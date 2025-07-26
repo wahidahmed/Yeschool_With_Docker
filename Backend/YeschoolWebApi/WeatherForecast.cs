@@ -1,4 +1,4 @@
-namespace WebApi
+namespace YeschoolWebApi
 {
     public class WeatherForecast
     {
