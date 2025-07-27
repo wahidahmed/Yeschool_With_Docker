@@ -5,7 +5,8 @@ using System;
 
 namespace Auth.Api.Data
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser>
+    //public class AppDbContext : IdentityDbContext<ApplicationUser>
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
