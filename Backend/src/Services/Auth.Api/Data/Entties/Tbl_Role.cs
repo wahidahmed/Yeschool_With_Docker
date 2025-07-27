@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Auth.Api.Data.Entties
 {
-    public class Role
+    public class Tbl_Role
     {
         [Key]
         [StringLength(50)]

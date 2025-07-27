@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Auth.Api.Data.Entties
 {
-    public class User
+    public class Tbl_User
     {
         [Key]
         [StringLength(50)]
