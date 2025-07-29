@@ -16,29 +16,58 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRefreshHandler, RefreshHandler>();
 #region Database Settings
 builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 #endregion
 
-var _authkey = builder.Configuration.GetValue<string>("JwtSettings:securitykey");
-builder.Services.AddAuthentication(item =>
+builder.Services.AddCors(op =>
 {
-    item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(item =>
+    op.AddPolicy("myPolicy", b =>
+    {
+        b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+var _authkey = builder.Configuration.GetValue<string>("JwtSettings:SecurityKey");
+//builder.Services.AddAuthentication(item =>
+//{
+//    item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(item =>
+//{
+//    item.RequireHttpsMetadata = true;
+//    item.SaveToken = true;
+//    item.TokenValidationParameters = new TokenValidationParameters()
+//    {
+//        ValidateIssuerSigningKey = true,
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authkey)),
+//        ValidateIssuer = false,
+//        ValidateAudience = false,
+//        ClockSkew = TimeSpan.Zero
+//    };
+
+//});
+
+//var _jwtsetting = builder.Configuration.GetSection("JwtSettings");
+//builder.Services.Configure<JwtSettings>(_jwtsetting);
+
+builder.Services.AddAuthentication(x =>
 {
-    item.RequireHttpsMetadata = true;
-    item.SaveToken = true;
-    item.TokenValidationParameters = new TokenValidationParameters()
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authkey)),
-        ValidateIssuer = false,
         ValidateAudience = false,
+        ValidateIssuer = false,
         ClockSkew = TimeSpan.Zero
     };
-
 });
 
 var _jwtsetting = builder.Configuration.GetSection("JwtSettings");
@@ -52,7 +81,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("myPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 

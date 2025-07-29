@@ -22,5 +22,12 @@ namespace Auth.Api.Data
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<SubTable> SubTables { get; set; }
         public DbSet<TempUser> TempUsers { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Entity<User>().ToTable("Users");
+        //}
     }
 }

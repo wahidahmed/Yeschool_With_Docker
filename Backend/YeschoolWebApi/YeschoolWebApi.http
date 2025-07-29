@@ -1,6 +1,0 @@
-@YeschoolWebApi_HostAddress = http://localhost:5147
-
-GET {{YeschoolWebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
