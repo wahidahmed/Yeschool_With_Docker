@@ -1,7 +1,6 @@
 using Auth.Api.Data;
+using Auth.Api.Helper;
 using Auth.Api.Modal;
-using Auth.Api.Services;
-using Auth.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,13 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IRefreshHandler, RefreshHandler>();
 #region Database Settings
 builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 #endregion
@@ -30,6 +28,7 @@ builder.Services.AddCors(op =>
     });
 });
 var _authkey = builder.Configuration.GetValue<string>("JwtSettings:SecurityKey");
+
 //builder.Services.AddAuthentication(item =>
 //{
 //    item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -72,6 +71,9 @@ builder.Services.AddAuthentication(x =>
 
 var _jwtsetting = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(_jwtsetting);
+
+builder.Services.AddControllersWithViews(options => options.Filters.Add(typeof(DynamicAuthorizationFilter)));
+
 
 var app = builder.Build();
 

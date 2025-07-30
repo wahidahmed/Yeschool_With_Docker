@@ -2,8 +2,7 @@
 using Auth.Api.Data.Entties;
 using Auth.Api.Helper;
 using Auth.Api.Modal;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -12,7 +11,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Auth.Api.Controllers
 {
@@ -49,7 +47,7 @@ namespace Auth.Api.Controllers
             var newAccessToken = user.Token;
             var newRefreshToken = CreateRefreshToken();
             user.RefreshToken = newRefreshToken;
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(5);
+            user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(30);
             await _authContext.SaveChangesAsync();
 
             return Ok(new TokenApiDto()
@@ -78,7 +76,7 @@ namespace Auth.Api.Controllers
                 return BadRequest(new { Message = passMessage.ToString() });
 
             userObj.Password = PasswordHasher.HashPassword(userObj.Password);
-            userObj.Role = "User";
+            userObj.Role = "Admin";
             userObj.Token = "";
             await _authContext.AddAsync(userObj);
             await _authContext.SaveChangesAsync();
@@ -89,6 +87,36 @@ namespace Auth.Api.Controllers
             });
         }
 
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<User>> GetAllUsers()
+        {
+            return Ok(await _authContext.Users.ToListAsync());
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] TokenApiDto tokenApiDto)
+        {
+            if (tokenApiDto is null)
+                return BadRequest("Invalid Client Request");
+            string accessToken = tokenApiDto.AccessToken;
+            string refreshToken = tokenApiDto.RefreshToken;
+            var principal = GetPrincipleFromExpiredToken(accessToken);
+            var username = principal.Identity.Name;
+            var user = await _authContext.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+                return BadRequest("Invalid Request");
+            var newAccessToken = CreateJwt(user);
+            var newRefreshToken = CreateRefreshToken();
+            user.RefreshToken = newRefreshToken;
+            await _authContext.SaveChangesAsync();
+            return Ok(new TokenApiDto()
+            {
+                AccessToken = newAccessToken,
+                RefreshToken = newRefreshToken,
+            });
+        }
         private Task<bool> CheckEmailExistAsync(string email)
             => _authContext.Users.AnyAsync(x => x.Email == email);
 
@@ -98,12 +126,12 @@ namespace Auth.Api.Controllers
         private static string CheckPasswordStrength(string pass)
         {
             StringBuilder sb = new StringBuilder();
-            if (pass.Length < 9)
-                sb.Append("Minimum password length should be 8" + Environment.NewLine);
-            if (!(Regex.IsMatch(pass, "[a-z]") && Regex.IsMatch(pass, "[A-Z]") && Regex.IsMatch(pass, "[0-9]")))
-                sb.Append("Password should be AlphaNumeric" + Environment.NewLine);
-            if (!Regex.IsMatch(pass, "[<,>,@,!,#,$,%,^,&,*,(,),_,+,\\[,\\],{,},?,:,;,|,',\\,.,/,~,`,-,=]"))
-                sb.Append("Password should contain special charcter" + Environment.NewLine);
+            if (pass.Length < 3)
+                sb.Append("Minimum password length should be 3" + Environment.NewLine);
+            //if (!(Regex.IsMatch(pass, "[a-z]") && Regex.IsMatch(pass, "[A-Z]") && Regex.IsMatch(pass, "[0-9]")))
+            //    sb.Append("Password should be AlphaNumeric" + Environment.NewLine);
+            //if (!Regex.IsMatch(pass, "[<,>,@,!,#,$,%,^,&,*,(,),_,+,\\[,\\],{,},?,:,;,|,',\\,.,/,~,`,-,=]"))
+            //    sb.Append("Password should contain special charcter" + Environment.NewLine);
             return sb.ToString();
         }
 
@@ -122,7 +150,7 @@ namespace Auth.Api.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = identity,
-                Expires = DateTime.Now.AddSeconds(10),
+                Expires = DateTime.Now.AddSeconds(30),
                 SigningCredentials = credentials
             };
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
