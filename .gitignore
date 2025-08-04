@@ -6,6 +6,31 @@
 ## EF Core Migrations (all projects)
 **/Migrations/
 
+# Ignore Angular build and environment files
+frontend/Angular14_Yesschool/node_modules/
+frontend/Angular14_Yesschool/dist/
+frontend/Angular14_Yesschool/.angular/cache/
+frontend/Angular14_Yesschool/out-tsc/
+frontend/Angular14_Yesschool/src/environments/environment*.ts
+
+# Ignore Angular compiler output
+frontend/Angular14_Yesschool/**/*.js
+frontend/Angular14_Yesschool/**/*.js.map
+frontend/Angular14_Yesschool/**/*.tsbuildinfo
+
+# VS Code settings
+.vscode/
+frontend/Angular14_Yesschool/.vscode/
+
+# Logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
 # User-specific files
 *.rsuser
 *.suo

@@ -1,0 +1,59 @@
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+     <li class="nav-item"> <a class="nav-link " routerLink="/dashboard"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a></li>
+     <li class="nav-item">
+         <a class="nav-link collapsed" data-bs-target="#product-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Products</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+         <ul id="product-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+              <li> <a routerLink="/add_new_product/0"> <i class="bi bi-circle"></i><span>Add Prodcut</span> </a></li>
+              <li> <a routerLink="/product_list"> <i class="bi bi-circle"></i><span>List Prodcut</span> </a></li>
+              <li> <a routerLink="/add_new_unit"> <i class="bi bi-circle"></i><span>Add Unit</span> </a></li>
+         </ul>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#customer-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>customer</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="customer-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li> <a routerLink="/add_new_customer"> <i class="bi bi-circle"></i><span>Add Customer</span> </a></li>
+           <li> <a routerLink="/customer_list"> <i class="bi bi-circle"></i><span>List Customer</span> </a></li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#supplier-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Supplier</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="supplier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li> <a routerLink="/add_supplier"> <i class="bi bi-circle"></i><span>Add Supplier</span> </a></li>
+           <li> <a routerLink="/supplier_list"> <i class="bi bi-circle"></i><span>List Supplier</span> </a></li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#purchase-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>purchase</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="purchase-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li> <a routerLink="/purchase_entry"> <i class="bi bi-circle"></i><span>Add purchase</span> </a></li>
+           <li> <a routerLink="/purchase_list"> <i class="bi bi-circle"></i><span>List purchase</span> </a></li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#sale-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>sale</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="sale-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li> <a routerLink="/sales_entry"> <i class="bi bi-circle"></i><span>Add sale</span> </a></li>
+           <li> <a routerLink="/sales_entry"> <i class="bi bi-circle"></i><span>List sale</span> </a></li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>HR</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="hr-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li> <a routerLink="/add_employee"> <i class="bi bi-circle"></i><span>Add Employee</span> </a></li>
+           <li> <a routerLink="/add_employee"> <i class="bi bi-circle"></i><span>List Employee</span> </a></li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#admin-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Administration</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="admin-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           <li> <a routerLink="/register"> <i class="bi bi-circle"></i><span>Add User</span> </a></li>
+      </ul>
+    </li>
+
+
+
+
+
+  </ul>
+</aside>
