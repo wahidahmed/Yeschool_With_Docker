@@ -1,29 +1,29 @@
-<app-header *ngIf="!(_router.url === '/register' || _router.url === '/' || _router.url === '/pages-error404')" ></app-header>
-<app-sidebar *ngIf="!(_router.url === '/register' || _router.url === '/' || _router.url === '/pages-error404')" ></app-sidebar>
+
+  <lib-ng-toast></lib-ng-toast>
+<div *ngIf="(_router.url=='/login')">
+  <router-outlet></router-outlet>
+</div>
+<div *ngIf="!(_router.url=='/login')">
+  <app-header></app-header>
+<app-sidebar ></app-sidebar>
 <main id="main" class="main">
-  <div class="pagetitle"*ngIf="!(_router.url === '/register' || _router.url === '/' || _router.url === '/pages-error404')">
-    <!-- <h4>Dashboard</h4> -->
-    <!-- <nav>
+
+
+  <!-- <div class="pagetitle"*ngIf="!(_router.url === '/register' || _router.url === '/' || _router.url === '/pages-error404')">
+    <h4>Dashboard</h4>
+     <nav>
        <ol class="breadcrumb">
           <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
        </ol>
-    </nav> -->
- </div>
+    </nav>
+ </div> -->
+
   <router-outlet></router-outlet>
+
 </main>
+</div>
 
 <!-- <app-footer *ngIf="!(_router.url === '/register' || _router.url === '/' || _router.url === '/pages-error404')" ></app-footer> -->
 
 
-<!-- <app-header></app-header>
-<div class="row">
-  <div class="col-12">
-    <div class="container-fluid">
-      <app-top-navbar></app-top-navbar>
-    </div>
-    <div class="container">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div> -->

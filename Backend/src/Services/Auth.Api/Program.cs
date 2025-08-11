@@ -1,4 +1,5 @@
 using Auth.Api.Data;
+using Auth.Api.Data.RawSql;
 using Auth.Api.Helper;
 using Auth.Api.Modal;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyPolicy", builder => builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
+});
+
 builder.Services.AddControllersWithViews();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -20,36 +29,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 #endregion
 
-builder.Services.AddCors(op =>
-{
-    op.AddPolicy("myPolicy", b =>
-    {
-        b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-    });
-});
+builder.Services.AddScoped<IRawSql_Helper,RawSql_Helper>();
+
+
 var _authkey = builder.Configuration.GetValue<string>("JwtSettings:SecurityKey");
-
-//builder.Services.AddAuthentication(item =>
-//{
-//    item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(item =>
-//{
-//    item.RequireHttpsMetadata = true;
-//    item.SaveToken = true;
-//    item.TokenValidationParameters = new TokenValidationParameters()
-//    {
-//        ValidateIssuerSigningKey = true,
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authkey)),
-//        ValidateIssuer = false,
-//        ValidateAudience = false,
-//        ClockSkew = TimeSpan.Zero
-//    };
-
-//});
-
-//var _jwtsetting = builder.Configuration.GetSection("JwtSettings");
-//builder.Services.Configure<JwtSettings>(_jwtsetting);
 
 builder.Services.AddAuthentication(x =>
 {
@@ -83,7 +66,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("myPolicy");
+app.UseHttpsRedirection();
+app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 

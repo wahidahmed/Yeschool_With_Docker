@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import ValidateForm from '../helpers/ValidateForm';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,15 +15,13 @@ export class SignupComponent implements OnInit {
   type: string = 'password';
   isText: boolean = false;
   eyeIcon:string = "fa-eye-slash"
-  constructor(private fb : FormBuilder, private router: Router) { }
+  constructor(private fb : FormBuilder, private router: Router,private auth: AuthService) { }
 
   ngOnInit() {
     this.signUpForm = this.fb.group({
-      firstName:['', Validators.required],
-      lastName:['', Validators.required],
       userName:['', Validators.required],
-      email:['', Validators.required],
-      password:['', Validators.required]
+      password:['', Validators.required],
+      role:['', Validators.required]
     })
   }
 
@@ -36,23 +36,22 @@ export class SignupComponent implements OnInit {
       console.log(this.signUpForm.value);
       let signUpObj = {
         ...this.signUpForm.value,
-        role:'',
         token:''
       }
-      // this.auth.signUp(signUpObj)
-      // .subscribe({
-      //   next:(res=>{
-      //     console.log(res.message);
-      //     this.signUpForm.reset();
-      //     this.router.navigate(['login']);
-      //     alert(res.message)
-      //   }),
-      //   error:(err=>{
-      //     alert(err?.error.message)
-      //   })
-      // })
+      this.auth.signUp(signUpObj)
+      .subscribe({
+        next:(res=>{
+          console.log(res.message);
+          this.signUpForm.reset();
+          this.router.navigate(['login']);
+          alert(res.message)
+        }),
+        error:(err=>{
+          alert(err?.error.message)
+        })
+      })
     } else {
-      // ValidateForm.validateAllFormFields(this.signUpForm); //{7}
+      ValidateForm.validateAllFormFields(this.signUpForm); //{7}
     }
   }
 }

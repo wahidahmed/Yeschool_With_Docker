@@ -17,6 +17,7 @@ namespace Auth.Api.Data
         public DbSet<User> Users { get; set; }
         public DbSet<AspRoleRight> AspRoleRights { get; set; }
         public DbSet<AppContent> AppContents { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{

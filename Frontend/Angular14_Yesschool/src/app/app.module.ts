@@ -9,6 +9,13 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { NgToastModule } from 'ng-angular-popup';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { RoleComponent } from './role/role.component';
+import { MaterialModuleModule } from './material.module.module';
+import { MenuAccessComponent } from './menu-access/menu-access.component';
 
 @NgModule({
   declarations: [
@@ -16,15 +23,27 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     SignupComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    HomeComponent,
+    RoleComponent,
+    MenuAccessComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgToastModule,
+    MaterialModuleModule,
   ],
-  providers: [],
+  providers: [
+    {
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptor,
+    multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

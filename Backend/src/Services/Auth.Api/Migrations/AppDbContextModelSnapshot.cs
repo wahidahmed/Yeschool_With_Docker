@@ -83,6 +83,24 @@ namespace Auth.Api.Migrations
                     b.ToTable("AspRoleRights");
                 });
 
+            modelBuilder.Entity("Auth.Api.Data.Entties.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("Auth.Api.Data.Entties.User", b =>
                 {
                     b.Property<int>("Id")

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import ValidateForm from '../helpers/ValidateForm';
+import { AuthService } from '../services/auth.service';
+import { NgToastService } from 'ng-angular-popup';
+import { UserCredStoreService } from '../services/user-cred-store.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +19,10 @@ public loginForm!: FormGroup;
   eyeIcon: string = 'fa-eye-slash';
    constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private auth: AuthService,
+    private toast: NgToastService,
+    private userStore:UserCredStoreService
   ) {}
 
   ngOnInit() {
@@ -34,25 +41,26 @@ public loginForm!: FormGroup;
    onSubmit() {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
-      // this.auth.signIn(this.loginForm.value).subscribe({
-      //   // next: (res) => {
-      //   //   console.log(res.message);
-      //   //   this.loginForm.reset();
-      //   //   this.auth.storeToken(res.accessToken);
-      //   //   this.auth.storeRefreshToken(res.refreshToken);
-      //   //   const tokenPayload = this.auth.decodedToken();
-      //   //   this.userStore.setFullNameForStore(tokenPayload.name);
-      //   //   this.userStore.setRoleForStore(tokenPayload.role);
-      //   //   this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
-      //   //   this.router.navigate(['dashboard'])
-      //   // },
-      //   // error: (err) => {
-      //   //   this.toast.error({detail:"ERROR", summary:"Something when wrong!", duration: 5000});
-      //   //   console.log(err);
-      //   // },
-      // });
+      this.auth.signIn(this.loginForm.value).subscribe({
+        next: (res) => {
+          console.log(res.message);
+          this.loginForm.reset();
+          this.auth.storeToken(res.accessToken);
+          this.auth.storeUserName(res.username);
+          this.auth.storeRefreshToken(res.refreshToken);
+          const tokenPayload = this.auth.decodedToken();
+          this.userStore.setUsernameForStore(tokenPayload.name);
+          this.userStore.setRoleForStore(tokenPayload.role);
+          this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
+          this.router.navigate(['home'])
+        },
+        error: (err) => {
+          this.toast.error({detail:"ERROR", summary:"Something when wrong!", duration: 5000});
+          console.log(err);
+        },
+      });
     } else {
-      // ValidateForm.validateAllFormFields(this.loginForm);
+      ValidateForm.validateAllFormFields(this.loginForm);
     }
   }
 }
