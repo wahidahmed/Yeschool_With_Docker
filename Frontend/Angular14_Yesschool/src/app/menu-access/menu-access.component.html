@@ -1,1 +1,59 @@
-<p>menu-access works!</p>
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title fa-pull-left">Menu access</h2>
+        <button class="btn btn-sm btn-danger fa-pull-right" [routerLink]="['/role']" >cancel</button>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="saveForm" (ngSubmit)="onSubmit()">
+            
+        <div class="form-group row">
+            <label class="col-2 col-form-label pr-0">Role Name:</label>
+            <div class="col-2">
+                <input class="form-control" formControlName="roleName"readonly />
+
+            </div>
+        </div>
+
+         <div class="form-check m-1" *ngFor="let item of parentMenus">
+            <ng-container *ngIf="item.roleName===role else uncheckedParent">
+             
+
+                        <input type="checkbox" class="form-check-input" value="{{item.appContentId}}"
+                          [checked]="isChecked(item.appContentId)"   
+                          (change)="onParentChange($event, item.appContentId)"/>
+                        <label class="form-check-label text-danger text-uppercase">{{item.displayName}}</label>
+
+               
+                    <div class="form-check m-1" *ngFor="let child of getChildren(item.appContentId)">
+                        <input  type="checkbox" class="form-check-input" value="{{child.appContentId}}"
+                        [checked]="isChecked(child.appContentId)"
+                        [disabled]="!isChecked(child.appContentId)"
+                        (change)="onChildChange($event, child.appContentId)"/>
+
+                        <div class="form-check m-1" >
+                            <label class="form-check-label text-primary text-uppercase">{{child.displayName}}</label>
+                        </div>
+                    </div>
+         
+                
+
+            </ng-container>
+
+            <ng-template #uncheckedParent>
+               <input  type="checkbox" class="form-check-input" value="{{item.appContentId}}"
+                (change)="onParentChange($event, item.appContentId)" />
+                    <label  class="form-check-label text-danger text-uppercase">{{item.displayName}}</label>
+                   
+                        <div class="form-check m-1" *ngFor="let child of getChildren(item.appContentId)">
+                            <input  type="checkbox" class="form-check-input" value="{{child.appContentId}}" 
+                            [disabled]="!isChecked(child.appContentId)" 
+                             (change)="onChildChange($event, child.appContentId)"/>
+                            <label  class="form-check-label text-primary text-uppercase">{{item.displayName}}</label>
+                        </div>
+                    
+            </ng-template>
+        </div>
+                <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Signup</button>
+        </form>
+    </div>
+</div>

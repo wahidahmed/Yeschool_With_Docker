@@ -17,6 +17,6 @@ export class AdminitrationService {
     return this.http.get<any>(`${this.baseUrl}GetAllRoles`);
   }
    getMenusByRole(role:string){
-    return this.http.get<any>(`${this.baseUrl}GetMenuItem`,{params:{role}});
+    return this.http.get<any>(`${this.baseUrl}GetMenuItem`,{ params: { roleName: role } });
   }
 }

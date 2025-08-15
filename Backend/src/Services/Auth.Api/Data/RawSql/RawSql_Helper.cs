@@ -59,7 +59,7 @@ namespace Auth.Api.Data.RawSql
         public IEnumerable<Sql_UserInfo> GetAppContentByRole(string roleName)
         {
 
-            var sql = RawSqlQuery(string.Format(@"select c.ID AppContentId,IsParent,ParentID,DisplayName,ISNULL(Area,'')Area,ISNULL(Controller,'')Controller,ISNULL(Action,'') Action,ISNULL(DisplayOrder,0)DisplayOrder,IsDisplay_As_Menu,ISNULL(Icon,''),ISNULL(RoleName,'')RoleName from AppContents c left join AspRoleRights r on r.AppContentId=c.ID and RoleName='{0}'", roleName), x => new Sql_UserInfo
+            var sql = RawSqlQuery(string.Format(@"select c.ID AppContentId,IsParent,ParentID,ISNULL(DisplayName,'')DisplayName,ISNULL(Area,'')Area,ISNULL(Controller,'')Controller,ISNULL(Action,'') Action,ISNULL(DisplayOrder,0)DisplayOrder,IsDisplay_As_Menu,ISNULL(Icon,''),ISNULL(RoleName,'')RoleName from AppContents c left join AspRoleRights r on r.AppContentId=c.ID and RoleName='{0}'", roleName), x => new Sql_UserInfo
             {
                 AppContentId = (int)x[0],
                 IsParent = (bool)x[1],
