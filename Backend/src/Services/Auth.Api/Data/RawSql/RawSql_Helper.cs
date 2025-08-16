@@ -76,5 +76,30 @@ namespace Auth.Api.Data.RawSql
 
             return sql;
         }
+
+        public IEnumerable<Sql_UserInfo> GetMenuItem(string userName)
+        {
+            var rawSql = string.Format(@"select a.ID,a.IsParent,a.ParentID,ISNULL(a.DisplayName,'') as DisplayName,ISNULL(a.Area,'')Area,ISNULL(a.Controller,'')Controller,ISNULL(a.Action,'')Action,ISNULL(a.DisplayOrder,0)DisplayOrder,a.IsDisplay_As_Menu,ISNULL(a.Icon,'')Icon,ISNULL(c.RoleName,'')RoleName from AppContents a
+				join AspRoleRights b on b.AppContentId=a.ID
+				join Roles c on c.RoleName=b.RoleName
+				join Users d on d.Role=c.RoleName
+				where d.Username='{0}'", userName);
+            var sql = RawSqlQuery(rawSql, x => new Sql_UserInfo
+            {
+                ID = (int)x[0],
+                IsParent = (bool)x[1],
+                ParentID = (int)x[2],
+                DisplayName = (string)x[3],
+                Area = (string)x[4],
+                Controller = (string)x[5],
+                Action = (string)x[6],
+                DisplayOrder = (int)x[7],
+                IsDisplay_As_Menu = (bool)x[8],
+                Icon = (string)x[9],
+                RoleName = (string)x[10]
+            });
+
+            return sql;
+        }
     }
 }

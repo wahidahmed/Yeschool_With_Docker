@@ -27,7 +27,7 @@
                     <div class="form-check m-1" *ngFor="let child of getChildren(item.appContentId)">
                         <input  type="checkbox" class="form-check-input" value="{{child.appContentId}}"
                         [checked]="isChecked(child.appContentId)"
-                        [disabled]="!isChecked(child.appContentId)"
+                        [disabled]="!isEnabled(child.appContentId)"
                         (change)="onChildChange($event, child.appContentId)"/>
 
                         <div class="form-check m-1" >
@@ -46,9 +46,10 @@
                    
                         <div class="form-check m-1" *ngFor="let child of getChildren(item.appContentId)">
                             <input  type="checkbox" class="form-check-input" value="{{child.appContentId}}" 
-                            [disabled]="!isChecked(child.appContentId)" 
+                            [checked]="isChecked(child.appContentId)"
+                            [disabled]="!isEnabled(child.appContentId)" 
                              (change)="onChildChange($event, child.appContentId)"/>
-                            <label  class="form-check-label text-primary text-uppercase">{{item.displayName}}</label>
+                            <label  class="form-check-label text-primary text-uppercase">{{child.displayName}}</label>
                         </div>
                     
             </ng-template>

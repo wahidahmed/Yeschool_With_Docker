@@ -1,6 +1,7 @@
 ﻿using Auth.Api.Data;
 using Auth.Api.Data.Entties;
 using Auth.Api.Data.RawSql;
+using Auth.Api.Modal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -43,11 +44,41 @@ namespace Auth.Api.Controllers
             return Ok(roles);
         }
 
+
+
         [Authorize]
-        [HttpGet("GetMenuItem")]
-        public IActionResult GetMenuItem(string roleName)
+        [HttpGet("GetAppContentByRole")]
+        public IActionResult GetAppContentByRole(string roleName)
         {
             var items = rawSql_Helper.GetAppContentByRole(roleName);
+            return Ok(items);
+        }
+
+        [Authorize]
+        [HttpPost("AssignAccess")]
+        public async Task<IActionResult> AssignAccess(AssignAccessDto dto)
+        {
+            List<AspRoleRight> aspRoleRightList = new List<AspRoleRight>();
+            foreach (var menuId in dto.MenuIds)
+            {
+                AspRoleRight aspRoleRight = new AspRoleRight();
+                aspRoleRight.AppContentId = menuId;
+                aspRoleRight.RoleName = dto.RoleName;
+                aspRoleRightList.Add(aspRoleRight);
+            }
+            var list= _authContext.AspRoleRights.ToList().Where(x=>x.RoleName==dto.RoleName);
+            _authContext.AspRoleRights.RemoveRange(list);
+
+            await _authContext.AspRoleRights.AddRangeAsync(aspRoleRightList);
+            await _authContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("GetMenuItem")]
+        public IActionResult GetMenuItem(string userName)
+        {
+            var items = rawSql_Helper.GetMenuItem(userName);
             return Ok(items);
         }
     }
