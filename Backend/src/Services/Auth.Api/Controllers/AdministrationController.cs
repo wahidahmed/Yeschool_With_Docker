@@ -46,7 +46,7 @@ namespace Auth.Api.Controllers
 
 
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetAppContentByRole")]
         public IActionResult GetAppContentByRole(string roleName)
         {
@@ -54,27 +54,36 @@ namespace Auth.Api.Controllers
             return Ok(items);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("AssignAccess")]
         public async Task<IActionResult> AssignAccess(AssignAccessDto dto)
         {
-            List<AspRoleRight> aspRoleRightList = new List<AspRoleRight>();
-            foreach (var menuId in dto.MenuIds)
+            try
             {
-                AspRoleRight aspRoleRight = new AspRoleRight();
-                aspRoleRight.AppContentId = menuId;
-                aspRoleRight.RoleName = dto.RoleName;
-                aspRoleRightList.Add(aspRoleRight);
-            }
-            var list= _authContext.AspRoleRights.ToList().Where(x=>x.RoleName==dto.RoleName);
-            _authContext.AspRoleRights.RemoveRange(list);
+                List<AspRoleRight> aspRoleRightList = new List<AspRoleRight>();
+                foreach (var menuId in dto.MenuIds)
+                {
+                    AspRoleRight aspRoleRight = new AspRoleRight();
+                    aspRoleRight.AppContentId = menuId;
+                    aspRoleRight.RoleName = dto.RoleName;
+                    aspRoleRightList.Add(aspRoleRight);
+                }
+                var list = _authContext.AspRoleRights.ToList().Where(x => x.RoleName == dto.RoleName);
+                _authContext.AspRoleRights.RemoveRange(list);
 
-            await _authContext.AspRoleRights.AddRangeAsync(aspRoleRightList);
-            await _authContext.SaveChangesAsync();
-            return Ok();
+                await _authContext.AspRoleRights.AddRangeAsync(aspRoleRightList);
+                await _authContext.SaveChangesAsync();
+               
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException?? ex;
+            }
+            
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetMenuItem")]
         public IActionResult GetMenuItem(string userName)
         {

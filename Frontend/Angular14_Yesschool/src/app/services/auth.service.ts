@@ -52,13 +52,12 @@ export class AuthService {
   decodedToken(){
     // const jwtHelper = new JwtHelperService();
     const token = this.getToken()!;
-    console.log(this.jwtHelper.decodeToken(token))
     return this.jwtHelper.decodeToken(token)
   }
 
   getuserNameFromToken(){
     if(this.userPayload)
-    return this.userPayload.name;
+      return this.userPayload.unique_name;
   }
 
   getRoleFromToken(){
@@ -81,7 +80,6 @@ export class AuthService {
 
   isRefreshTokenExpired(): boolean {
     const token = this.getRefreshToken();
-    console.log('ref',token)
      // If token is missing, treat it as expired
     if (!token || token.split('.').length !== 3) {
       return true;

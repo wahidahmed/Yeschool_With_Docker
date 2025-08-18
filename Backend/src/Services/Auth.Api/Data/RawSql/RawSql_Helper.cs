@@ -79,7 +79,7 @@ namespace Auth.Api.Data.RawSql
 
         public IEnumerable<Sql_UserInfo> GetMenuItem(string userName)
         {
-            var rawSql = string.Format(@"select a.ID,a.IsParent,a.ParentID,ISNULL(a.DisplayName,'') as DisplayName,ISNULL(a.Area,'')Area,ISNULL(a.Controller,'')Controller,ISNULL(a.Action,'')Action,ISNULL(a.DisplayOrder,0)DisplayOrder,a.IsDisplay_As_Menu,ISNULL(a.Icon,'')Icon,ISNULL(c.RoleName,'')RoleName from AppContents a
+            var rawSql = string.Format(@"select a.ID,a.IsParent,a.ParentID,ISNULL(a.DisplayName,'') as DisplayName,ISNULL(a.Area,'')Area,ISNULL(a.Controller,'')Controller,ISNULL(a.Action,'')Action,ISNULL(a.DisplayOrder,0)DisplayOrder,a.IsDisplay_As_Menu,ISNULL(a.Icon,'')Icon,ISNULL(c.RoleName,'')RoleName,ISNULL(a.RoutePath,'') as RoutePath from AppContents a
 				join AspRoleRights b on b.AppContentId=a.ID
 				join Roles c on c.RoleName=b.RoleName
 				join Users d on d.Role=c.RoleName
@@ -96,7 +96,8 @@ namespace Auth.Api.Data.RawSql
                 DisplayOrder = (int)x[7],
                 IsDisplay_As_Menu = (bool)x[8],
                 Icon = (string)x[9],
-                RoleName = (string)x[10]
+                RoleName = (string)x[10],
+                RoutePath = (string)x[11],
             });
 
             return sql;

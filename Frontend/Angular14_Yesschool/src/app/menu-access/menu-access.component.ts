@@ -4,6 +4,9 @@ import { AdminitrationService } from '../services/adminitration.service';
 import { NgToastService } from 'ng-angular-popup';
 import { UserCredStoreService } from '../services/user-cred-store.service';
 import { AuthService } from '../services/auth.service';
+import { IAssignAccess } from '../models/iAssignAccess.model';
+import ValidateForm from '../helpers/ValidateForm';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-menu-access',
@@ -16,8 +19,7 @@ export class MenuAccessComponent implements OnInit {
     private fb:FormBuilder
     ,private adminstrationService:AdminitrationService
     , private toast:NgToastService
-    ,private userStore:UserCredStoreService
-    ,private auth:AuthService
+    ,private activateRoute:ActivatedRoute
     ) { }
   menuList:any[];
   parentMenus: any[] = [];
@@ -27,18 +29,17 @@ export class MenuAccessComponent implements OnInit {
   saveForm:FormGroup;
   public role:string;
   ngOnInit(): void {
-   this.userStore.getRoleFromStore().subscribe(val=>{
-      let rl=this.auth.getRoleFromToken();
-      this.role=val|| rl;
-      this.getMenus(this.role);
-    })
-
+    this.getDefaultInfo();
     this.saveForm=this.fb.group({
       roleName:[this.role,[Validators.required]],
        menuIds: this.fb.array([])
     })
+  }
 
-
+  getDefaultInfo(){
+    const roleName = this.activateRoute.snapshot.queryParamMap.get('roleName');
+      this.role=roleName;
+     this.getMenus(this.role);
   }
 
   getMenus(role:string){
@@ -46,7 +47,6 @@ export class MenuAccessComponent implements OnInit {
       this.menuList=data;
       this.parentMenus = this.menuList.filter(x => x.isParent);
       this.childMenus = this.menuList.filter(x => !x.isParent);
-      console.log('childmenus',this.childMenus);
       data.forEach(e => {
         this.checkedList.push(e.appContentId);
         if(e.roleName==role){
@@ -138,6 +138,26 @@ export class MenuAccessComponent implements OnInit {
 
 
   onSubmit(){
-     console.log(this.saveForm.value);
+    if(this.saveForm.valid){
+      
+      const dto:IAssignAccess={
+        RoleName:this.saveForm.value.roleName,
+        MenuIds:this.saveForm.value.menuIds
+      }
+      this.adminstrationService.assignAccess(dto).subscribe({
+        next:(res)=>{
+          this.saveForm.reset();
+            window.location.reload();
+            // this.getDefaultInfo();
+           this.toast.success({detail:"SUCCESS", summary:res, duration: 5000});
+        },
+        error:(err)=>{
+          this.toast.error({detail:"ERROR", summary:"Something when wrong!", duration: 5000});
+        }
+      })
+    }
+    else{
+      ValidateForm.validateAllFormFields(this.saveForm);
+    }
   }
 }

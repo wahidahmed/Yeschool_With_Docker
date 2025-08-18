@@ -33,7 +33,6 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (this.signUpForm.valid) {
-      console.log(this.signUpForm.value);
       let signUpObj = {
         ...this.signUpForm.value,
         token:''

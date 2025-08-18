@@ -57,6 +57,9 @@ namespace Auth.Api.Migrations
                     b.Property<int>("ParentID")
                         .HasColumnType("int");
 
+                    b.Property<string>("RoutePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("AppContents");
