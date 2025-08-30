@@ -83,7 +83,7 @@ namespace Auth.Api.Data.RawSql
 				join AspRoleRights b on b.AppContentId=a.ID
 				join Roles c on c.RoleName=b.RoleName
 				join Users d on d.Role=c.RoleName
-				where d.Username='{0}'", userName);
+				where d.Username='{0}' and a.IsDisplay_As_Menu=1", userName);
             var sql = RawSqlQuery(rawSql, x => new Sql_UserInfo
             {
                 ID = (int)x[0],

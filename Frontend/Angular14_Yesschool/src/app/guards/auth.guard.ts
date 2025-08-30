@@ -37,7 +37,8 @@ export class AuthGuard implements CanActivate {
       // Access token expired but refresh token is valid
     const refreshToken = this.auth.getRefreshToken();
     const accessToken = this.auth.getToken();
-    return this.auth.renewToken({ accessToken, refreshToken }).pipe(
+    const username='';
+    return this.auth.renewToken({ accessToken, refreshToken,username }).pipe(
       tap(response => {
          this.auth.storeRefreshToken(response.refreshToken);
         this.auth.storeToken(response.accessToken);

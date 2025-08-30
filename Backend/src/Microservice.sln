@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{02
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Api", "Services\Auth.Api\Auth.Api.csproj", "{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppGateway", "Gateway\WebAppGateway\WebAppGateway.csproj", "{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +19,17 @@ Global
 		{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5B4E1549-AC7C-47ED-917F-BA6B64A419B1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9653948-5351-41AD-A7EB-660FB78D14C2}

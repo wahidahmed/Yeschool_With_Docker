@@ -23,13 +23,11 @@ export class SidebarComponent implements OnInit {
     this.adminService.getMenuItem(this.userNameFromSidebar).subscribe(res=>{
       this.parentMenu=res.filter(x=>x.isParent===true).sort((a,b)=>a.DisplayOrder-b.DisplayOrder);
       this.menuList=res;
-      console.log('parent',res);
     })
   }
   
   getChildren(parentId:number){
    this.childrenMenu= this.menuList.filter(r=>r.parentID===parentId).sort((a,b)=>a.DisplayOrder-b.DisplayOrder);
-   console.log('child',this.childrenMenu);
   return this.childrenMenu;
   }
 

@@ -50,14 +50,21 @@ export class AuthService {
   }
 
   decodedToken(){
-    // const jwtHelper = new JwtHelperService();
-    const token = this.getToken()!;
-    return this.jwtHelper.decodeToken(token)
+    // // const jwtHelper = new JwtHelperService();
+    // const token = this.getToken()!;
+    // return this.jwtHelper.decodeToken(token)
+    const token = this.getToken();
+  if (token) {
+    return this.jwtHelper.decodeToken(token);
+  }
+  return null;
   }
 
   getuserNameFromToken(){
-    if(this.userPayload)
-      return this.userPayload.unique_name;
+    // if(this.userPayload)
+    //   return this.userPayload.unique_name;
+     const payload = this.decodedToken();
+     return payload ? payload.unique_name : null;
   }
 
   getRoleFromToken(){
@@ -79,11 +86,14 @@ export class AuthService {
   }
 
   isRefreshTokenExpired(): boolean {
-    const token = this.getRefreshToken();
-     // If token is missing, treat it as expired
-    if (!token || token.split('.').length !== 3) {
-      return true;
-    }
-    return !token || this.jwtHelper.isTokenExpired(token);
+    // const token = this.getRefreshToken();
+    //  // If token is missing, treat it as expired
+    // if (!token || token.split('.').length !== 3) {
+    //   return true;
+    // }
+    // return !token || this.jwtHelper.isTokenExpired(token);
+
+     const token = this.getRefreshToken();
+     return !token; // just check existence, backend validates expiry
   }
 }

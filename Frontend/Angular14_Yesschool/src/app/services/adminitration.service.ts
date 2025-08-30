@@ -11,7 +11,7 @@ export class AdminitrationService {
   constructor(private http:HttpClient) { }
 
   addNnewRole(roleName:string){
-    return this.http.post<any>(`${this.baseUrl}AddNewRole`,roleName);
+    return this.http.post<any>(`${this.baseUrl}AddNewRole?roleName=${roleName}`,{});
   }
 
   assignAccess(dto:IAssignAccess){

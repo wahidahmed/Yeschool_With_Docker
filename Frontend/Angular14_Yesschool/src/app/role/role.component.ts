@@ -25,19 +25,19 @@ export class RoleComponent implements OnInit {
 
   getList(){
     this.adminstrationService.getRoles().subscribe(data=>{this.roleList=data});
-    console.log(this.roleList)
   }
 
   onSubmit(){
     if(this.roleForm.valid){
         this.adminstrationService.addNnewRole(this.roleForm.controls['roleName'].value).subscribe({
           next:(res=>{
-              this.toast.success({detail:res.message,summary:'successfully added',duration:5000});
+            this.getList();
+              this.toast.success({detail:res,summary:'successfully added',duration:5000});
           }),
           error:(err=>{
             // alert(err?.error)
             console.log(err);
-             this.toast.error({detail:err,summary:'successfully added',duration:5000});
+             this.toast.error({detail:err,summary:'failed added',duration:5000});
           })
         })
        
