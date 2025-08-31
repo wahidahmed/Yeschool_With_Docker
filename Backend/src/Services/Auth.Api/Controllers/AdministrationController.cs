@@ -48,6 +48,7 @@ namespace Auth.Api.Controllers
 
         //[Authorize]
         [HttpGet("GetAppContentByRole")]
+        [AllowAnonymous]
         public IActionResult GetAppContentByRole(string roleName)
         {
             var items = rawSql_Helper.GetAppContentByRole(roleName);
@@ -56,6 +57,7 @@ namespace Auth.Api.Controllers
 
         //[Authorize]
         [HttpPost("AssignAccess")]
+        [AllowAnonymous]
         public async Task<IActionResult> AssignAccess(AssignAccessDto dto)
         {
             try
@@ -85,6 +87,7 @@ namespace Auth.Api.Controllers
 
         //[Authorize]
         [HttpGet("GetMenuItem")]
+        [AllowAnonymous]
         public IActionResult GetMenuItem(string userName)
         {
             var items = rawSql_Helper.GetMenuItem(userName);

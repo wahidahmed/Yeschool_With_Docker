@@ -90,8 +90,8 @@ namespace Auth.Api.Controllers
         }
 
 
-        [Authorize]
-        [HttpGet]
+        //[Authorize]
+        [HttpGet("GetAllUsers")]
         public async Task<ActionResult<User>> GetAllUsers()
         {
             return Ok(await _authContext.Users.ToListAsync());

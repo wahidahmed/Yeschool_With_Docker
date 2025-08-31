@@ -1,3 +1,35 @@
 {
-
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/User/{all}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "host": "localhost",
+          "port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{all}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Administration/{all}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "host": "localhost",
+          "port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/admin/{all}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "GatewayAuthentication",
+      //  "AllowedScopes": []
+      //}
+    }
+  ], // required section
+  "GlobalConfiguration": { // required
+    "BaseUrl": "http://localhost:5005"
+  }
 }

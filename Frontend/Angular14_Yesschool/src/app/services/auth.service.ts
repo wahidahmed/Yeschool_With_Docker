@@ -77,7 +77,7 @@ export class AuthService {
   }
 
   getUsers(){
-    return this.http.get<any>(this.baseUrl);
+    return this.http.get<any>(`${this.baseUrl}GetAllUsers`);
   }
 
     isAccessTokenExpired(): boolean {
