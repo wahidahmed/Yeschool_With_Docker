@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using School.AdminService.Data;
+using School.AdminService.Repository;
+using School.AdminService.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 #endregion
 
-
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IRawSqlRepository, RawSqlRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
