@@ -6,18 +6,19 @@ namespace School.AdminService.Data.Entities
     public class Address:BaseEntity
     {
         [Key]
-        public Int64 AddressId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int AddressId { get; set; }
         [ForeignKey("District")]
-        public int DistrictsId { get; set; }
+        public int DistrictId { get; set; }
         [ForeignKey("Thana")]
-        public int ThanasId { get; set; }
+        public int ThanaId { get; set; }
         [MaxLength(500)]
-        public string StreetDetails { get; set; }
+        public string StreetDetail { get; set; }
         [MaxLength(20)]
         [Required]
         public string AddressType { get; set; }
         [ForeignKey("PersonalInfo")]
-        public Int64 PersonalInfoId { get; set; }
+        public long PersonalInfoId { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public District District { get; set; }
         public Thana Thana { get; set; }

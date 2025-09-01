@@ -7,12 +7,14 @@ namespace School.AdminService.Data.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int FeesNameID { get; set; }
+        public int FeesNameId { get; set; }
         [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
         [Required]
-        
-        public string Frequency { get; set; }
+        [MaxLength(50)]
+        public string FeesCollectionType { get; set; }// exp:monthly, daily, yearly
+        [MaxLength(500)]
         public string Remarks { get; set; }
 
         public ICollection<FeesSetup> FeesSetup { get; set; } = new List<FeesSetup>();

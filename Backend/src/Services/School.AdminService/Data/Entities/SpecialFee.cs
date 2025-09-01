@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.AdminService.Data.Entities
@@ -11,22 +12,18 @@ namespace School.AdminService.Data.Entities
         [ForeignKey("FeesName")]
         public int FeesNamesId { get; set; }
         [ForeignKey("StudentInfo")]
-        public Int64 StudentInfosId { get; set; }
+        public long StudentInfosId { get; set; }
         [ForeignKey("AcademicYears")]
         public int AcademicYear { get; set; }
 
-       
+        [Precision(18,2)]
         public decimal Amount { get; set; }
+        [MaxLength(500)]
         public string Remarks { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; }=false;
 
-        [DataType(DataType.Date)]
-        [Column(TypeName = "Date")]
-        public DateTime ActiveDate { get; set; }
-
-        [DataType(DataType.Date)]
-        [Column(TypeName = "Date")]
-        public DateTime? InactiveDate { get; set; }
+        public DateOnly ActiveDate { get; set; }
+        public DateOnly? InactiveDate { get; set; }
 
         public StudentInfo StudentInfo { get; set; }
         public FeesName FeesName { get; set; }

@@ -7,9 +7,11 @@ namespace School.AdminService.Data.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int SectionID { get; set; }
+        public int SectionId { get; set; }
         [Required]
+        [MaxLength(50)]
         public string SectionName { get; set; }
+        [MaxLength(500)]
         public string Remarks { get; set; }
         public ICollection<ClassSection> ClassSection { get; set; } = new List<ClassSection>();
     }

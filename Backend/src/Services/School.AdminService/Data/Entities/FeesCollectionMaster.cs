@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.AdminService.Data.Entities
@@ -10,31 +11,33 @@ namespace School.AdminService.Data.Entities
         public long FeesCollectionMasterId { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string InvoiceNo { get; set; }
 
         [ForeignKey("StudentInfo")]
-        public Int64 StudentInfoId { get; set; }
+        public long StudentInfoId { get; set; }
 
         [ForeignKey("AcademicYear")]
         public int AcademicYearId { get; set; }
-
-        public decimal TotalParialDiscount { get; set; }
-
-        public decimal ExtraDiscount { get; set; }
-
+        [Precision(18, 2)]
+        public decimal TotalDiscount { get; set; } = 0;
+        [Precision(18, 2)]
+        public decimal ExtraDiscount { get; set; } = 0;
+        [MaxLength(500)]
         public string ExtraDiscountReason { get; set; }
-
+        [Precision(18, 2)]
         public decimal GrandTotalAmount { get; set; }
 
-        public bool IsAdmitFees { get; set; }
+        public bool IsAdmitFees { get; set; }=false;
 
-        public bool IsLocked { get; set; }
+        public bool IsLocked { get; set; } = false;
 
-        public DateTime CollectDate { get; set; }
+        public DateOnly CollectDate { get; set; }
 
         public AcademicYear AcademicYear { get; set; }
 
         public StudentInfo StudentInfo { get; set; }
+
+        public ICollection<FeesCollectionDetail> FeesCollectionDetails { get; set; }=new List<FeesCollectionDetail>();
     }
 }

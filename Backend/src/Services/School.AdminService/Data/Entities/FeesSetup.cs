@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.AdminService.Data.Entities
@@ -14,9 +15,9 @@ namespace School.AdminService.Data.Entities
 
         [ForeignKey("FeesName")]
         public int FeesNameId { get; set; }
-        public decimal Amount { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime AppliedDate { get; set; }
+        [Precision(18,2)]
+        public decimal FeesAmount { get; set; }
+        public DateOnly AppliedDate { get; set; }
 
         public Classes Classes { get; set; }
         public FeesName FeesName { get; set; }

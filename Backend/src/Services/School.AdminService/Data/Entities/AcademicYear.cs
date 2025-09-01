@@ -7,7 +7,7 @@ namespace School.AdminService.Data.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Year { get; set; }
+        public int AcademicYearId { get; set; }
         public bool IsActive { get; set; } = false;
 
         public ICollection<StudentAcademicHistory> StudentAcademicHistory { get; set; } = new List<StudentAcademicHistory>();

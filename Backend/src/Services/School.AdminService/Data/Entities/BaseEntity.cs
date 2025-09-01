@@ -4,8 +4,10 @@ namespace School.AdminService.Data.Entities
 {
     public class BaseEntity
     {
-
-        public DateTime LastUpdatedOn { get; set; } = DateTime.UtcNow;
-        public int LastUpdatedBy { get; set; } = 0;
+        public int CreatedBy {  get; set; }
+        public DateTime CreatedOn { get; set; }
+        public int? UpdatedBy { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+       
     }
 }

@@ -8,9 +8,11 @@ namespace School.AdminService.Data.Entities
        
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ClassID { get; set; }
+        public int ClassesId { get; set; }
         [Required]
-        public string ClassName { get; set; }
+        [MaxLength(50)]
+        public string ClassesName { get; set; }
+        [MaxLength(500)]
         public string Remarks { get; set; }
 
         public ICollection<ClassSection> ClassSection { get; set; } =new List<ClassSection>();

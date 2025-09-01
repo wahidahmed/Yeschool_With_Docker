@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.AdminService.Data.Entities
@@ -10,7 +11,7 @@ namespace School.AdminService.Data.Entities
         public long FeesCollectionDetailId { get; set; }
 
         [ForeignKey("FeesCollectionMaster")]
-        public long FeeCollectMasterId { get; set; }
+        public long FeesCollectionMasterId { get; set; }
 
         [ForeignKey("FeesName")]
         public int FeesNameId { get; set; }
@@ -19,14 +20,14 @@ namespace School.AdminService.Data.Entities
 
         public int? ToMonth { get; set; }
 
-        public bool IsSpecial { get; set; }
-
+        public bool IsSpecial { get; set; }=false;
+        [Precision(18, 2)]
         public decimal FeesAmount { get; set; }
-
-        public decimal PartialDiscount { get; set; }
-
+        [Precision(18, 2)]
+        public decimal Discount { get; set; } = 0;
+        [Precision(18, 2)]
         public decimal TotalAmount { get; set; }
-
+        [MaxLength(500)]
         public string Remarks { get; set; }
 
         public FeesCollectionMaster FeesCollectionMaster { get; set; }
