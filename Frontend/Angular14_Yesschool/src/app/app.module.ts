@@ -16,6 +16,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RoleComponent } from './role/role.component';
 import { MaterialModuleModule } from './material.module.module';
 import { MenuAccessComponent } from './menu-access/menu-access.component';
+import { ClassManageComponent } from './schoolAdmin/class-manage/class-manage.component';
+import { SectionManageComponent } from './schoolAdmin/section-manage/section-manage.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MenuAccessComponent } from './menu-access/menu-access.component';
     SidebarComponent,
     HomeComponent,
     RoleComponent,
-    MenuAccessComponent
+    MenuAccessComponent,
+    ClassManageComponent,
+    SectionManageComponent
   ],
   imports: [
     BrowserModule,

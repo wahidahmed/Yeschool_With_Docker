@@ -185,3 +185,27 @@ FROM [Classes] AS [c]
 2025-09-02 12:37:00.111 +06:00 [INF] Request finished HTTP/1.1 GET http://localhost:5002/_vs/browserLink - 200 null text/javascript; charset=UTF-8 36.3319ms
 2025-09-02 12:37:00.213 +06:00 [INF] Request starting HTTP/1.1 GET http://localhost:5002/swagger/v1/swagger.json - null null
 2025-09-02 12:37:00.228 +06:00 [INF] Request finished HTTP/1.1 GET http://localhost:5002/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 15.1898ms
+2025-09-02 16:36:04.325 +06:00 [INF] User profile is available. Using 'C:\Users\User\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-09-02 16:36:04.549 +06:00 [INF] Now listening on: http://localhost:5002
+2025-09-02 16:36:04.606 +06:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-09-02 16:36:04.608 +06:00 [INF] Hosting environment: Development
+2025-09-02 16:36:04.610 +06:00 [INF] Content root path: D:\PD\Yeschool\Backend\src\Services\School.AdminService
+2025-09-02 16:36:05.805 +06:00 [INF] Request starting HTTP/1.1 GET http://localhost:5002/swagger/index.html - null null
+2025-09-02 16:36:06.395 +06:00 [INF] Request finished HTTP/1.1 GET http://localhost:5002/swagger/index.html - 200 null text/html;charset=utf-8 588.018ms
+2025-09-02 16:36:06.525 +06:00 [INF] Request starting HTTP/1.1 GET http://localhost:5002/_vs/browserLink - null null
+2025-09-02 16:36:06.610 +06:00 [INF] Request starting HTTP/1.1 GET http://localhost:5002/_framework/aspnetcore-browser-refresh.js - null null
+2025-09-02 16:36:06.614 +06:00 [INF] Request finished HTTP/1.1 GET http://localhost:5002/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript; charset=utf-8 3.0645ms
+2025-09-02 16:36:06.634 +06:00 [INF] Request finished HTTP/1.1 GET http://localhost:5002/_vs/browserLink - 200 null text/javascript; charset=UTF-8 108.9208ms
+2025-09-02 16:36:06.824 +06:00 [INF] Request starting HTTP/1.1 GET http://localhost:5002/swagger/v1/swagger.json - null null
+2025-09-02 16:36:06.876 +06:00 [INF] Request finished HTTP/1.1 GET http://localhost:5002/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 52.3124ms
+2025-09-02 16:40:09.047 +06:00 [INF] Request starting HTTP/1.1 GET http://localhost:5002/api/classes - null null
+2025-09-02 16:40:09.386 +06:00 [INF] Executing endpoint 'School.AdminService.Controllers.ClassesController.Get (School.AdminService)'
+2025-09-02 16:40:09.428 +06:00 [INF] Route matched with {action = "Get", controller = "Classes"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get() on controller School.AdminService.Controllers.ClassesController (School.AdminService).
+2025-09-02 16:41:10.028 +06:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-09-02 16:41:15.322 +06:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[ClassesId], [c].[ClassesName], [c].[CreatedBy], [c].[CreatedOn], [c].[Remarks], [c].[UpdatedBy], [c].[UpdatedOn]
+FROM [Classes] AS [c]
+2025-09-02 16:41:15.410 +06:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[School.AdminService.Data.Entities.Classes, School.AdminService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-09-02 16:41:15.455 +06:00 [INF] Executed action School.AdminService.Controllers.ClassesController.Get (School.AdminService) in 66019.0296ms
+2025-09-02 16:41:15.456 +06:00 [INF] Executed endpoint 'School.AdminService.Controllers.ClassesController.Get (School.AdminService)'
+2025-09-02 16:41:15.469 +06:00 [INF] Request finished HTTP/1.1 GET http://localhost:5002/api/classes - 200 null application/json; charset=utf-8 66419.7897ms
