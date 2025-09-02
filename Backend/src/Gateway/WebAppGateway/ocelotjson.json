@@ -9,9 +9,10 @@
           "port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/api/auth/{all}",
+      "UpstreamPathTemplate": "/api/auth/user/{all}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
+
     {
       "DownstreamPathTemplate": "/api/Administration/{all}",
       "DownstreamScheme": "http",
@@ -21,12 +22,24 @@
           "port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/api/admin/{all}",
+      "UpstreamPathTemplate": "/api/auth/admin/{all}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "GatewayAuthentication",
-      //  "AllowedScopes": []
-      //}
+    },
+    {
+      "DownstreamPathTemplate": "/api/{all}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "host": "localhost",
+          "port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/admin_service/{all}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthentication",
+        "AllowedScopes": []
+      }
     }
   ], // required section
   "GlobalConfiguration": { // required

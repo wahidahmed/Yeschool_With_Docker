@@ -22,7 +22,7 @@ namespace Auth.Api.Controllers
         }
         [Authorize]
         [HttpPost("AddNewRole")]
-        public async Task<IActionResult> Add(string roleName)
+        public async Task<IActionResult> AddNewRole(string roleName)
         {
             var role = await _authContext.Roles.AnyAsync(x => x.RoleName == roleName.ToUpper());
             if (role)

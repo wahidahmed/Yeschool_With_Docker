@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.AdminService.Data.Entities;
 using School.AdminService.DataTransferObjects;
@@ -21,6 +22,7 @@ namespace School.AdminService.Controllers
 
         // GET: api/<ClassesController>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             var data = await unitOfWork.Classes.GetAsync();
@@ -42,8 +44,8 @@ namespace School.AdminService.Controllers
         {
             //throw new Exception("someting test");
             Int64 maxId = await unitOfWork.Classes.GetMaxIDAsync(x => x.ClassesId);
-            if (classDto.ClassID == 0)
-                classDto.ClassID = Convert.ToInt32(maxId) + 1;
+            if (classDto.ClassesId == 0)
+                classDto.ClassesId = Convert.ToInt32(maxId) + 1;
             var entity = mapper.Map<Classes>(classDto);
             entity.UpdatedBy = 0;
 
@@ -72,14 +74,14 @@ namespace School.AdminService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, ClassDto classDto)
         {
-            if (id != classDto.ClassID)
+            if (id != classDto.ClassesId)
                 return BadRequest("Update not allowed");
 
             var classData = await unitOfWork.Classes.GetFirstOrDefaultAsync(x => x.ClassesId == id);
             if (classData == null)
                 return BadRequest("Update not allowed");
 
-            classData.ClassesName = classDto.ClassName;
+            classData.ClassesName = classDto.ClassesName;
             classData.Remarks = classDto.Remarks;
             classData.UpdatedBy = 0;
             unitOfWork.Classes.Update(classData);

@@ -7,7 +7,7 @@ import { IAssignAccess } from '../models/iAssignAccess.model';
 })
 export class AdminitrationService {
 
-   private baseUrl: string = 'http://localhost:5001/api/Administration/';
+   private baseUrl: string = 'http://localhost:5005/api/auth/admin/';
   constructor(private http:HttpClient) { }
 
   addNnewRole(roleName:string){

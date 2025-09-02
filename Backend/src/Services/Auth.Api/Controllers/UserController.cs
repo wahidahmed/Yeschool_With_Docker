@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -142,11 +143,24 @@ namespace Auth.Api.Controllers
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.jwtSettings.SecurityKey);
-            var identity = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.Name,$"{user.Username}")
-            });
+
+
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Role, user.Role),
+                };
+            var permissions = _authContext.AspRoleRights.Where(x=>x.RoleName==user.Role)
+                .Select(rr => $"{rr.AppContent.Area}:{rr.AppContent.Controller}:{rr.AppContent.Action}")
+                                .ToList();
+            permissions.ForEach(p => claims.Add(new Claim("permission", p)));
+            var identity = new ClaimsIdentity(claims);
+
+            //var identity = new ClaimsIdentity(new Claim[]
+            //{
+            //    new Claim(ClaimTypes.Role, user.Role),
+            //    new Claim(ClaimTypes.Name,$"{user.Username}")
+            //});
 
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 

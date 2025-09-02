@@ -8,12 +8,13 @@ import { RoleComponent } from './role/role.component';
 import { MenuAccessComponent } from './menu-access/menu-access.component';
 
 const routes: Routes = [
-   {path:'', redirectTo:'login', pathMatch:'full'},
-  {path:'login',component:LoginComponent},
-  {path:'signup',component:SignupComponent,canActivate:[AuthGuard]},
-   {path:'home',component:HomeComponent,canActivate:[AuthGuard]},
-   {path:'role',component:RoleComponent,canActivate:[AuthGuard]},
-    {path:'menu',component:MenuAccessComponent,canActivate:[AuthGuard]}
+   {path:'', redirectTo:'login', pathMatch:'full'}
+  ,{path:'login',component:LoginComponent},
+  ,{path:'signup',component:SignupComponent,canActivate:[AuthGuard]}
+  ,{path:'home',component:HomeComponent,canActivate:[AuthGuard]}
+  ,{path:'role',component:RoleComponent,canActivate:[AuthGuard]}
+  ,{path:'menu',component:MenuAccessComponent,canActivate:[AuthGuard]}
+  ,{path:"class_list",component:HomeComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

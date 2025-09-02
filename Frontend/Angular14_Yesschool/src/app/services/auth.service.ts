@@ -8,7 +8,7 @@ import { TokenApiModel } from '../models/token-api.model';
 })
 export class AuthService {
 
- private baseUrl: string = 'http://localhost:5001/api/User/';
+ private baseUrl: string = 'http://localhost:5005/api/auth/user/';
   private userPayload:any;
    private jwtHelper = new JwtHelperService();
   constructor(private http: HttpClient, private router: Router) {
