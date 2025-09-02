@@ -1,1 +1,63 @@
-<p>class-manage works!</p>
+
+<div class="card">
+  <div class="card-header"> <h3 class="card-title">Class manage</h3></div>
+  <div class="card-body">
+ 
+      <div class="row">
+
+       
+              <div class="col-md-4 col-sm-6">
+                 <form [formGroup]="classForm" (ngSubmit)="onSubmit()">
+                       <input type="hidden" formControlName="classId"/>
+              
+                  <div class="input-group mb-3">
+                  <div>
+                      <label class="" >Class Name</label>
+                    <input type="text" class="form-control" formControlName="className"/>
+                  </div>
+                        <span *ngIf="classForm.controls['className'].dirty && classForm.hasError('required','className')" class="text-danger">*Class Name is required*</span>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div>
+                        <label class="" >Remarks</label>
+                        <input type="text" class="form-control" formControlName="remarks"/>
+                    </div>
+                  </div>
+
+                <div class="input-group mb-3">
+                  <button type="submit"  class="btn btn-success">Save</button>
+                  <button type="reset" class="btn btn-danger">reset</button>
+              </div>
+                 </form>
+               
+
+              </div>
+              
+        <div class="col-md-8 col-sm-6">
+            <table class="table table-responsive table-bordered">
+              <thead>
+                <tr>
+                  <th>Class Name</th>
+                  <th>Remarks</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of classList">
+                  <td>{{item.className}}</td>
+                  <td>
+                    <button class="btn btn-warning">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+
+ 
+  </div>
+</div>
+
+
+
