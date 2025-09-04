@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Services\\Auth.Api\\Auth.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Gateway\\WebAppGateway\\WebAppGateway.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Services\\School.AdminService\\School.AdminService.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

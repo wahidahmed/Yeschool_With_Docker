@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}|Services\\School.AdminService\\School.AdminService.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\services\\school.adminservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}|Services\\School.AdminService\\School.AdminService.csproj|solutionrelative:services\\school.adminservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}|Gateway\\WebAppGateway\\WebAppGateway.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\gateway\\webappgateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}|Gateway\\WebAppGateway\\WebAppGateway.csproj|solutionrelative:gateway\\webappgateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}|Services\\Auth.Api\\Auth.Api.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\services\\auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}|Services\\Auth.Api\\Auth.Api.csproj|solutionrelative:services\\auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 212,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Services\\School.AdminService\\Program.cs",
+              "RelativeDocumentMoniker": "Services\\School.AdminService\\Program.cs",
+              "ToolTip": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Services\\School.AdminService\\Program.cs",
+              "RelativeToolTip": "Services\\School.AdminService\\Program.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAAAFcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-04T09:19:46.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Gateway\\WebAppGateway\\Program.cs",
+              "RelativeDocumentMoniker": "Gateway\\WebAppGateway\\Program.cs",
+              "ToolTip": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Gateway\\WebAppGateway\\Program.cs",
+              "RelativeToolTip": "Gateway\\WebAppGateway\\Program.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-04T09:19:29.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Services\\Auth.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Services\\Auth.Api\\Program.cs",
+              "ToolTip": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Services\\Auth.Api\\Program.cs",
+              "RelativeToolTip": "Services\\Auth.Api\\Program.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAAAEEAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-04T05:17:40.133Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

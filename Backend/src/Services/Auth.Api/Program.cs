@@ -66,7 +66,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection(); stop it only for checking docker temporarily
+//app.UseSwagger(); //it should be in development mode only. but now for checking docker temporarily
+//app.UseSwaggerUI();//it should be in development mode only. but now for checking docker temporarily
 app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();

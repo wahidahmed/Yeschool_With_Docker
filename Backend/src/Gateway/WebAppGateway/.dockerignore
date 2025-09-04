@@ -1,0 +1,13 @@
+**/bin
+**/obj
+**/.vscode
+**/*.user
+**/*.swp
+**/Thumbs.db
+**/.git
+**/.github
+**/*.dockerignore
+**/*.sln
+**/*.csproj
+Dockerfile*
+!Yeschool/backend/src/Gateway/WebGateway/Dockerfile

@@ -86,7 +86,6 @@ if (app.Environment.IsDevelopment())
 }
 app.ConfigureExceptionHandler(app.Environment);
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

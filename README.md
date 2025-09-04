@@ -1,2 +1,0 @@
-# Yeschool
-School Management ERP 
