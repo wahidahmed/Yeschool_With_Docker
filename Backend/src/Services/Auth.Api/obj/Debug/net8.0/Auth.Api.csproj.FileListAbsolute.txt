@@ -462,3 +462,4 @@ D:\PD\Docker\Yeschool\Backend\src\Services\Auth.Api\obj\Debug\net8.0\refint\Auth
 D:\PD\Docker\Yeschool\Backend\src\Services\Auth.Api\obj\Debug\net8.0\Auth.Api.pdb
 D:\PD\Docker\Yeschool\Backend\src\Services\Auth.Api\obj\Debug\net8.0\Auth.Api.genruntimeconfig.cache
 D:\PD\Docker\Yeschool\Backend\src\Services\Auth.Api\obj\Debug\net8.0\ref\Auth.Api.dll
+D:\PD\Docker\Yeschool\Backend\src\Services\Auth.Api\obj\Debug\net8.0\Auth.Api.sourcelink.json

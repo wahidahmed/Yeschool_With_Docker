@@ -107,3 +107,4 @@ D:\PD\Docker\Yeschool\Backend\src\Gateway\WebAppGateway\obj\Debug\net8.0\WebAppG
 D:\PD\Docker\Yeschool\Backend\src\Gateway\WebAppGateway\obj\Debug\net8.0\WebAppGateway.genruntimeconfig.cache
 D:\PD\Docker\Yeschool\Backend\src\Gateway\WebAppGateway\obj\Debug\net8.0\ref\WebAppGateway.dll
 D:\PD\Docker\Yeschool\Backend\src\Gateway\WebAppGateway\bin\Debug\net8.0\ocelot.json
+D:\PD\Docker\Yeschool\Backend\src\Gateway\WebAppGateway\obj\Debug\net8.0\WebAppGateway.sourcelink.json

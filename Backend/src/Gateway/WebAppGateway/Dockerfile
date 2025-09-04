@@ -1,23 +1,25 @@
-#base stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
+EXPOSE 80
+ENV ASPNETCORE_URLS="http://+:80"
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 WORKDIR /src
 
-COPY ["Yeschool/Backend/src/Gateway/WebAppGateway/WebAppGateway.csproj","Gateway/WebAppGateway"]
-RUN dotnet restore "Gateway/WebAppGateway/WebAppGateway.csproj"
+COPY "Backend/src/Gateway/WebAppGateway/WebAppGateway.csproj" "/Backend/src/Gateway/WebAppGateway/"
+RUN dotnet restore "Backend/src/Gateway/WebAppGateway/WebAppGateway.csproj"
 
-COPY ["Yeschool/Backend/src/.","./"]
+COPY . .
 
-WORKDIR "/src/Gateway/WebAppGateway"
-RUN dotnet build "WebAppGateway.csproj" -c Release -o app/build
+WORKDIR "/src/Backend/src/Gateway/WebAppGateway"
+RUN dotnet build "WebAppGateway.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WebAppGateway.csproj" -c Release -o app/publish
+RUN dotnet publish "WebAppGateway.csproj" -c Release -o /app/publish --no-restore
 
 FROM base AS final
 WORKDIR /app
-COPY --from=build app/publish .
+COPY --from=publish /app/publish .
 ENTRYPOINT [ "dotnet","WebAppGateway.dll" ]
+
 

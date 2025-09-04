@@ -313,3 +313,4 @@ D:\PD\Docker\Yeschool\Backend\src\Services\School.AdminService\obj\Debug\net8.0\
 D:\PD\Docker\Yeschool\Backend\src\Services\School.AdminService\obj\Debug\net8.0\School.AdminService.pdb
 D:\PD\Docker\Yeschool\Backend\src\Services\School.AdminService\obj\Debug\net8.0\School.AdminService.genruntimeconfig.cache
 D:\PD\Docker\Yeschool\Backend\src\Services\School.AdminService\obj\Debug\net8.0\ref\School.AdminService.dll
+D:\PD\Docker\Yeschool\Backend\src\Services\School.AdminService\obj\Debug\net8.0\School.AdminService.sourcelink.json
