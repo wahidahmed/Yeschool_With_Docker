@@ -6,7 +6,8 @@ ENV ASPNETCORE_URLS="http://+:80"
 FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 WORKDIR /src
 
-COPY "Backend/src/Gateway/WebAppGateway/WebAppGateway.csproj" "/Backend/src/Gateway/WebAppGateway/"
+# COPY "Backend/src/Gateway/WebAppGateway/WebAppGateway.csproj" "/Backend/src/Gateway/WebAppGateway/"
+COPY ["Backend/src/Gateway/WebAppGateway/WebAppGateway.csproj","./Backend/src/Gateway/WebAppGateway/"]
 RUN dotnet restore "Backend/src/Gateway/WebAppGateway/WebAppGateway.csproj"
 
 COPY . .

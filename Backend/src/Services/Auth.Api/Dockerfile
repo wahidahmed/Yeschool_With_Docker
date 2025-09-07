@@ -28,7 +28,7 @@
 
 #=========the above code for indivitual project only==================
 
-FROM mrc.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 ENV ASPNETCORE_URLS="http://+:80"
@@ -37,7 +37,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy project file and restore
-COPY "Backend/src/Services/Auth.Api/Auth.Api.csproj" "/Backend/src/Services/Auth.Api/"
+COPY "Backend/src/Services/Auth.Api/Auth.Api.csproj" "./Backend/src/Services/Auth.Api/"
 RUN dotnet restore "Backend/src/Services/Auth.Api/Auth.Api.csproj"
 
 # Copy entire solution

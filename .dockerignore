@@ -1,0 +1,19 @@
+.git
+.gitignore
+.vs
+.vscode
+*.user
+*.suo
+*.swp
+.DS_Store
+node_modules
+bin
+obj
+dist
+out
+logs
+*.log
+
+# Only include needed
+!Backend/
+!Frontend/

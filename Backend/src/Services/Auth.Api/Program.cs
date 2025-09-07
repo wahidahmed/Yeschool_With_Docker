@@ -1,8 +1,10 @@
-using Auth.Api.Data;
+﻿using Auth.Api.Data;
+using Auth.Api.Data.Entties;
 using Auth.Api.Data.RawSql;
 using Auth.Api.Helper;
 using Auth.Api.Modal;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -26,7 +28,16 @@ builder.Services.AddSwaggerGen();
 
 //builder.Services.AddTransient<IUserService, UserService>();
 #region Database Settings
-builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(
+    builder.Configuration.GetConnectionString("DbConnection"),
+    sqlOptions=>sqlOptions.EnableRetryOnFailure
+        (
+            maxRetryCount: 10,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null
+        )
+    )
+);
 #endregion
 
 builder.Services.AddScoped<IRawSql_Helper,RawSql_Helper>();
@@ -66,6 +77,40 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+// 🔁 Wait for DB with retry
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+
+    var maxRetries = 15;
+    for (int i = 0; i < maxRetries; i++)
+    {
+        try
+        {
+            var context = services.GetRequiredService<AppDbContext>();
+            context.Database.Migrate(); // Applies migrations
+
+            // Seed data
+            // Seed data
+            if (!context.Users.Any())
+            {
+                context.Roles.Add(new Role { RoleName = "ADMIN" });
+                context.Users.Add(new User { Username = "admin", Password = "123", Role = "ADMIN" });
+                //context.AppContents.Add(new AppContent { });
+                context.SaveChanges();
+            }
+            logger.LogInformation("Connected to SQL Server and migrated.");
+            break;
+        }
+        catch (SqlException ex) when (i < maxRetries - 1)
+        {
+            logger.LogWarning($"Connection to SQL Server failed (attempt {i + 1}/{maxRetries}): {ex.Message}");
+            await Task.Delay(10000); // Wait 10 seconds
+        }
+    }
+}
+
 //app.UseHttpsRedirection(); stop it only for checking docker temporarily
 //app.UseSwagger(); //it should be in development mode only. but now for checking docker temporarily
 //app.UseSwaggerUI();//it should be in development mode only. but now for checking docker temporarily

@@ -34,12 +34,12 @@ ENV ASPNETCORE_URLS="http://+:80"
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["Backend/src/Services/School.AdminService/School.AdminService.csproj","/Backend/src/School.AdminService/"]
+COPY ["Backend/src/Services/School.AdminService/School.AdminService.csproj","./Backend/src/Services/School.AdminService/"]
 RUN dotnet restore "Backend/src/Services/School.AdminService/School.AdminService.csproj"
 
 COPY . .
 
-WORKDIR "/src/Backend/src/School.AdminService"
+WORKDIR "/src/Backend/src/Services/School.AdminService"
 RUN dotnet build "School.AdminService.csproj" -c Release -o /app/build
 
 FROM build AS publish
