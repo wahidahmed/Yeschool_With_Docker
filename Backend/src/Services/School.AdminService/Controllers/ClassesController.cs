@@ -40,6 +40,7 @@ namespace School.AdminService.Controllers
 
         // POST api/<ClassesController>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post(ClassDto classDto)
         {
             //throw new Exception("someting test");
