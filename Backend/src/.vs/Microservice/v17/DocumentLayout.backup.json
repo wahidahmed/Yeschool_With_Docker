@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}|Gateway\\WebAppGateway\\WebAppGateway.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\gateway\\webappgateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}|Gateway\\WebAppGateway\\WebAppGateway.csproj|solutionrelative:gateway\\webappgateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}|Services\\Auth.Api\\Auth.Api.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\services\\auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD}|Services\\Auth.Api\\Auth.Api.csproj|solutionrelative:services\\auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}|Services\\School.AdminService\\School.AdminService.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\services\\school.adminservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}|Services\\School.AdminService\\School.AdminService.csproj|solutionrelative:services\\school.adminservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}|Gateway\\WebAppGateway\\WebAppGateway.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\gateway\\webappgateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{5B4E1549-AC7C-47ED-917F-BA6B64A419B1}|Gateway\\WebAppGateway\\WebAppGateway.csproj|solutionrelative:gateway\\webappgateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}|Services\\School.AdminService\\School.AdminService.csproj|d:\\pd\\docker\\yeschool\\backend\\src\\services\\school.adminservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 212,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,7 +66,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Services\\School.AdminService\\Program.cs",
               "RelativeDocumentMoniker": "Services\\School.AdminService\\Program.cs",
@@ -74,8 +74,7 @@
               "RelativeToolTip": "Services\\School.AdminService\\Program.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAwwCAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-04T16:02:29.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-04T16:02:29.9Z"
             },
             {
               "$type": "Document",
@@ -91,28 +90,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Services\\Auth.Api\\Program.cs",
               "RelativeDocumentMoniker": "Services\\Auth.Api\\Program.cs",
               "ToolTip": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Services\\Auth.Api\\Program.cs",
               "RelativeToolTip": "Services\\Auth.Api\\Program.cs",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAwwHAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAwwFgAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-04T16:00:48.567Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "ocelot.json",
               "DocumentMoniker": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Gateway\\WebAppGateway\\ocelot.json",
               "RelativeDocumentMoniker": "Gateway\\WebAppGateway\\ocelot.json",
               "ToolTip": "D:\\PD\\Docker\\Yeschool\\Backend\\src\\Gateway\\WebAppGateway\\ocelot.json",
               "RelativeToolTip": "Gateway\\WebAppGateway\\ocelot.json",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAACcAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-04T15:48:31.71Z"
+              "WhenOpened": "2025-09-04T15:48:31.71Z",
+              "EditorCaption": ""
             }
           ]
         }

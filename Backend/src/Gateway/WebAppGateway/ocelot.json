@@ -4,11 +4,11 @@
       "DownstreamPathTemplate": "/api/User/{all}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        //{
-        //  "host": "localhost",
-        //  "port": 5001
-        //},
         {
+          "host": "localhost",
+          "port": 5001
+        }
+        ,{
           "host": "auth-api",
           "port": 80
         }
@@ -21,10 +21,10 @@
       "DownstreamPathTemplate": "/api/Administration/{all}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        //{
-        //  "host": "localhost",
-        //  "port": 5001
-        //},
+        {
+          "host": "localhost",
+          "port": 5001
+        },
         {
           "host": "auth-api",
           "port": 80
@@ -37,10 +37,10 @@
       "DownstreamPathTemplate": "/api/{all}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        //{
-        //  "host": "localhost",
-        //  "port": 5002
-        //},
+        {
+          "host": "localhost",
+          "port": 5002
+        },
         {
           "Host": "school-adminservice", //In Docker, use service name( in compose file) as hostname,
           "Port": 80
@@ -55,7 +55,7 @@
     }
   ], // required section
   "GlobalConfiguration": { // required
-    //"BaseUrl": "http://localhost:5005"
-    "BaseUrl": "http://webappgateway" //Gateway refers to itself by service name
+    "BaseUrl": "http://localhost:5005"
+    //"BaseUrl": "http://webappgateway" //Gateway refers to itself by service name
   }
 }

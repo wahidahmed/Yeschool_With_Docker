@@ -8,6 +8,10 @@
           "host": "localhost",
           "port": 5001
         }
+        ,{
+          "host": "auth-api",
+          "port": 80
+        }
       ],
       "UpstreamPathTemplate": "/api/auth/user/{all}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
@@ -20,6 +24,10 @@
         {
           "host": "localhost",
           "port": 5001
+        },
+        {
+          "host": "auth-api",
+          "port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/auth/admin/{all}",
@@ -32,6 +40,10 @@
         {
           "host": "localhost",
           "port": 5002
+        },
+        {
+          "Host": "school-adminservice", //In Docker, use service name( in compose file) as hostname,
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/admin_service/{all}",
@@ -44,5 +56,6 @@
   ], // required section
   "GlobalConfiguration": { // required
     "BaseUrl": "http://localhost:5005"
+    //"BaseUrl": "http://webappgateway" //Gateway refers to itself by service name
   }
 }
