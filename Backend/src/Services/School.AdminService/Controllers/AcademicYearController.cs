@@ -60,14 +60,14 @@ namespace School.AdminService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, AcademicYearDto dto)
         {
-            if (id != dto.Year)
+            if (id != dto.AcademicYearId)
                 return BadRequest("Update not allowed");
 
             var data = await unitOfWork.AcademicYear.GetFirstOrDefaultAsync(x => x.AcademicYearId == id);
             if (data == null)
                 return BadRequest("Update not allowed");
 
-            data.AcademicYearId = dto.Year;
+            data.AcademicYearId = dto.AcademicYearId;
             data.UpdatedBy = 0;
             unitOfWork.AcademicYear.Update(data);
             await unitOfWork.SaveAsync();
