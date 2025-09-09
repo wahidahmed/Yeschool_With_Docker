@@ -4,8 +4,8 @@ namespace School.AdminService.DataTransferObjects
 {
     public class StudentInfoDto
     {
-        public int StudentId { get; set; }
-        public int PersonalInfoId { get; set; }
+        public long StudentId { get; set; }
+        public long PersonalInfoId { get; set; }
 
         [Required(ErrorMessage = "Guardian Name is required")]
         [RegularExpression(".*[a-zA-Z]+.*", ErrorMessage = "Guardian Name cannot contain numeric value")]

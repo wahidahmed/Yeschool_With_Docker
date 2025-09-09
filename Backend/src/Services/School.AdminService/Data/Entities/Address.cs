@@ -7,7 +7,7 @@ namespace School.AdminService.Data.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AddressId { get; set; }
+        public long AddressId { get; set; }
         [ForeignKey("District")]
         public int DistrictId { get; set; }
         [ForeignKey("Thana")]

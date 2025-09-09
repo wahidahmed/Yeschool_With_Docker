@@ -4,7 +4,7 @@ namespace School.AdminService.DataTransferObjects
 {
     public class PersonalInfoDto
     {
-        public int PersonalnfoId { get; set; }
+        public long PersonalnfoId { get; set; }
         [Required]
         public string Name { get; set; }
         [MaxLength(11)]
