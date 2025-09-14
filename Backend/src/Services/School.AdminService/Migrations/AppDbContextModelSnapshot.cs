@@ -44,7 +44,7 @@ namespace School.AdminService.Migrations
 
                     b.HasKey("AcademicYearId");
 
-                    b.ToTable("AcademicYears");
+                    b.ToTable("AcademicYears", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Address", b =>
@@ -93,7 +93,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("ThanaId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.ClassSection", b =>
@@ -125,7 +125,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("ClassSection");
+                    b.ToTable("ClassSection", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Classes", b =>
@@ -156,7 +156,7 @@ namespace School.AdminService.Migrations
 
                     b.HasKey("ClassesId");
 
-                    b.ToTable("Classes");
+                    b.ToTable("Classes", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Country", b =>
@@ -178,7 +178,7 @@ namespace School.AdminService.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
 
                     b.HasData(
                         new
@@ -209,7 +209,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("DivisionsId");
 
-                    b.ToTable("Districts");
+                    b.ToTable("Districts", (string)null);
 
                     b.HasData(
                         new
@@ -308,7 +308,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("CountriesId");
 
-                    b.ToTable("Divisions");
+                    b.ToTable("Divisions", (string)null);
 
                     b.HasData(
                         new
@@ -373,7 +373,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("FeesNameId");
 
-                    b.ToTable("FeesCollectionDetails");
+                    b.ToTable("FeesCollectionDetails", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.FeesCollectionMaster", b =>
@@ -435,7 +435,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("StudentInfoId");
 
-                    b.ToTable("FeesCollectionMasters");
+                    b.ToTable("FeesCollectionMasters", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.FeesName", b =>
@@ -474,7 +474,7 @@ namespace School.AdminService.Migrations
 
                     b.HasKey("FeesNameId");
 
-                    b.ToTable("FeesNames");
+                    b.ToTable("FeesNames", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.FeesSetup", b =>
@@ -513,7 +513,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("FeesNameId");
 
-                    b.ToTable("FeesSetups");
+                    b.ToTable("FeesSetups", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.PersonalInfo", b =>
@@ -596,7 +596,7 @@ namespace School.AdminService.Migrations
                         .IsUnique()
                         .HasFilter("[PersonCode] IS NOT NULL");
 
-                    b.ToTable("PersonalInfos");
+                    b.ToTable("PersonalInfos", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Section", b =>
@@ -627,7 +627,7 @@ namespace School.AdminService.Migrations
 
                     b.HasKey("SectionId");
 
-                    b.ToTable("Sections");
+                    b.ToTable("Sections", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.SpecialFee", b =>
@@ -684,7 +684,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("StudentInfosId");
 
-                    b.ToTable("SpecialFees");
+                    b.ToTable("SpecialFees", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.StudentAcademicHistory", b =>
@@ -716,7 +716,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("ClassSectionId");
 
-                    b.ToTable("StudentAcademicHistories");
+                    b.ToTable("StudentAcademicHistories", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.StudentInfo", b =>
@@ -724,10 +724,7 @@ namespace School.AdminService.Migrations
                     b.Property<long>("StudentId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("AcademicYearId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClassesId")
+                    b.Property<int>("ClassesId")
                         .HasColumnType("int");
 
                     b.Property<int>("CreatedBy")
@@ -770,15 +767,13 @@ namespace School.AdminService.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.HasIndex("AcademicYearId");
-
                     b.HasIndex("ClassesId");
 
                     b.HasIndex("PersonalInfoId");
 
                     b.HasIndex("StudentAcademicHistoryId");
 
-                    b.ToTable("StudentInfos");
+                    b.ToTable("StudentInfos", (string)null);
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Thana", b =>
@@ -802,7 +797,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("DistrictsId");
 
-                    b.ToTable("Thanas");
+                    b.ToTable("Thanas", (string)null);
 
                     b.HasData(
                         new
@@ -1231,18 +1226,14 @@ namespace School.AdminService.Migrations
 
             modelBuilder.Entity("School.AdminService.Data.Entities.StudentInfo", b =>
                 {
-                    b.HasOne("School.AdminService.Data.Entities.AcademicYear", null)
-                        .WithMany("StudentInfo")
-                        .HasForeignKey("AcademicYearId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("School.AdminService.Data.Entities.Classes", null)
+                    b.HasOne("School.AdminService.Data.Entities.Classes", "Classes")
                         .WithMany("StudentInfo")
                         .HasForeignKey("ClassesId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("School.AdminService.Data.Entities.PersonalInfo", "PersonalInfo")
-                        .WithMany()
+                        .WithMany("Students")
                         .HasForeignKey("PersonalInfoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1251,6 +1242,8 @@ namespace School.AdminService.Migrations
                         .WithMany("StudentInfos")
                         .HasForeignKey("StudentAcademicHistoryId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Classes");
 
                     b.Navigation("PersonalInfo");
 
@@ -1270,8 +1263,6 @@ namespace School.AdminService.Migrations
             modelBuilder.Entity("School.AdminService.Data.Entities.AcademicYear", b =>
                 {
                     b.Navigation("StudentAcademicHistory");
-
-                    b.Navigation("StudentInfo");
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.ClassSection", b =>
@@ -1301,6 +1292,8 @@ namespace School.AdminService.Migrations
             modelBuilder.Entity("School.AdminService.Data.Entities.PersonalInfo", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Section", b =>

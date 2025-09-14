@@ -15,32 +15,38 @@ namespace School.AdminService.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IStudentService studentService;
 
-        public AdmissionController(IUnitOfWork unitOfWork, IMapper mapper)
+        public AdmissionController(IUnitOfWork unitOfWork, IMapper mapper, IStudentService studentService)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.studentService = studentService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("GetStudentInfoDetails")]
+        public async Task<IActionResult> GetStudentInfoDetails(long personalId = 0, long studentId = 0, int classId = 0)
         {
-
-            return Ok();
+            var fullData = await studentService.GetStudentInfoAsync(personalId, studentId,classId);
+            if (!fullData.Any())
+            {
+                return NotFound();
+            }
+            return Ok(fullData);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Post(AdmissionDto dto)
         {
-            var personalId =Convert.ToInt64(unitOfWork.PersonalInfo.GetMaxID(x=>x.PersonalnfoId))+1;
+            var personalId = Convert.ToInt64(unitOfWork.PersonalInfo.GetMaxID(x => x.PersonalnfoId)) + 1;
             dto.personalInfo.PersonalnfoId = personalId;
-            dto.personalInfo.PersonCode = "PERS-0"+personalId.ToString();
-            var personal=mapper.Map<PersonalInfo>(dto.personalInfo);
+            dto.personalInfo.PersonCode = "PERS-0" + personalId.ToString();
+            var personal = mapper.Map<PersonalInfo>(dto.personalInfo);
             unitOfWork.PersonalInfo.Insert(personal);
 
-            dto.presentAddress.PersonalInfoId= dto.personalInfo.PersonalnfoId;
+            dto.presentAddress.PersonalInfoId = dto.personalInfo.PersonalnfoId;
             dto.presentAddress.AddressType = "presnt";
-            var presentAdr=mapper.Map<Address>(dto.presentAddress);
+            var presentAdr = mapper.Map<Address>(dto.presentAddress);
             unitOfWork.Address.Insert(presentAdr);
 
             dto.permanentAddress.PersonalInfoId = dto.personalInfo.PersonalnfoId;
@@ -50,6 +56,7 @@ namespace School.AdminService.Controllers
 
             var stuId = Convert.ToInt64(unitOfWork.StudentInfo.GetMaxID(x => x.StudentId)) + 1;
             dto.studentInfo.StudentId = stuId;
+            dto.studentInfo.Status = "pending";
             dto.studentInfo.PersonalInfoId = dto.personalInfo.PersonalnfoId;
             var studentInfo = mapper.Map<StudentInfo>(dto.studentInfo);
             unitOfWork.StudentInfo.Insert(studentInfo);
@@ -60,18 +67,18 @@ namespace School.AdminService.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(long personalId,AdmissionUpdateDto dto)
+        public async Task<IActionResult> Put(long personalId, AdmissionUpdateDto dto)
         {
-           
+
             var personalData = await unitOfWork.PersonalInfo.GetByIDAsync(personalId);
             if (personalData == null)
                 return BadRequest("Update not allowed personal info");
 
-            personalData.UpdatedOn = DateTime.Now;personalData.UpdatedBy = 1;
+            personalData.UpdatedOn = DateTime.Now; personalData.UpdatedBy = 1;
             mapper.Map(dto.personalInfo, personalData);
             unitOfWork.PersonalInfo.Update(personalData);
-            
-            var studentData=await unitOfWork.StudentInfo.GetFirstOrDefaultAsync(x=>x.PersonalInfoId==personalId);
+
+            var studentData = await unitOfWork.StudentInfo.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId);
             if (studentData == null)
                 return BadRequest("Update not allowed student info");
 
@@ -79,7 +86,7 @@ namespace School.AdminService.Controllers
             mapper.Map(dto.studentInfo, studentData);
             unitOfWork.StudentInfo.Update(studentData);
 
-            var presentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType=="presnt");
+            var presentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType == "presnt");
             if (presentData == null)
                 return BadRequest("Update not allowed for present address");
 
@@ -87,7 +94,7 @@ namespace School.AdminService.Controllers
             mapper.Map(dto.presentAddress, presentData);
             unitOfWork.Address.Update(presentData);
 
-            var permanentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType=="permanent");
+            var permanentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType == "permanent");
             if (permanentData == null)
                 return BadRequest("Update not allowed for permanent address");
 
@@ -98,6 +105,12 @@ namespace School.AdminService.Controllers
             await unitOfWork.SaveAsync();
 
             return Ok(200);
+        }
+
+        [HttpPut("AdmitConfirming")]
+        public async Task<IActionResult> AdmitConfirming()
+        {
+            return Ok();
         }
     }
 }

@@ -35,6 +35,7 @@ builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(bu
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IRawSqlRepository, RawSqlRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddAutoMapper(cfg =>
 {

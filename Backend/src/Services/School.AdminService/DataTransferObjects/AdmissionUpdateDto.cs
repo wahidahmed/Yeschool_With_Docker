@@ -65,6 +65,8 @@ namespace School.AdminService.DataTransferObjects
         public int? ThanaId { get; set; }
         public string StreetDetail { get; set; }
         public string AddressType { get; set; }
+        public string ThanaName { get; set; }
+        public string DistrictName { get; set; }
         public long? PersonalInfoId { get; set; }
     }
 }

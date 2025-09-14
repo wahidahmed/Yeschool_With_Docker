@@ -23,10 +23,12 @@ namespace School.AdminService.Data.Entities
         [Required]
         [MaxLength(10)]
         public string Status { get; set; }
-        [ForeignKey("StudentAcademicHistory")]
-        public long? StudentAcademicHistoryId {  get; set; }
+
+        [ForeignKey("Classes")]
+        public int ClassesId {  get; set; }
+        public Classes Classes { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
-        public StudentAcademicHistory StudentAcademicHistory { get; set; }
+        public ICollection<StudentAcademicHistory> studentAcademicHistories { get; set; }=new List<StudentAcademicHistory>();
 
     }
 }
