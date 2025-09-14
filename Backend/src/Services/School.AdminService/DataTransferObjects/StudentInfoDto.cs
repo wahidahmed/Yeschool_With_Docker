@@ -14,13 +14,12 @@ namespace School.AdminService.DataTransferObjects
 
         [Required(ErrorMessage = "Guardian mobile number is required")]
         [MaxLength(11,ErrorMessage ="Must contain 11 digit")]
-        public string GuardianMobile { get; set; }
+        public string GuardianMobileNo { get; set; }
 
         [Required(ErrorMessage = "Guardian relation is required")]
         [MaxLength(21, ErrorMessage = "cannot contain more than 21 digit")]
         public string GuardianRelation { get; set; }
 
-        public int AcademicYear { get; set; }
 
         [Required]
         [MaxLength(10)]

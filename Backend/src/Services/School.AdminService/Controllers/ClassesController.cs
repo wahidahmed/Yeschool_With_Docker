@@ -22,7 +22,7 @@ namespace School.AdminService.Controllers
 
         // GET: api/<ClassesController>
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Get()
         {
             var data = await unitOfWork.Classes.GetAsync();
@@ -40,7 +40,7 @@ namespace School.AdminService.Controllers
 
         // POST api/<ClassesController>
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post(ClassDto classDto)
         {
             //throw new Exception("someting test");

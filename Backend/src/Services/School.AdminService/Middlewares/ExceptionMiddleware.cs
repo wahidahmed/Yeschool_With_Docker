@@ -24,6 +24,18 @@ namespace School.AdminService.Middlewares
             }
             catch (Exception ex)
             {
+                // Log full exception including inner exceptions
+                var innerEx = ex;
+                while (innerEx != null)
+                {
+                    Console.WriteLine(innerEx.Message);
+                    Console.WriteLine(innerEx.StackTrace);
+                    innerEx = innerEx.InnerException;
+                }
+
+                // Or just capture the deepest inner exception
+                var deepestEx = ex;
+                while (deepestEx.InnerException != null) deepestEx = deepestEx.InnerException;
                 ApiError response;
                 string message;
                 var exceptionType=ex.GetType();
@@ -38,12 +50,14 @@ namespace School.AdminService.Middlewares
                 {
                     statusCode = HttpStatusCode.InternalServerError;
                     //message = "Unknown Error";
-                    message =ex.Message == null? "Unknown Error":ex.Message;
+                    //message =ex.Message == null? "Unknown Error":ex.Message;
+                    message = deepestEx.Message;
                 }
               
                 if(env.IsDevelopment())
                 {
-                    response = new ApiError((int)statusCode, ex.Message,ex.StackTrace.ToString());
+                    //response = new ApiError((int)statusCode, ex.Message,ex.StackTrace.ToString());
+                    response = new ApiError((int)statusCode, message, ex.StackTrace.ToString());
                 }
                 else
                 {

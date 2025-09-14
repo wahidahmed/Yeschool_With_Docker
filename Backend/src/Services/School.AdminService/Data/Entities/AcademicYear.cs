@@ -11,6 +11,5 @@ namespace School.AdminService.Data.Entities
         public bool IsActive { get; set; } = false;
 
         public ICollection<StudentAcademicHistory> StudentAcademicHistory { get; set; } = new List<StudentAcademicHistory>();
-        public ICollection<StudentInfo> StudentInfo { get; set; } = new List<StudentInfo>();
     }
 }

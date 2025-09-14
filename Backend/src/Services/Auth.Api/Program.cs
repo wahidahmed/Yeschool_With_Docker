@@ -92,11 +92,10 @@ using (var scope = app.Services.CreateScope())
             context.Database.Migrate(); // Applies migrations
 
             // Seed data
-            // Seed data
             if (!context.Users.Any())
             {
                 context.Roles.Add(new Role { RoleName = "ADMIN" });
-                context.Users.Add(new User { Username = "admin", Password = "123", Role = "ADMIN" });
+                context.Users.Add(new User { Username = "admin", Password = "yfTzNw11SmvlXcJ4M4zog4RuKCf7rtL3QM8Tz2zAMGVMyFjC", Role = "ADMIN" });//password 123
                 //context.AppContents.Add(new AppContent { });
                 context.SaveChanges();
             }

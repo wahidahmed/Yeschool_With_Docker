@@ -59,21 +59,33 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Add a dynamic authorization handler
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("DynamicPermission", policy =>
+//        policy.Requirements.Add(new PermissionRequirement()));
+//});
+
+//builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+
+//builder.Services.AddControllers(options =>
+//{
+//    // ✅ THIS is where you add the global dynamic permission filter
+//    options.Filters.Add(new AuthorizeFilter("DynamicPermission"));
+//});
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("DynamicPermission", policy =>
-        policy.Requirements.Add(new PermissionRequirement()));
+        policy.Requirements.Add(new PermissionRequirement())
+    );
+
+    // 🔑 Set DynamicPermission as the default policy for [Authorize]
+    options.DefaultPolicy = options.GetPolicy("DynamicPermission");
 });
 
+// ✅ Register handler
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
-builder.Services.AddControllers(options =>
-{
-    // ✅ THIS is where you add the global dynamic permission filter
-    options.Filters.Add(new AuthorizeFilter("DynamicPermission"));
-});
-
-builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
 
 string logPath = builder.Configuration.GetSection("Logging:LogPath").Value;

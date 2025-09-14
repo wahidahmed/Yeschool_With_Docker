@@ -6,7 +6,7 @@ namespace School.AdminService.DataTransferObjects
     {
         public long PersonalnfoId { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string PersonName { get; set; }
         [MaxLength(11)]
         public string Mobile { get; set; }
         [MaxLength(100)]
@@ -33,6 +33,6 @@ namespace School.AdminService.DataTransferObjects
         [MaxLength(50)]
         public string Religion { get; set; }
         public string ImageUrl { get; set; }
-        public string PersonnelCode { get; set; }
+        public string PersonCode { get; set; }
     }
 }

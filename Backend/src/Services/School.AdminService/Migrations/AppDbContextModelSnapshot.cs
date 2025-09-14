@@ -49,11 +49,11 @@ namespace School.AdminService.Migrations
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Address", b =>
                 {
-                    b.Property<int>("AddressId")
+                    b.Property<long>("AddressId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("AddressId"));
 
                     b.Property<string>("AddressType")
                         .IsRequired()
@@ -572,7 +572,7 @@ namespace School.AdminService.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PersonCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PersonName")
                         .IsRequired()
@@ -591,6 +591,10 @@ namespace School.AdminService.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("PersonalnfoId");
+
+                    b.HasIndex("PersonCode")
+                        .IsUnique()
+                        .HasFilter("[PersonCode] IS NOT NULL");
 
                     b.ToTable("PersonalInfos");
                 });
@@ -755,7 +759,7 @@ namespace School.AdminService.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<long>("StudentAcademicHistoryId")
+                    b.Property<long?>("StudentAcademicHistoryId")
                         .HasColumnType("bigint");
 
                     b.Property<int?>("UpdatedBy")
@@ -1246,8 +1250,7 @@ namespace School.AdminService.Migrations
                     b.HasOne("School.AdminService.Data.Entities.StudentAcademicHistory", "StudentAcademicHistory")
                         .WithMany("StudentInfos")
                         .HasForeignKey("StudentAcademicHistoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("PersonalInfo");
 

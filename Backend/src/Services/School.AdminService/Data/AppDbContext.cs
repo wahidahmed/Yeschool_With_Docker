@@ -30,6 +30,10 @@ namespace School.AdminService.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<PersonalInfo>()
+                           .HasIndex(u => u.PersonCode)
+                           .IsUnique();
+
             // Make all foreign keys restrict delete by default
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys()))

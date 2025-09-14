@@ -24,7 +24,7 @@ namespace School.AdminService.Data.Entities
         [MaxLength(10)]
         public string Status { get; set; }
         [ForeignKey("StudentAcademicHistory")]
-        public long StudentAcademicHistoryId {  get; set; }
+        public long? StudentAcademicHistoryId {  get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public StudentAcademicHistory StudentAcademicHistory { get; set; }
 

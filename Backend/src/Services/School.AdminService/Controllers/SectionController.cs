@@ -22,7 +22,7 @@ namespace School.AdminService.Controllers
 
         // GET: api/<SectionController>
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Get()
         {
             var data = await unitOfWork.Section.GetAsync();
@@ -40,7 +40,7 @@ namespace School.AdminService.Controllers
 
         // POST api/<SectionController>
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post(SectionDto dto)
         {
             Int64 maxId = await unitOfWork.Section.GetMaxIDAsync(x => x.SectionId);
@@ -73,7 +73,7 @@ namespace School.AdminService.Controllers
 
         // PUT api/<SectionController>/5
         [HttpPut("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Put(int id, SectionDto sectionDto)
         {
             if (id != sectionDto.SectionId)
