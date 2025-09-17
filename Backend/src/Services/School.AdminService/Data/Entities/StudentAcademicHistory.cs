@@ -17,7 +17,6 @@ namespace School.AdminService.Data.Entities
 
         [ForeignKey("AcademicYear")]
         public int AcademicYearId { get; set; }
-        public bool IsActive {  get; set; }=false;
         public ClassSection ClassSection { get; set; }
         public  AcademicYear AcademicYear { get; set; }
         public StudentInfo StudentInfo { get; set; }

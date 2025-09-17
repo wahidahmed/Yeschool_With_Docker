@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.AdminService.Data.Entities;
+using School.AdminService.Helpers;
 
 namespace School.AdminService.Data
 {
@@ -29,6 +30,20 @@ namespace School.AdminService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<StudentInfo>(entity =>
+            {
+                entity.Property(e => e.Status)
+                     .HasConversion<string>()
+                     .HasDefaultValue(StudentStatus.PENDING);
+
+                // ✅ Check constraint for string values
+                entity.ToTable(t => t.HasCheckConstraint(
+                    "CK_Student_Status",
+                    "Status IN ('PENDING', 'ACTIVE', 'ENROLLED')"
+                ));
+
+            });
 
             modelBuilder.Entity<PersonalInfo>()
                            .HasIndex(u => u.PersonCode)

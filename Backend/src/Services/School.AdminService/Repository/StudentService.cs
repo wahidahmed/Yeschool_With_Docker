@@ -19,6 +19,11 @@ namespace School.AdminService.Repository
         {
             var query = context.StudentInfos
                                 .Include(x=>x.Classes)
+
+                                .Include(x=>x.studentAcademicHistories)
+                                    .ThenInclude(p=>p.ClassSection)
+                                        .ThenInclude(p=>p.Section)
+
                                 .Include(x => x.PersonalInfo)
                                     .ThenInclude(p=>p.Addresses)
                                         .ThenInclude(q=>q.District)
@@ -26,6 +31,7 @@ namespace School.AdminService.Repository
                                 .Include(x => x.PersonalInfo)
                                     .ThenInclude(p => p.Addresses)
                                         .ThenInclude(q => q.Thana)
+
                                 .Select(s =>new GetStudentDetailDto
                                 {
                                     StudentId=s.StudentId,
@@ -33,10 +39,10 @@ namespace School.AdminService.Repository
                                     GuardianName=s.GuardianName,
                                     GuardianMobileNo=s.GuardianMobileNo,
                                     GuardianRelation=s.GuardianRelation,
-                                    Status=s.Status,
+                                    Status=s.Status.ToString(),
                                     ClassesId=s.ClassesId,
                                     ClassesName=s.Classes.ClassesName,
-
+                                    
                                     PersonName=s.PersonalInfo.PersonName,
                                     MobileNo=s.PersonalInfo.MobileNo,
                                     EmailAddress=s.PersonalInfo.EmailAddress,

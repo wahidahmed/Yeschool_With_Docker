@@ -11,7 +11,11 @@ namespace School.AdminService.DataTransferObjects
         public string GuardianRelation { get; set; }
         public string Status { get; set; }
         public string ClassesName { get; set; }
+        public string SectionName { get; set; }
         public int ClassesId { get; set; }
+        public int SectionId { get; set; }
+        public int AcademicYearId {  get; set; }
+        public bool IsActive { get; set; }
 
 
 

@@ -17,4 +17,10 @@
             return milliseconds * 1000 + counter; // Adds up to 3 extra digits
         }
     }
+    public enum StudentStatus
+    {
+        PENDING,
+        ACTIVE ,
+        ENROLLED
+    }
 }
