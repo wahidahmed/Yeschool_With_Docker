@@ -30,6 +30,12 @@ namespace School.AdminService.Controllers
             await unitOfWork.SaveAsync();
             return Ok();
         }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var data=await unitOfWork.FeesName.GetAsync();
+            return Ok(data);
+        }
         [HttpPut("UpdateFeesName")]
         public async Task<IActionResult> UpdateFeesName(int id, FeesNameUpdateDto dto)
         {
@@ -54,21 +60,8 @@ namespace School.AdminService.Controllers
             {
                 return NotFound("There is no data by this Id");
             }
-            //var masterId = Convert.ToInt64(unitOfWork.FeesCollectionMaster.GetMaxID(x => x.FeesCollectionMasterId)) + 1;
-            //dto.FeesCollectionMasterId = masterId;
-            //dto.InvoiceNo = "INV-0" + masterId + dto.StudentInfoId + "-0" + dto.StudentInfoId.ToString();
-            string invoiceNo;
-            do
-            {
-                invoiceNo = InvoiceGenerator.GenerateInvoiceNo();
-            }
-            while (await unitOfWork.FeesCollectionMaster.AnyAsync(x=>x.InvoiceNo==invoiceNo));
 
-            var masterEntity = mapper.Map<FeesCollectionMaster>(dto);
-            masterEntity.InvoiceNo = invoiceNo;
-            masterEntity.CreatedBy = 1;
-            masterEntity.CreatedOn = DateTime.Now;
-           
+            var masterEntity = await FeesCollectionMap(dto);
             unitOfWork.FeesCollectionMaster.Insert(masterEntity);
             studentInfo.UpdatedOn = DateTime.Now;
             studentInfo.UpdatedBy = 1;
@@ -76,6 +69,37 @@ namespace School.AdminService.Controllers
             unitOfWork.StudentInfo.Update(studentInfo);
             await unitOfWork.SaveAsync();
             return Ok();
+        }
+
+        [HttpPost("FeesCollection")]
+        public async Task<IActionResult> FeesCollection(FeesCollectionDto dto)
+        {
+            var studentInfo = await unitOfWork.StudentInfo.GetByIDAsync(dto.StudentInfoId);
+            if (studentInfo == null)
+            {
+                return NotFound("There is no data by this Id");
+            }
+            var masterEntity =await FeesCollectionMap(dto);
+
+            unitOfWork.FeesCollectionMaster.Insert(masterEntity);
+            await unitOfWork.SaveAsync();
+            return Ok();
+        }
+
+        private async Task<FeesCollectionMaster> FeesCollectionMap(FeesCollectionDto dto)
+        {
+            string invoiceNo;
+            do
+            {
+                invoiceNo = InvoiceGenerator.GenerateInvoiceNo();
+            }
+            while (await unitOfWork.FeesCollectionMaster.AnyAsync(x => x.InvoiceNo == invoiceNo));
+
+            var masterEntity = mapper.Map<FeesCollectionMaster>(dto);
+            masterEntity.InvoiceNo = invoiceNo;
+            masterEntity.CreatedBy = 1;
+            masterEntity.CreatedOn = DateTime.Now;
+            return masterEntity;
         }
 
     }
