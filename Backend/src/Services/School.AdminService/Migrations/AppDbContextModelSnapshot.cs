@@ -322,13 +322,10 @@ namespace School.AdminService.Migrations
             modelBuilder.Entity("School.AdminService.Data.Entities.FeesCollectionDetail", b =>
                 {
                     b.Property<long>("FeesCollectionDetailId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("FeesCollectionDetailId"));
 
                     b.Property<decimal>("Discount")
                         .HasPrecision(18, 2)
@@ -361,12 +358,6 @@ namespace School.AdminService.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("FeesCollectionDetailId");
 
                     b.HasIndex("FeesCollectionMasterId");
@@ -379,7 +370,10 @@ namespace School.AdminService.Migrations
             modelBuilder.Entity("School.AdminService.Data.Entities.FeesCollectionMaster", b =>
                 {
                     b.Property<long>("FeesCollectionMasterId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("FeesCollectionMasterId"));
 
                     b.Property<int>("AcademicYearId")
                         .HasColumnType("int");

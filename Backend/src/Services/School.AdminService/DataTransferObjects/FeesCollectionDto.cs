@@ -1,5 +1,4 @@
-﻿using School.AdminService.Data.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace School.AdminService.DataTransferObjects
 {
@@ -10,7 +9,7 @@ namespace School.AdminService.DataTransferObjects
         [MaxLength(20)]
         public string InvoiceNo { get; set; }
         [Required]
-        public Int64 StudentInfoId { get; set; }
+        public long StudentInfoId { get; set; }
         [Required]
         public int AcademicYearId { get; set; }
         public decimal TotalParialDiscount { get; set; }
@@ -24,6 +23,26 @@ namespace School.AdminService.DataTransferObjects
         public bool IsAdmitFees { get; set; }
 
         public bool IsLocked { get; set; }
-        public List<FeesCollectionDetail> FeesListArray { get; set; }
+        public List<FeesDetailsDto> FeesCollectionDetails { get; set; }
     }
+
+    public class FeesDetailsDto
+    {
+        public long FeesCollectionDetailId { get; set; }
+
+        public long FeesCollectionMasterId { get; set; }
+        public int FeesNameId { get; set; }
+
+        public int? FromMonth { get; set; }
+
+        public int? ToMonth { get; set; }
+
+        public bool IsSpecial { get; set; } = false;
+        public decimal FeesAmount { get; set; }
+        public decimal Discount { get; set; }
+        public decimal TotalAmount { get; set; }
+        [MaxLength(500)]
+        public string Remarks { get; set; }
+    }
+
 }

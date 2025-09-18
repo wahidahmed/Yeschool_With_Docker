@@ -227,5 +227,21 @@ namespace School.AdminService.Repository
 
         }
 
+        public virtual async Task<bool> AnyAsync()
+        {
+            return await dbSet.AnyAsync();
+        }
+
+        public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.AsNoTracking().Where(filter);
+            }
+            return await query.AnyAsync();
+        }
+
     }
 }

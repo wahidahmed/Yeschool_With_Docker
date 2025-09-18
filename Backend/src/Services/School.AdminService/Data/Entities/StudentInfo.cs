@@ -23,7 +23,7 @@ namespace School.AdminService.Data.Entities
         public string GuardianRelation { get; set; }
         [Required]
         [MaxLength(10)]
-        public StudentStatus Status { get; set; }
+        public string Status { get; set; }
 
         [ForeignKey("Classes")]
         public int ClassesId {  get; set; }

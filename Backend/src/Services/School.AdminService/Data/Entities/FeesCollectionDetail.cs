@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.AdminService.Data.Entities
 {
-    public class FeesCollectionDetail:BaseEntity
+    public class FeesCollectionDetail
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long FeesCollectionDetailId { get; set; }
 
         [ForeignKey("FeesCollectionMaster")]

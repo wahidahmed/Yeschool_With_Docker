@@ -7,7 +7,7 @@ namespace School.AdminService.Data.Entities
     public class FeesCollectionMaster:BaseEntity
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long FeesCollectionMasterId { get; set; }
 
         [Required]

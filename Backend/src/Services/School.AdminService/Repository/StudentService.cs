@@ -42,6 +42,7 @@ namespace School.AdminService.Repository
                                     Status=s.Status.ToString(),
                                     ClassesId=s.ClassesId,
                                     ClassesName=s.Classes.ClassesName,
+                                    AcademicYearId=s.AcademicYearId,
                                     
                                     PersonName=s.PersonalInfo.PersonName,
                                     MobileNo=s.PersonalInfo.MobileNo,

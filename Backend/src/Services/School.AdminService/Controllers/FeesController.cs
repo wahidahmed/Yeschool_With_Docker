@@ -1,0 +1,82 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using School.AdminService.Data.Entities;
+using School.AdminService.DataTransferObjects;
+using School.AdminService.Helpers;
+using School.AdminService.Repository.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace School.AdminService.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class FeesController : ControllerBase
+    {
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
+
+        public FeesController(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+        }
+        [HttpPost("AddFeesName")]
+        public async Task<IActionResult> AddFeesName(FeesNameDto dto)
+        {
+            var entity = mapper.Map<FeesName>(dto);
+            unitOfWork.FeesName.Insert(entity);
+            await unitOfWork.SaveAsync();
+            return Ok();
+        }
+        [HttpPut("UpdateFeesName")]
+        public async Task<IActionResult> UpdateFeesName(int id, FeesNameUpdateDto dto)
+        {
+            var data = await unitOfWork.FeesName.GetByIDAsync(id);
+            if (data == null)
+            {
+                return NotFound("There is no data by this Id");
+            }
+            data.UpdatedOn = DateTime.Now;
+            data.Name = dto.Name;
+            var entity = mapper.Map(dto, data);
+            unitOfWork.FeesName.Update(entity);
+            await unitOfWork.SaveAsync();
+            return Ok();
+        }
+
+        [HttpPost("AdmitEnrolled")]
+        public async Task<IActionResult> Enrolled(FeesCollectionDto dto)
+        {
+            var studentInfo = await unitOfWork.StudentInfo.GetByIDAsync(dto.StudentInfoId);
+            if (studentInfo == null)
+            {
+                return NotFound("There is no data by this Id");
+            }
+            //var masterId = Convert.ToInt64(unitOfWork.FeesCollectionMaster.GetMaxID(x => x.FeesCollectionMasterId)) + 1;
+            //dto.FeesCollectionMasterId = masterId;
+            //dto.InvoiceNo = "INV-0" + masterId + dto.StudentInfoId + "-0" + dto.StudentInfoId.ToString();
+            string invoiceNo;
+            do
+            {
+                invoiceNo = InvoiceGenerator.GenerateInvoiceNo();
+            }
+            while (await unitOfWork.FeesCollectionMaster.AnyAsync(x=>x.InvoiceNo==invoiceNo));
+
+            var masterEntity = mapper.Map<FeesCollectionMaster>(dto);
+            masterEntity.InvoiceNo = invoiceNo;
+            masterEntity.CreatedBy = 1;
+            masterEntity.CreatedOn = DateTime.Now;
+           
+            unitOfWork.FeesCollectionMaster.Insert(masterEntity);
+            studentInfo.UpdatedOn = DateTime.Now;
+            studentInfo.UpdatedBy = 1;
+            studentInfo.Status = "ENROLLED";
+            unitOfWork.StudentInfo.Update(studentInfo);
+            await unitOfWork.SaveAsync();
+            return Ok();
+        }
+
+    }
+}

@@ -18,30 +18,24 @@ namespace School.AdminService.Helpers
             CreateMap<Section, SectionDto>().ReverseMap();
             CreateMap<AcademicYear, AcademicYearDto>().ReverseMap();
             CreateMap<Address, AddressDto>().ReverseMap();
-            //CreateMap<PersonalInfo, PersonalInfoDto>()
-            //    .ForMember(dest => dest.DateOfBirth
-            //              , opt => opt.MapFrom(src => src.DateOfBirth.ToString("yyyy-MM-dd"))
-            //    ).ReverseMap()
-            //    .ForMember(
-            //    dest => dest.DateOfBirth,
-            //    opt => opt.MapFrom(src =>
-            //        string.IsNullOrEmpty(src.DateOfBirth)
-            //            ? default(DateOnly)
-            //            : DateOnly.Parse(src.DateOfBirth))
-            //    );
             CreateMap<PersonalInfo, PersonalInfoDto>().ReverseMap();
             CreateMap<StudentInfo, StudentInfoDto>().ReverseMap();
             CreateMap<FeesName, FeesNameDto>().ReverseMap();
             CreateMap<FeesSetup, FeesSetupDto>().ReverseMap();
+            CreateMap<FeesCollectionMaster,FeesCollectionDto>().ReverseMap();
+            CreateMap<FeesCollectionDetail, FeesDetailsDto>().ReverseMap();
 
             CreateMap<AddressUpdateDto, Address>()
-            .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
+                .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
 
             CreateMap<PersonalInfoUpdateDto, PersonalInfo>()
-          .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
+                .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
 
             CreateMap<StudentInfoUpdateDto, StudentInfo>()
-          .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
+                .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
+
+            CreateMap<FeesNameUpdateDto, FeesName>()
+                .ForAllMembers(opt => opt.Condition ((src, dest, srcValue) => ShouldMap(srcValue)));
         }
 
         // Reusable condition logic

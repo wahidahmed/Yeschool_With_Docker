@@ -26,5 +26,6 @@ namespace School.AdminService.Repository.Interfaces
 
 
         void DeleteRange(List<TEntity> entityToDelete);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null);
     }
 }

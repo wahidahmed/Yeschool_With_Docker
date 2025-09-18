@@ -25,6 +25,7 @@ namespace School.AdminService.Repository
         public IGenericRepository<FeesSetup> FeesSetup => new GenericRepository<FeesSetup>(_dbContext);
         public IGenericRepository<FeesCollectionMaster> FeesCollectionMaster => new GenericRepository<FeesCollectionMaster>(_dbContext);
         public IGenericRepository<FeesCollectionDetail> FeesCollectionDetail => new GenericRepository<FeesCollectionDetail>(_dbContext);
+        public IGenericRepository<StudentAcademicHistory> StudentAcademicHistory => new GenericRepository<StudentAcademicHistory>(_dbContext);
         public async Task<bool> SaveAsync()
         {
             return await _dbContext.SaveChangesAsync() > 0;

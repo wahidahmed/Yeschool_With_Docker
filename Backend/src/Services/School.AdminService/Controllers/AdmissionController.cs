@@ -38,6 +38,11 @@ namespace School.AdminService.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(AdmissionDto dto)
         {
+            if (!Enum.TryParse<StudentStatus>(dto.studentInfo.Status, true, out var status))
+            {
+                ModelState.AddModelError("Status", "Invalid status value. Allowed: PENDING, ACTIVE, ENROLLED.");
+                return BadRequest(ModelState);
+            }
             var personalId = Convert.ToInt64(unitOfWork.PersonalInfo.GetMaxID(x => x.PersonalnfoId)) + 1;
             dto.personalInfo.PersonalnfoId = personalId;
             dto.personalInfo.PersonCode = "PERS-0" + personalId.ToString();
@@ -56,7 +61,7 @@ namespace School.AdminService.Controllers
 
             var stuId = Convert.ToInt64(unitOfWork.StudentInfo.GetMaxID(x => x.StudentId)) + 1;
             dto.studentInfo.StudentId = stuId;
-            dto.studentInfo.Status = "pending";
+            dto.studentInfo.Status = "PENDING";
             dto.studentInfo.PersonalInfoId = dto.personalInfo.PersonalnfoId;
             var studentInfo = mapper.Map<StudentInfo>(dto.studentInfo);
             unitOfWork.StudentInfo.Insert(studentInfo);
@@ -107,9 +112,23 @@ namespace School.AdminService.Controllers
             return Ok(200);
         }
 
-        [HttpPut("AdmitConfirming")]
-        public async Task<IActionResult> AdmitConfirming()
+        [HttpPost("AdmitConfirm")]
+        public async Task<IActionResult> AdmitConfirm(long studentId,int classSectionId)
         {
+            var studentInfo=await unitOfWork.StudentInfo.GetByIDAsync(studentId);
+            studentInfo.UpdatedOn = DateTime.Now;
+            studentInfo.UpdatedBy = 1;
+            studentInfo.Status= "ACTIVE";
+            var academicId = Convert.ToInt64(unitOfWork.StudentAcademicHistory.GetMaxID(x => x.StudentAcademicHistoryId)) + 1;
+            StudentAcademicHistory academicHistory = new StudentAcademicHistory
+            {
+                StudentAcademicHistoryId = academicId,
+                StudentInfoId=studentId,
+                ClassSectionId=classSectionId,
+                AcademicYearId=studentInfo.AcademicYearId
+            };
+            unitOfWork.StudentAcademicHistory.Insert(academicHistory);
+            await unitOfWork.SaveAsync();
             return Ok();
         }
     }
