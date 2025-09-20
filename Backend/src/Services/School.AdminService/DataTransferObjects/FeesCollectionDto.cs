@@ -35,7 +35,7 @@ namespace School.AdminService.DataTransferObjects
         public decimal GrandTotalAmount { get; set; }
         public string CollectDate { get; set; }
 
-        public List<FeesDetailsDto> FeesCollectionDetails { get; set; }
+        public List<GetFeesDetailsDto> FeesCollectionDetails { get; set; }
     }
 
     public class FeesDetailsDto

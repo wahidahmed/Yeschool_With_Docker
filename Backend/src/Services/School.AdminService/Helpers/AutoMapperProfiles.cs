@@ -23,7 +23,7 @@ namespace School.AdminService.Helpers
             CreateMap<FeesName, FeesNameDto>().ReverseMap();
             CreateMap<FeesSetup, FeesSetupDto>().ReverseMap();
             CreateMap<FeesCollectionMaster,FeesCollectionDto>().ReverseMap();
-            CreateMap<FeesCollectionDetail, FeesDetailsDto>().ReverseMap();
+            CreateMap<FeesCollectionDetail,FeesDetailsDto>().ReverseMap();
 
             CreateMap<AddressUpdateDto, Address>()
                 .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));

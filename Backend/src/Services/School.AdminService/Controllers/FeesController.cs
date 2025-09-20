@@ -16,11 +16,13 @@ namespace School.AdminService.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IFeesService feesService;
 
-        public FeesController(IUnitOfWork unitOfWork, IMapper mapper)
+        public FeesController(IUnitOfWork unitOfWork, IMapper mapper, IFeesService feesService)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.feesService = feesService;
         }
         [HttpPost("AddFeesName")]
         public async Task<IActionResult> AddFeesName(FeesNameDto dto)
@@ -33,7 +35,7 @@ namespace School.AdminService.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var data=await unitOfWork.FeesName.GetAsync();
+            var data = await unitOfWork.FeesName.GetAsync();
             return Ok(data);
         }
         [HttpPut("UpdateFeesName")]
@@ -48,8 +50,8 @@ namespace School.AdminService.Controllers
             data.Name = dto.Name;
             var entity = mapper.Map(dto, data);
             unitOfWork.FeesName.Update(entity);
-            await unitOfWork.SaveAsync();
-            return Ok();
+            var result = await unitOfWork.SaveAsync();
+            return Ok(result);
         }
 
         [HttpPost("AdmitEnrolled")]
@@ -62,28 +64,40 @@ namespace School.AdminService.Controllers
             }
 
             var masterEntity = await FeesCollectionMap(dto);
+            masterEntity.IsAdmitFees = true;
             unitOfWork.FeesCollectionMaster.Insert(masterEntity);
             studentInfo.UpdatedOn = DateTime.Now;
             studentInfo.UpdatedBy = 1;
             studentInfo.Status = "ENROLLED";
             unitOfWork.StudentInfo.Update(studentInfo);
-            await unitOfWork.SaveAsync();
-            return Ok();
+            var retult = await unitOfWork.SaveAsync();
+            return Ok(retult);
         }
 
         [HttpPost("FeesCollection")]
         public async Task<IActionResult> FeesCollection(FeesCollectionDto dto)
         {
-            var studentInfo = await unitOfWork.StudentInfo.GetByIDAsync(dto.StudentInfoId);
+            var studentInfo = await unitOfWork.StudentInfo.GetFirstOrDefaultAsync(x => x.StudentId == dto.StudentInfoId && x.Status != "PENDING");
             if (studentInfo == null)
             {
                 return NotFound("There is no data by this Id");
             }
-            var masterEntity =await FeesCollectionMap(dto);
+            var masterEntity = await FeesCollectionMap(dto);
 
             unitOfWork.FeesCollectionMaster.Insert(masterEntity);
-            await unitOfWork.SaveAsync();
-            return Ok();
+            var retult = await unitOfWork.SaveAsync();
+            return Ok(retult);
+        }
+
+        [HttpGet("GetFeesDetails")]
+        public async Task<IActionResult> GetFeesDetails(long studentId = 0,int feesId=0,int fromMonth=0, int toMonth=0)
+        {
+            var result = await feesService.GetFeesDetails(studentId, feesId, fromMonth, toMonth);
+            if (!result.Any())
+            {
+                return NotFound("not data found");
+            }
+            return Ok(result);
         }
 
         private async Task<FeesCollectionMaster> FeesCollectionMap(FeesCollectionDto dto)
