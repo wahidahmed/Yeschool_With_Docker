@@ -7,6 +7,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleComponent } from './role/role.component';
 import { MenuAccessComponent } from './menu-access/menu-access.component';
 import { ClassManageComponent } from './schoolAdmin/class-manage/class-manage.component';
+import { SectionManageComponent } from './schoolAdmin/section-manage/section-manage.component';
+import { FeesNameComponent } from './schoolAdmin/fees-name/fees-name.component';
 
 const routes: Routes = [
    {path:'', redirectTo:'login', pathMatch:'full'}
@@ -16,6 +18,8 @@ const routes: Routes = [
   ,{path:'role',component:RoleComponent,canActivate:[AuthGuard]}
   ,{path:'menu',component:MenuAccessComponent,canActivate:[AuthGuard]}
   ,{path:"class_list",component:ClassManageComponent,canActivate:[AuthGuard]}
+  ,{path:"section_list",component:SectionManageComponent,canActivate:[AuthGuard]}
+  ,{path:"FeesName_list",component:FeesNameComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

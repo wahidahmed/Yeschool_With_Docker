@@ -62,7 +62,7 @@ namespace Auth.Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AppContents");
+                    b.ToTable("AppContents", (string)null);
                 });
 
             modelBuilder.Entity("Auth.Api.Data.Entties.AspRoleRight", b =>
@@ -83,7 +83,7 @@ namespace Auth.Api.Migrations
 
                     b.HasIndex("AppContentId");
 
-                    b.ToTable("AspRoleRights");
+                    b.ToTable("AspRoleRights", (string)null);
                 });
 
             modelBuilder.Entity("Auth.Api.Data.Entties.Role", b =>
@@ -101,7 +101,7 @@ namespace Auth.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Auth.Api.Data.Entties.User", b =>
@@ -141,7 +141,7 @@ namespace Auth.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Auth.Api.Data.Entties.AspRoleRight", b =>

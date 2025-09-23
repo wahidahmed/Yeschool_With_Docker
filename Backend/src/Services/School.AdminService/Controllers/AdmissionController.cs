@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.AdminService.Data.Entities;
@@ -36,6 +37,7 @@ namespace School.AdminService.Controllers
         }
 
         [HttpPost]
+        //[Authorize]
         public async Task<IActionResult> Post(AdmissionDto dto)
         {
             if (!Enum.TryParse<StudentStatus>(dto.studentInfo.Status, true, out var status))

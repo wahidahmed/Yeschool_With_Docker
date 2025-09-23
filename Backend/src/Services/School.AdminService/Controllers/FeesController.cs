@@ -27,7 +27,13 @@ namespace School.AdminService.Controllers
         [HttpPost("AddFeesName")]
         public async Task<IActionResult> AddFeesName(FeesNameDto dto)
         {
+            var check = await unitOfWork.FeesName.GetFirstOrDefaultAsync(x => x.Name.ToUpper() == dto.Name.ToUpper());
+            if (check != null)
+            {
+                return BadRequest("This fees name has been already exist");
+            }
             var entity = mapper.Map<FeesName>(dto);
+            entity.Name = dto.Name.ToUpper();
             unitOfWork.FeesName.Insert(entity);
             await unitOfWork.SaveAsync();
             return Ok();
@@ -49,6 +55,7 @@ namespace School.AdminService.Controllers
             data.UpdatedOn = DateTime.Now;
             data.Name = dto.Name;
             var entity = mapper.Map(dto, data);
+            entity.Name=dto.Name.ToUpper();
             unitOfWork.FeesName.Update(entity);
             var result = await unitOfWork.SaveAsync();
             return Ok(result);

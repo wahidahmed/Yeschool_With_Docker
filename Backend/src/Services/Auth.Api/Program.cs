@@ -15,16 +15,39 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("MyPolicy", builder => builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials());
+    //options.AddPolicy("MyPolicy", builder => builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+    //    .AllowAnyMethod()
+    //    .AllowAnyHeader()
+    //    .AllowCredentials());
+
+    options.AddPolicy("MyPolicy", policyBuilder =>
+    {
+        policyBuilder
+            .WithOrigins(
+                "http://localhost:4200",    // Host machine Angular
+                "https://localhost:4200",
+                "http://frontend:80"        // Docker internal
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials(); // Required for cookies/auth headers
+    });
 });
 
 builder.Services.AddControllersWithViews();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// 🛰️ Database with retry
+builder.Services.AddDbContextPool<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DbConnection"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 10,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null)
+    ));
 
 //builder.Services.AddTransient<IUserService, UserService>();
 #region Database Settings
@@ -77,46 +100,64 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// 🔁 Wait for DB with retry
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var logger = services.GetRequiredService<ILogger<Program>>();
 
-    var maxRetries = 15;
-    for (int i = 0; i < maxRetries; i++)
-    {
-        try
-        {
-            var context = services.GetRequiredService<AppDbContext>();
-            context.Database.Migrate(); // Applies migrations
 
-            // Seed data
-            if (!context.Users.Any())
-            {
-                context.Roles.Add(new Role { RoleName = "ADMIN" });
-                context.Users.Add(new User { Username = "admin", Password = "yfTzNw11SmvlXcJ4M4zog4RuKCf7rtL3QM8Tz2zAMGVMyFjC", Role = "ADMIN" });//password 123
-                //context.AppContents.Add(new AppContent { });
-                context.SaveChanges();
-            }
-            logger.LogInformation("Connected to SQL Server and migrated.");
-            break;
-        }
-        catch (SqlException ex) when (i < maxRetries - 1)
-        {
-            logger.LogWarning($"Connection to SQL Server failed (attempt {i + 1}/{maxRetries}): {ex.Message}");
-            await Task.Delay(10000); // Wait 10 seconds
-        }
-    }
-}
-
-//app.UseHttpsRedirection(); stop it only for checking docker temporarily
-//app.UseSwagger(); //it should be in development mode only. but now for checking docker temporarily
-//app.UseSwaggerUI();//it should be in development mode only. but now for checking docker temporarily
 app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    var maxRetries = 20;
+    var delay = TimeSpan.FromSeconds(10);
+
+    for (int i = 0; i < maxRetries; i++)
+    {
+        try
+        {
+            logger.LogInformation("Attempting to connect to SQL Server...");
+            context.Database.OpenConnection(); // Test connection
+            context.Database.CloseConnection();
+            break; // Connection succeeded
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, $"Connection failed on attempt {i + 1}/{maxRetries}. Retrying in 10s...");
+            await Task.Delay(delay);
+        }
+    }
+
+    // Now migrate
+    try
+    {
+        context.Database.Migrate();
+        logger.LogInformation("✅ Database migrated.");
+
+        // Seed data
+        if (!context.Users.Any(u => u.Username == "admin"))
+        {
+           
+            context.Roles.Add(new Role { RoleName = "ADMIN" });
+            context.Users.Add(new User
+            {
+                Username = "admin",
+                Password = "yfTzNw11SmvlXcJ4M4zog4RuKCf7rtL3QM8Tz2zAMGVMyFjC",// password 123
+                Role = "ADMIN"
+            });
+            context.SaveChanges();
+            logger.LogInformation("🔐 Admin user seeded.");
+        }
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Failed to migrate or seed database.");
+        throw;
+    }
+}
+
 
 app.Run();

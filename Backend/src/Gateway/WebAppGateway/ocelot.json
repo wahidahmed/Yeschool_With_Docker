@@ -1,52 +1,52 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/User/{all}",
+      "DownstreamPathTemplate": "/api/User/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "host": "localhost",
           "port": 5001
-        }
-        ,{
-          "host": "auth-api",
-          "port": 80
-        }
+        }//,
+        //{
+        //  "Host": "auth-api", //In Docker, use service name( in compose file) as hostname,
+        //  "Port": 80
+        //}
       ],
-      "UpstreamPathTemplate": "/api/auth/user/{all}",
+      "UpstreamPathTemplate": "/api/auth/user/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
 
     {
-      "DownstreamPathTemplate": "/api/Administration/{all}",
+      "DownstreamPathTemplate": "/api/Administration/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "host": "localhost",
           "port": 5001
-        },
-        {
-          "host": "auth-api",
-          "port": 80
-        }
+        }//,
+        //{
+        //  "Host": "auth-api", //In Docker, use service name( in compose file) as hostname,
+        //  "Port": 80
+        //}
       ],
-      "UpstreamPathTemplate": "/api/auth/admin/{all}",
+      "UpstreamPathTemplate": "/api/auth/admin/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/{all}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "host": "localhost",
           "port": 5002
-        },
-        {
-          "Host": "school-adminservice", //In Docker, use service name( in compose file) as hostname,
-          "Port": 80
-        }
+        }//,
+        //{
+        //  "Host": "school-adminservice", //In Docker, use service name( in compose file) as hostname,
+        //  "Port": 80
+        //}
       ],
-      "UpstreamPathTemplate": "/api/admin_service/{all}",
+      "UpstreamPathTemplate": "/api/admin_service/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthentication",

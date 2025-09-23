@@ -5,31 +5,32 @@ import ValidateForm from 'src/app/helpers/ValidateForm';
 import { AdminMasterService } from 'src/app/services/admin-master.service';
 
 @Component({
-  selector: 'app-section-manage',
-  templateUrl: './section-manage.component.html',
-  styleUrls: ['./section-manage.component.css']
+  selector: 'app-fees-name',
+  templateUrl: './fees-name.component.html',
+  styleUrls: ['./fees-name.component.css']
 })
-export class SectionManageComponent implements OnInit {
+export class FeesNameComponent implements OnInit {
 
   
     constructor(private adminMasterService:AdminMasterService,private fb:FormBuilder, private toast:NgToastService) { }
-    public sectionForm:FormGroup;
-    sectionList:any[];
+    public feesNameForm:FormGroup;
+    feesNameList:any[];
     ngOnInit(): void {
-      this.sectionForm=this.fb.group({
-        sectionId:[0,],
-        sectionName:[null,[Validators.required]],
+      this.feesNameForm=this.fb.group({
+        feesNameId:[0,],
+        feesName:[null,[Validators.required]],
+        feesType:["",[Validators.required]],
         remarks:[null]
       })
       this.getList();
     }
   getList(){
-      this.adminMasterService.getSectionList().subscribe(data=>{this.sectionList=data; console.log(data)});
+      this.adminMasterService.getFeesNameList().subscribe(data=>{this.feesNameList=data; console.log(data)});
     }
     onSubmit(){
      
-       if(this.sectionForm.valid){
-              this.adminMasterService.addNewSection(this.sectionForm.controls['sectionName'].value,this.sectionForm.controls['remarks'].value).subscribe({
+       if(this.feesNameForm.valid){
+              this.adminMasterService.addFeesName(this.feesNameForm.controls['feesName'].value,this.feesNameForm.controls['feesType'].value,this.feesNameForm.controls['remarks'].value).subscribe({
                 next:(res=>{
                   this.getList();
                   this.toast.success({detail:res,summary:"successfully added",duration:5000});
@@ -42,7 +43,7 @@ export class SectionManageComponent implements OnInit {
              
           }
           else{
-            ValidateForm.validateAllFormFields(this.sectionForm);
+            ValidateForm.validateAllFormFields(this.feesNameForm);
           }
     }
 

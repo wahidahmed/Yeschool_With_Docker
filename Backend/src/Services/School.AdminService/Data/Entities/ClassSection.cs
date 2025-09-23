@@ -3,11 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace School.AdminService.Data.Entities
 {
-    public class ClassSection:BaseEntity
+    public class ClassSection
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClassSectionId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string ClassSectionName { get; set; }
        
         [ForeignKey("Classes")]
         public int ClassesId { get; set; }

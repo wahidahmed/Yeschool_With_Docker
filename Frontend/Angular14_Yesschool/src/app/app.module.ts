@@ -18,6 +18,7 @@ import { MaterialModuleModule } from './material.module.module';
 import { MenuAccessComponent } from './menu-access/menu-access.component';
 import { ClassManageComponent } from './schoolAdmin/class-manage/class-manage.component';
 import { SectionManageComponent } from './schoolAdmin/section-manage/section-manage.component';
+import { FeesNameComponent } from './schoolAdmin/fees-name/fees-name.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SectionManageComponent } from './schoolAdmin/section-manage/section-man
     RoleComponent,
     MenuAccessComponent,
     ClassManageComponent,
-    SectionManageComponent
+    SectionManageComponent,
+    FeesNameComponent
   ],
   imports: [
     BrowserModule,

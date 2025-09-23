@@ -48,7 +48,9 @@ namespace School.AdminService.Controllers
             if (dto.SectionId == 0)
                 dto.SectionId = Convert.ToInt32(maxId) + 1;
             var entity = mapper.Map<Section>(dto);
-            entity.UpdatedBy = 0;
+            entity.SectionName = dto.SectionName.ToUpper();
+            entity.CreatedBy = 0;
+            entity.CreatedOn = DateTime.Now;
 
             var classes = await unitOfWork.Classes.GetAsync();
 
@@ -57,9 +59,9 @@ namespace School.AdminService.Controllers
             {
                 var clsSec = new ClassSection
                 {
+                    ClassSectionName = item.ClassesName + "-" + entity.SectionName,
                     SectionId = entity.SectionId,
-                    ClassesId = item.ClassesId,
-                    UpdatedBy = 0
+                    ClassesId = item.ClassesId
                 };
                 classSection.Add(clsSec);
             }

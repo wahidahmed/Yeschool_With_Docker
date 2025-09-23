@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using School.AdminService.Data;
 using School.AdminService.Extensions;
@@ -60,20 +58,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Add a dynamic authorization handler
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("DynamicPermission", policy =>
-//        policy.Requirements.Add(new PermissionRequirement()));
-//});
-
-//builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
-
-//builder.Services.AddControllers(options =>
-//{
-//    // ✅ THIS is where you add the global dynamic permission filter
-//    options.Filters.Add(new AuthorizeFilter("DynamicPermission"));
-//});
 
 builder.Services.AddAuthorization(options =>
 {
@@ -97,6 +81,16 @@ var _logger = new LoggerConfiguration()
                 .WriteTo.File(logPath).CreateLogger();
 builder.Logging.AddSerilog(_logger);
 
+// 🛰️ Database with retry
+builder.Services.AddDbContextPool<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DbConnection"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 10,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null)
+    ));
+
 var app = builder.Build();
 
 
@@ -109,5 +103,32 @@ if (app.Environment.IsDevelopment())
 app.ConfigureExceptionHandler(app.Environment);
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+    var retries = 0;
+    const int maxRetries = 15;
+    while (retries < maxRetries)
+    {
+        try
+        {
+            context.Database.Migrate();
+            logger.LogInformation("✅ Database migrated successfully.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "❌ Migration failed (attempt {Attempt}/{Max}), retrying in 10s...", retries + 1, maxRetries);
+            await Task.Delay(10_000);
+            retries++;
+        }
+    }
+
+    if (retries == maxRetries)
+        throw new Exception("Failed to connect to database after multiple attempts.");
+}
 
 app.Run();

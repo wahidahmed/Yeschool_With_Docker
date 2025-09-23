@@ -26,7 +26,7 @@
 
 #=========the above code for indivitual project only==================
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 as base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 ENV ASPNETCORE_URLS="http://+:80"

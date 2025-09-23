@@ -99,25 +99,21 @@ namespace School.AdminService.Migrations
             modelBuilder.Entity("School.AdminService.Data.Entities.ClassSection", b =>
                 {
                     b.Property<int>("ClassSectionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClassSectionId"));
+
+                    b.Property<string>("ClassSectionName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ClassesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("ClassSectionId");
 
@@ -125,7 +121,7 @@ namespace School.AdminService.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("ClassSection");
+                    b.ToTable("ClassSections");
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Classes", b =>

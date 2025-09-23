@@ -43,10 +43,22 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("MyPolicy", builder => builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials());
+    //options.AddPolicy("MyPolicy", builder => builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+    //    .AllowAnyMethod()
+    //    .AllowAnyHeader()
+    //    .AllowCredentials());
+    options.AddPolicy("MyPolicy", policyBuilder =>
+    {
+        policyBuilder
+            .WithOrigins(
+                "http://localhost:4200",    // Host machine Angular
+                "https://localhost:4200",
+                "http://frontend:80"        // Docker internal
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials(); // Required for cookies/auth headers
+    });
 });
 
 var app = builder.Build();

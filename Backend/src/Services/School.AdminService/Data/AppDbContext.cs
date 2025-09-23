@@ -12,6 +12,7 @@ namespace School.AdminService.Data
         }
         public DbSet<Classes> Classes { get; set; }
         public DbSet<Section> Sections { get; set; }
+        public DbSet<ClassSection> ClassSections { get; set; }
         public DbSet<AcademicYear> AcademicYears { get; set; }
         public DbSet<PersonalInfo> PersonalInfos { get; set; }
         public DbSet<Country> Countries { get; set; }

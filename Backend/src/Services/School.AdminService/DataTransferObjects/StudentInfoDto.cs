@@ -6,6 +6,7 @@ namespace School.AdminService.DataTransferObjects
     {
         public long StudentId { get; set; }
         public long PersonalInfoId { get; set; }
+        public int AcademicYearId { get; set; }
 
         [Required(ErrorMessage = "Guardian Name is required")]
         [RegularExpression(".*[a-zA-Z]+.*", ErrorMessage = "Guardian Name cannot contain numeric value")]
@@ -25,6 +26,6 @@ namespace School.AdminService.DataTransferObjects
         [MaxLength(10)]
         public string Status { get; set; }
 
-        public int ClassID { get; set; }
+        public int ClassesId { get; set; }
     }
 }

@@ -1,0 +1,83 @@
+
+<div class="card">
+  <div class="card-header"> <h3 class="card-title">Fees Name manage</h3></div>
+  <div class="card-body">
+ 
+      <div class="row">
+
+       
+              <div class="col-md-4 col-sm-6">
+                 <form [formGroup]="feesNameForm" (ngSubmit)="onSubmit()">
+                       <input type="hidden" formControlName="feesNameId"/>
+              
+                  <div class="mb-3">
+                  <div>
+                      <label class="" >Fees Name</label>
+                    <input type="text" class="form-control" formControlName="feesName"/>
+                  </div>
+                        <span *ngIf="feesNameForm.controls['feesName'].dirty && feesNameForm.hasError('required','feesName')" class="text-danger">*Fees Name is required*</span>
+                  </div>
+
+                <div class="mb-3">
+                  <div>
+                      <label class="" >Fees Type</label>
+                   
+                    <select class="form-control" formControlName="feesType">
+                        <option value="">Select</option>
+                        <option value="YEARLY">Yearly</option>
+                        <option value="MONTHLY">Monthly</option>
+                        <option value="DAILY">Daily</option>
+                        <option value="IRREGULAR">Irregular</option>
+                    </select>
+                  </div>
+                        <span *ngIf="feesNameForm.controls['feesType'].dirty && feesNameForm.hasError('required','feesType')" class="text-danger">*Fees Type is required*</span>
+                </div>
+
+                
+
+                  <div class="mb-3">
+                    <div>
+                        <label class="" >Remarks</label>
+                        <input type="text" class="form-control" formControlName="remarks"/>
+                    </div>
+                  </div>
+
+                <div class="input-group mb-3">
+                  <button type="submit"  class="btn btn-success">Save</button>
+                  <button type="reset" class="btn btn-danger">reset</button>
+              </div>
+                 </form>
+               
+
+              </div>
+              
+        <div class="col-md-8 col-sm-6">
+            <table class="table table-responsive table-bordered">
+              <thead>
+                <tr>
+                  <th>Fees Name</th>
+                  <th>Type</th>
+                  <th>Remarks</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of feesNameList">
+                  <td>{{item.name}}</td>
+                  <td>{{item.feesCollectionType}}</td>
+                  <td>{{item.remarks}}</td>
+                  <td>
+                    <button class="btn btn-warning">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+
+ 
+  </div>
+</div>
+
+
+

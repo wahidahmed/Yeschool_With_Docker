@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.AdminService.Data.Entities;
 using School.AdminService.DataTransferObjects;
@@ -43,12 +42,19 @@ namespace School.AdminService.Controllers
         //[Authorize]
         public async Task<IActionResult> Post(ClassDto classDto)
         {
+            var clsName = await unitOfWork.Classes.GetFirstOrDefaultAsync(x => x.ClassesName.ToUpper() == classDto.ClassesName.ToUpper());
+            if (clsName != null)
+            {
+                return BadRequest("This class name has been already exist");
+            }
             //throw new Exception("someting test");
             Int64 maxId = await unitOfWork.Classes.GetMaxIDAsync(x => x.ClassesId);
             if (classDto.ClassesId == 0)
                 classDto.ClassesId = Convert.ToInt32(maxId) + 1;
             var entity = mapper.Map<Classes>(classDto);
+            entity.ClassesName = classDto.ClassesName.ToUpper();
             entity.UpdatedBy = 0;
+            entity.UpdatedOn = DateTime.Now;
 
             var sections = await unitOfWork.Section.GetAsync();
 
@@ -57,9 +63,9 @@ namespace School.AdminService.Controllers
             {
                 var clsSec = new ClassSection
                 {
+                    ClassSectionName= entity.ClassesName+"-"+item.SectionName,
                     ClassesId = entity.ClassesId,
-                    SectionId = item.SectionId,
-                    UpdatedBy = 0
+                    SectionId = item.SectionId
                 };
                 classSection.Add(clsSec);
             }

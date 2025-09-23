@@ -10,15 +10,40 @@ private baseUrl:string='http://localhost:5005/api/admin_service/';
 
   addNewClass(className:string,remarks:string){
     let dto={
-      className:className,
-      remarks:remarks
+      ClassesName:className,
+      Remarks:remarks
     }
-    return this.http.post(`${this.baseUrl}Classes`,dto);
+    return this.http.post<any>(`${this.baseUrl}Classes`,dto);
   }
+
+  
 
   getClassList(){
-    return this.http.get(`${this.baseUrl}classes`);
+    return this.http.get<any>(`${this.baseUrl}classes`);
   }
 
+  addNewSection(sectionName:string,remarks:string){
+    let dto={
+      SectionName:sectionName,
+      Remarks:remarks
+    }
+    return this.http.post<any>(`${this.baseUrl}Section`,dto);
+  }
+  getSectionList(){
+    return this.http.get<any>(`${this.baseUrl}Section`);
+  }
+
+  addFeesName(feesName:string,feesCollectionType:string,remarks:string){
+    let dto={
+      Name:feesName,
+      FeesCollectionType:feesCollectionType,
+      Remarks:remarks
+    }
+    return this.http.post<any>(`${this.baseUrl}Fees/AddFeesName`,dto);
+  }
+
+  getFeesNameList(){
+    return this.http.get<any>(`${this.baseUrl}Fees`);
+  }
   
 }
