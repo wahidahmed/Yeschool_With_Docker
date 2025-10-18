@@ -1,0 +1,288 @@
+
+<form (ngSubmit)="onSubmit()" [formGroup]="admitFormGroup">
+  <div class="">
+
+    <h2 class="text-center mb-4">Student Registration</h2>
+
+    <!-- Section 1: Personal & Guardian Info -->
+    <div class="section-title">Personal & Guardian Information</div>
+
+    <div class="row g-3" formGroupName="studentInfo">
+      <!-- Person Name -->
+      <div class="col-md-4">
+        <label for="personName" class="form-label">Student Name <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="PersonName" placeholder="Enter student name"
+          [ngClass]="{'is-invalid': formErrors.PersonName}"
+          (blur)="onBlur()"
+        >
+            <div class="text-danger" *ngIf="formErrors.PersonName">
+              <span>{{formErrors.PersonName}}</span>
+            </div>
+      </div>
+
+
+          <!-- Class -->
+      <div class="col-md-2">
+        <label for="class" class="form-label">Class <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="ClassesId" 
+         [ngClass]="{'is-invalid': formErrors.ClassesId}" (blur)="onBlur()"
+        >
+          <option value="" selected disabled>Select Class</option>
+          <option value="1">Class 1</option>
+          <option value="2">Class 2</option>
+          <option value="3">Class 3</option>
+          <option value="4">Class 4</option>
+          <option value="5">Class 5</option>
+        </select>
+           <div class="text-danger" *ngIf="formErrors.ClassesId">
+              <span>{{formErrors.ClassesId}}</span>
+            </div>
+      </div>
+
+       <!-- Date of Birth -->
+      <div class="col-md-2">
+        <label for="dob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+        <input type="date" class="form-control" formControlName="DateOfBirth"
+          [ngClass]="{'is-invalid': formErrors.DateOfBirth}"
+        >
+             <div class="text-danger" *ngIf="formErrors.DateOfBirth">
+              <span>{{formErrors.DateOfBirth}}</span>
+            </div>
+      </div>
+       <!-- Gender -->
+      <div class="col-md-2">
+        <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="Gender"
+          [ngClass]="{'is-invalid': formErrors.Gender}" (blur)="onBlur()"
+        >
+          <option value="" selected disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="text-danger" style="display:none;">Gender is required</div>
+      </div>
+      
+      <!-- Religion -->
+      <div class="col-md-2">
+        <label for="religion" class="form-label">Religion <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="Religion" 
+          [ngClass]="{'is-invalid': formErrors.Religion}" (blur)="onBlur()"
+        >
+          <option value="" selected disabled>Select Religion</option>
+          <option value="ISLAM">ISLAM</option>
+          <option value="HINDU">HINDU</option>
+          <option value="BODDHO">BODDHO</option>
+           <option value="CRISTHAN">CRISTHAN</option>
+        </select>
+           <div class="text-danger" *ngIf="formErrors.Religion">
+              <span>{{formErrors.Religion}}</span>
+            </div>
+      </div>
+
+      <!-- Guardian Name -->
+      <div class="col-md-4">
+        <label for="guardianName" class="form-label">Guardian Name <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="GuardianName" placeholder="Full name of guardian"
+          [ngClass]="{'is-invalid': formErrors.GuardianName}"
+          (blur)="onBlur()"
+        >
+           <div class="text-danger" *ngIf="formErrors.GuardianName">
+              <span>{{formErrors.GuardianName}}</span>
+            </div>
+      </div>
+
+      <!-- Guardian Mobile -->
+      <div class="col-md-2">
+        <label for="guardianMobile" class="form-label">Guardian Mobile <span class="text-danger">*</span></label>
+        <input type="tel" class="form-control" formControlName="GuardianMobileNo" placeholder="01XXX-XXXXXX" 
+          [ngClass]="{'is-invalid': formErrors.GuardianMobileNo}"
+           (blur)="onBlur()"
+        >
+             <div class="text-danger" *ngIf="formErrors.GuardianMobileNo">
+              <span>{{formErrors.GuardianMobileNo}}</span>
+            </div>
+      </div>
+
+      <!-- Guardian Relation -->
+      <div class="col-md-2">
+        <label for="guardianRelation" class="form-label">Guardian Relation <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="GuardianRelation"
+          [ngClass]="{'is-invalid': formErrors.GuardianRelation}" (blur)="onBlur()"
+        >
+          <option value="" selected disabled>Select Relation</option>
+          <option value="Father">Father</option>
+          <option value="Mother">Mother</option>
+          <option value="Uncle">Uncle</option>
+          <option value="Aunt">Aunt</option>
+          <option value="Others">Others</option>
+        </select>
+            <div class="text-danger" *ngIf="formErrors.GuardianRelation">
+              <span>{{formErrors.GuardianRelation}}</span>
+            </div>
+      </div>
+
+      <!-- Academic Year -->
+      <div class="col-md-2">
+        <label for="academicYear" class="form-label">Academic Year <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="AcademicYearId"
+          [ngClass]="{'is-invalid': formErrors.AcademicYearId}"
+          (blur)="onBlur()"
+        >
+          <option value="" selected >Select Year</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+         <div class="text-danger" *ngIf="formErrors.AcademicYearId">
+              <span>{{formErrors.AcademicYearId}}</span>
+            </div>
+      </div>
+      
+      <!-- Mobile -->
+      <div class="col-md-2">
+        <label for="mobile" class="form-label">Student Mobile</label>
+        <input type="tel" class="form-control" formControlName="Mobile" placeholder="01XXX-XXXXXX" maxlength="11">
+      </div>
+
+
+     
+
+      <!-- Father Name -->
+      <div class="col-md-4">
+        <label for="fatherName" class="form-label">Father's Name <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="FatherName" placeholder="Enter father's name"
+          [ngClass]="{'is-invalid': formErrors.FatherName}" (blur)="onBlur()"
+        >
+            <div class="text-danger" *ngIf="formErrors.FatherName">
+              <span>{{formErrors.FatherName}}</span>
+            </div>
+      </div>
+
+      <!-- Father Mobile -->
+      <div class="col-md-3">
+        <label for="fatherMobile" class="form-label">Father's Mobile</label>
+        <input type="tel" class="form-control" formControlName="FatherMobile" placeholder="01XXX-XXXXXX" maxlength="11">
+        <div class="text-danger" style="display:none;">Must be 11 digits</div>
+      </div>
+
+      <!-- Father Occupation -->
+      <div class="col-md-4">
+        <label for="fatherOccupation" class="form-label">Father's Occupation</label>
+        <input type="text" class="form-control" formControlName="FatherOccupation" placeholder="e.g., Businessman">
+      </div>
+
+      <!-- Mother Name -->
+      <div class="col-md-4">
+        <label for="motherName" class="form-label">Mother's Name <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="MotherName" placeholder="Enter mother's name"
+          [ngClass]="{'is-invalid': formErrors.MotherName}" (blur)="onBlur()"
+        >
+             <div class="text-danger" *ngIf="formErrors.MotherName">
+              <span>{{formErrors.MotherName}}</span>
+            </div>
+      </div>
+
+      <!-- Mother Mobile -->
+      <div class="col-md-3">
+        <label for="motherMobile" class="form-label">Mother's Mobile</label>
+        <input type="tel" class="form-control" formControlName="MotherMobile" placeholder="01XXX-XXXXXX" maxlength="11">
+        <div class="text-danger" style="display:none;">Must be 11 digits</div>
+      </div>
+
+      <!-- Mother Occupation -->
+      <div class="col-md-4">
+        <label for="motherOccupation" class="form-label">Mother's Occupation</label>
+        <input type="text" class="form-control" formControlName="MotherOccupation" placeholder="e.g., Teacher">
+      </div>
+      
+    </div>
+
+    <!-- Section 2: Address Information -->
+    <div class="section-title mt-4">Address Information</div>
+
+    <h5 class="mt-3">Present Address</h5>
+    <div class="row g-3" formGroupName="presentAddress">
+      <div class="col-md-2">
+        <label for="presentDistrict" class="form-label">District <span class="text-danger">*</span></label>
+        <select class="form-select"  formControlName="DistrictId"
+          [ngClass]="{'is-invalid': formErrors.DistrictId}" (blur)="onBlur()"
+        >
+          <option value="" selected disabled>Select District</option>
+          <option value="Dhaka">Dhaka</option>
+          <option value="Chittagong">Chittagong</option>
+          <option value="Sylhet">Sylhet</option>
+          <option value="Rajshahi">Rajshahi</option>
+        </select>
+             <div class="text-danger" *ngIf="formErrors.DistrictId">
+              <span>{{formErrors.DistrictId}}</span>
+            </div>
+      </div>
+
+      <div class="col-md-2">
+        <label for="presentThana" class="form-label">Thana/Upazila </label>
+        <select class="form-select" formControlName="ThanaId">
+          <option value="" selected disabled>Select Thana</option>
+          <!-- Will be populated dynamically -->
+        </select>
+      </div>
+
+      <div class="col-5">
+        <label for="presentStreet" class="form-label">Street Details </label>
+        <textarea class="form-control"  rows="2" placeholder="House, Road, Area" formControlName="StreetDetail"></textarea>
+      </div>
+      <div class="col-3">
+          
+            <div class="form-check mb-3">
+               <h4 class="mt-3">Permanent Address</h4>
+              <input class="form-check-input" type="checkbox" id="sameAsPresent">
+              <label class="form-check-label" for="sameAsPresent">
+                Same as Present Address
+              </label>
+            </div>
+      </div>
+    </div>
+
+   
+
+    <div>
+      <div class="row g-3" formGroupName="permanentAddress">
+        <div class="col-md-2">
+          <label for="permanentDistrict" class="form-label">District <span class="text-danger">*</span></label>
+          <select class="form-select"  formControlName="DistrictId"
+            [ngClass]="{'is-invalid': formErrors.DistrictId}"
+          >
+            <option value="" selected disabled>Select District</option>
+            <option value="Dhaka">Dhaka</option>
+            <option value="Chittagong">Chittagong</option>
+            <option value="Sylhet">Sylhet</option>
+            <option value="Rajshahi">Rajshahi</option>
+          </select>
+                 <div class="text-danger" *ngIf="formErrors.DistrictId">
+              <span>{{formErrors.DistrictId}}</span>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+          <label for="permanentThana" class="form-label">Thana/Upazila </label>
+          <select class="form-select" formControlName="ThanaId">
+            <option value="" selected disabled>Select Thana</option>
+            <!-- Will be populated dynamically -->
+          </select>
+        </div>
+
+        <div class="col-5">
+          <label for="permanentStreet" class="form-label">Street Details </label>
+          <textarea class="form-control" rows="2" placeholder="House, Road, Area" formControlName="StreetDetail"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-flex justify-content-end mt-4">
+      <button type="submit" class="btn btn-primary">Submit Registration</button>
+    </div>
+
+  </div>
+
+  </form>

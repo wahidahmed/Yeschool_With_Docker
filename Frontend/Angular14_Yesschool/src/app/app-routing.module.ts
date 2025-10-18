@@ -9,6 +9,7 @@ import { MenuAccessComponent } from './menu-access/menu-access.component';
 import { ClassManageComponent } from './schoolAdmin/class-manage/class-manage.component';
 import { SectionManageComponent } from './schoolAdmin/section-manage/section-manage.component';
 import { FeesNameComponent } from './schoolAdmin/fees-name/fees-name.component';
+import { StudentAdmissionComponent } from './schoolAdmin/student-admission/student-admission.component';
 
 const routes: Routes = [
    {path:'', redirectTo:'login', pathMatch:'full'}
@@ -20,6 +21,7 @@ const routes: Routes = [
   ,{path:"class_list",component:ClassManageComponent,canActivate:[AuthGuard]}
   ,{path:"section_list",component:SectionManageComponent,canActivate:[AuthGuard]}
   ,{path:"FeesName_list",component:FeesNameComponent,canActivate:[AuthGuard]}
+  ,{path:"Student_Admission",component:StudentAdmissionComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

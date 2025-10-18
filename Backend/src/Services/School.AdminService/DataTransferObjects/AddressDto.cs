@@ -8,8 +8,7 @@ namespace School.AdminService.DataTransferObjects
         public int DistrictId { get; set; }
         public int ThanaId { get; set; }
         public string StreetDetail { get; set; }
-        [Required]
         public string AddressType { get; set; }
-        public long PersonalInfoId { get; set; }
+        public long? PersonalInfoId { get; set; }
     }
 }

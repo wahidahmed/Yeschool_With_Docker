@@ -19,6 +19,7 @@ import { MenuAccessComponent } from './menu-access/menu-access.component';
 import { ClassManageComponent } from './schoolAdmin/class-manage/class-manage.component';
 import { SectionManageComponent } from './schoolAdmin/section-manage/section-manage.component';
 import { FeesNameComponent } from './schoolAdmin/fees-name/fees-name.component';
+import { StudentAdmissionComponent } from './schoolAdmin/student-admission/student-admission.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FeesNameComponent } from './schoolAdmin/fees-name/fees-name.component';
     MenuAccessComponent,
     ClassManageComponent,
     SectionManageComponent,
-    FeesNameComponent
+    FeesNameComponent,
+    StudentAdmissionComponent
   ],
   imports: [
     BrowserModule,

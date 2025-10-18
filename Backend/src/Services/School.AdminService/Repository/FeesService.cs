@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.AdminService.Data;
-using School.AdminService.Data.Entities;
 using School.AdminService.DataTransferObjects;
 using School.AdminService.Repository.Interfaces;
 
