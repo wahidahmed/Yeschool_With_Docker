@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.AdminService.Data.Entities;
 using School.AdminService.DataTransferObjects;
 using School.AdminService.Helpers;
 using School.AdminService.Repository.Interfaces;
-using System.Threading.Tasks;
 
 namespace School.AdminService.Controllers
 {
@@ -17,12 +15,14 @@ namespace School.AdminService.Controllers
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IStudentService studentService;
+        private readonly IIdGeneratorService idGeneratorService;
 
-        public AdmissionController(IUnitOfWork unitOfWork, IMapper mapper, IStudentService studentService)
+        public AdmissionController(IUnitOfWork unitOfWork, IMapper mapper, IStudentService studentService,IIdGeneratorService idGeneratorService)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.studentService = studentService;
+            this.idGeneratorService = idGeneratorService;
         }
 
         [HttpGet("GetStudentInfoDetails")]
@@ -37,7 +37,7 @@ namespace School.AdminService.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Post(AdmissionDto dto)
         {
             if (!Enum.TryParse<StudentStatus>(dto.studentInfo.Status, true, out var status))
@@ -45,23 +45,26 @@ namespace School.AdminService.Controllers
                 ModelState.AddModelError("Status", "Invalid status value. Allowed: PENDING, ACTIVE, ENROLLED.");
                 return BadRequest(ModelState);
             }
-            var personalId = Convert.ToInt64(unitOfWork.PersonalInfo.GetMaxID(x => x.PersonalnfoId)) + 1;
+
+            var personalId = await idGeneratorService.GetNextIdAsync("PersonalInfos");
+            //var personalId = Convert.ToInt64(unitOfWork.PersonalInfo.GetMaxID(x => x.PersonalnfoId)) + 1;
             dto.personalInfo.PersonalnfoId = personalId;
             dto.personalInfo.PersonCode = "PERS-0" + personalId.ToString();
             var personal = mapper.Map<PersonalInfo>(dto.personalInfo);
             unitOfWork.PersonalInfo.Insert(personal);
 
             dto.presentAddress.PersonalInfoId = dto.personalInfo.PersonalnfoId;
-            dto.presentAddress.AddressType = "presnt";
+            dto.presentAddress.AddressType = "PRESENT";
             var presentAdr = mapper.Map<Address>(dto.presentAddress);
             unitOfWork.Address.Insert(presentAdr);
 
             dto.permanentAddress.PersonalInfoId = dto.personalInfo.PersonalnfoId;
-            dto.permanentAddress.AddressType = "permanent";
+            dto.permanentAddress.AddressType = "PERMANENT";
             var permanentAdr = mapper.Map<Address>(dto.permanentAddress);
             unitOfWork.Address.Insert(permanentAdr);
 
-            var stuId = Convert.ToInt64(unitOfWork.StudentInfo.GetMaxID(x => x.StudentId)) + 1;
+            var stuId =  await idGeneratorService.GetNextIdAsync("StudentInfos");
+            //var stuId = Convert.ToInt64(unitOfWork.StudentInfo.GetMaxID(x => x.StudentId)) + 1;
             dto.studentInfo.StudentId = stuId;
             dto.studentInfo.Status = "PENDING";
             dto.studentInfo.PersonalInfoId = dto.personalInfo.PersonalnfoId;
@@ -121,7 +124,8 @@ namespace School.AdminService.Controllers
             studentInfo.UpdatedOn = DateTime.Now;
             studentInfo.UpdatedBy = 1;
             studentInfo.Status= "ACTIVE";
-            var academicId = Convert.ToInt64(unitOfWork.StudentAcademicHistory.GetMaxID(x => x.StudentAcademicHistoryId)) + 1;
+            var academicId = await idGeneratorService.GetNextIdAsync("StudentAcademicHistories");
+            //var academicId = Convert.ToInt64(unitOfWork.StudentAcademicHistory.GetMaxID(x => x.StudentAcademicHistoryId)) + 1;
             StudentAcademicHistory academicHistory = new StudentAcademicHistory
             {
                 StudentAcademicHistoryId = academicId,

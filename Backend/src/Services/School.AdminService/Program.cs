@@ -20,28 +20,29 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 #region Database Settings
-builder.Services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"),
-    sqlOptions => sqlOptions.EnableRetryOnFailure
-        (
+builder.Services.AddDbContextPool<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DbConnection"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure(
             maxRetryCount: 10,
             maxRetryDelay: TimeSpan.FromSeconds(30),
-            errorNumbersToAdd: null
-        )
+            errorNumbersToAdd: null)
     ));
-
 #endregion
 
+// 💉 DI
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IRawSqlRepository, RawSqlRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IFeesService, FeesService>();
+builder.Services.AddScoped<IIdGeneratorService, IdGeneratorService>();
 
-builder.Services.AddAutoMapper(cfg =>
-{
-    cfg.AddProfile<AutoMapperProfiles>();
-});
+// 🔄 AutoMapper
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfiles>());
 
-var _authkey = builder.Configuration.GetValue<string>("JwtSettings:SecurityKey");
+// 🔐 JWT Authentication
+var _authkey = builder.Configuration.GetValue<string>("JwtSettings:SecurityKey")
+              ?? throw new InvalidOperationException("JWT key not configured");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -53,44 +54,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_authkey))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authkey))
         };
     });
 
 
+// 🔑 Authorization with Dynamic Policy
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("DynamicPermission", policy =>
-        policy.Requirements.Add(new PermissionRequirement())
-    );
+        policy.Requirements.Add(new PermissionRequirement()));
 
-    // 🔑 Set DynamicPermission as the default policy for [Authorize]
+    // Set as default policy for [Authorize]
     options.DefaultPolicy = options.GetPolicy("DynamicPermission");
 });
 
-// ✅ Register handler
+// ✅ Register Authorization Handler
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
 
+// 📝 Logging
+string logPath = builder.Configuration.GetSection("Logging:LogPath").Value
+                 ?? "logs/admin-service-log-.txt";
 
-string logPath = builder.Configuration.GetSection("Logging:LogPath").Value;
 var _logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .MinimumLevel.Override("microsoft", Serilog.Events.LogEventLevel.Warning)
-                .WriteTo.File(logPath).CreateLogger();
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    .WriteTo.File(logPath, rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
 builder.Logging.AddSerilog(_logger);
 
-// 🛰️ Database with retry
-builder.Services.AddDbContextPool<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DbConnection"),
-        sqlOptions => sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 10,
-            maxRetryDelay: TimeSpan.FromSeconds(30),
-            errorNumbersToAdd: null)
-    ));
-
+// 🚦 Build App
 var app = builder.Build();
 
 
@@ -101,34 +96,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.ConfigureExceptionHandler(app.Environment);
+app.UseAuthentication(); // ← YOU ARE MISSING THIS!
 app.UseAuthorization();
-app.MapControllers();
-
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-    var retries = 0;
-    const int maxRetries = 15;
-    while (retries < maxRetries)
-    {
-        try
-        {
-            context.Database.Migrate();
-            logger.LogInformation("✅ Database migrated successfully.");
-            break;
-        }
-        catch (Exception ex)
-        {
-            logger.LogWarning(ex, "❌ Migration failed (attempt {Attempt}/{Max}), retrying in 10s...", retries + 1, maxRetries);
-            await Task.Delay(10_000);
-            retries++;
-        }
-    }
-
-    if (retries == maxRetries)
-        throw new Exception("Failed to connect to database after multiple attempts.");
-}
+// 🔀 Map Endpoints
+app.MapControllers(); // ← This maps all controller routes
 
 app.Run();

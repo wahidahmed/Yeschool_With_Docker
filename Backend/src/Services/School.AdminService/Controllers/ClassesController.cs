@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.AdminService.Data.Entities;
 using School.AdminService.DataTransferObjects;
+using School.AdminService.Repository;
 using School.AdminService.Repository.Interfaces;
 
 namespace School.AdminService.Controllers
@@ -12,16 +14,18 @@ namespace School.AdminService.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IIdGeneratorService idGeneratorService;
 
-        public ClassesController(IUnitOfWork unitOfWork, IMapper mapper)
+        public ClassesController(IUnitOfWork unitOfWork, IMapper mapper, IIdGeneratorService idGeneratorService)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.idGeneratorService = idGeneratorService;
         }
 
         // GET: api/<ClassesController>
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             var data = await unitOfWork.Classes.GetAsync();
@@ -39,7 +43,7 @@ namespace School.AdminService.Controllers
 
         // POST api/<ClassesController>
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Post(ClassDto classDto)
         {
             var clsName = await unitOfWork.Classes.GetFirstOrDefaultAsync(x => x.ClassesName.ToUpper() == classDto.ClassesName.ToUpper());
@@ -48,9 +52,11 @@ namespace School.AdminService.Controllers
                 return BadRequest("This class name has been already exist");
             }
             //throw new Exception("someting test");
-            Int64 maxId = await unitOfWork.Classes.GetMaxIDAsync(x => x.ClassesId);
-            if (classDto.ClassesId == 0)
-                classDto.ClassesId = Convert.ToInt32(maxId) + 1;
+            Int64 maxId = await idGeneratorService.GetNextIdAsync("Classes");
+            //Int64 maxId = await unitOfWork.Classes.GetMaxIDAsync(x => x.ClassesId);
+            //if (classDto.ClassesId == 0)
+            //    classDto.ClassesId = Convert.ToInt32(maxId) + 1;
+            classDto.ClassesId = Convert.ToInt32(maxId);
             var entity = mapper.Map<Classes>(classDto);
             entity.ClassesName = classDto.ClassesName.ToUpper();
             entity.UpdatedBy = 0;

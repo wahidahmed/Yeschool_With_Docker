@@ -108,56 +108,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    var maxRetries = 20;
-    var delay = TimeSpan.FromSeconds(10);
-
-    for (int i = 0; i < maxRetries; i++)
-    {
-        try
-        {
-            logger.LogInformation("Attempting to connect to SQL Server...");
-            context.Database.OpenConnection(); // Test connection
-            context.Database.CloseConnection();
-            break; // Connection succeeded
-        }
-        catch (Exception ex)
-        {
-            logger.LogWarning(ex, $"Connection failed on attempt {i + 1}/{maxRetries}. Retrying in 10s...");
-            await Task.Delay(delay);
-        }
-    }
-
-    // Now migrate
-    try
-    {
-        context.Database.Migrate();
-        logger.LogInformation("✅ Database migrated.");
-
-        // Seed data
-        if (!context.Users.Any(u => u.Username == "admin"))
-        {
-           
-            context.Roles.Add(new Role { RoleName = "ADMIN" });
-            context.Users.Add(new User
-            {
-                Username = "admin",
-                Password = "yfTzNw11SmvlXcJ4M4zog4RuKCf7rtL3QM8Tz2zAMGVMyFjC",// password 123
-                Role = "ADMIN"
-            });
-            context.SaveChanges();
-            logger.LogInformation("🔐 Admin user seeded.");
-        }
-    }
-    catch (Exception ex)
-    {
-        logger.LogError(ex, "Failed to migrate or seed database.");
-        throw;
-    }
-}
 
 
 app.Run();

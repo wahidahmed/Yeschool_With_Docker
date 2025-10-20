@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.AdminService.Data.Entities;
 using School.AdminService.DataTransferObjects;
+using School.AdminService.Repository;
 using School.AdminService.Repository.Interfaces;
 
 namespace School.AdminService.Controllers
@@ -13,11 +14,13 @@ namespace School.AdminService.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IIdGeneratorService idGeneratorService;
 
-        public SectionController(IUnitOfWork unitOfWork, IMapper mapper)
+        public SectionController(IUnitOfWork unitOfWork, IMapper mapper, IIdGeneratorService idGeneratorService)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.idGeneratorService = idGeneratorService;
         }
 
         // GET: api/<SectionController>
@@ -43,10 +46,12 @@ namespace School.AdminService.Controllers
         //[Authorize]
         public async Task<IActionResult> Post(SectionDto dto)
         {
-            Int64 maxId = await unitOfWork.Section.GetMaxIDAsync(x => x.SectionId);
+            Int64 maxId = await idGeneratorService.GetNextIdAsync("Sections");
+            //Int64 maxId = await unitOfWork.Section.GetMaxIDAsync(x => x.SectionId);
 
-            if (dto.SectionId == 0)
-                dto.SectionId = Convert.ToInt32(maxId) + 1;
+            //if (dto.SectionId == 0)
+            //    dto.SectionId = Convert.ToInt32(maxId) + 1;
+            dto.SectionId = Convert.ToInt32(maxId);
             var entity = mapper.Map<Section>(dto);
             entity.SectionName = dto.SectionName.ToUpper();
             entity.CreatedBy = 0;

@@ -27,10 +27,18 @@ namespace School.AdminService.Data
         public DbSet<SpecialFee> SpecialFees { get; set; }
         public DbSet<FeesCollectionMaster> FeesCollectionMasters { get; set; }
         public DbSet<FeesCollectionDetail> FeesCollectionDetails { get; set; }
+        public DbSet<IdSequence> IdSequences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Optional: Seed default sequences
+            modelBuilder.Entity<IdSequence>().HasData(
+                new IdSequence { EntityType = "PersonalInfos", NextId = 1 },
+                new IdSequence { EntityType = "StudentInfos", NextId = 1 },
+                new IdSequence { EntityType = "StudentAcademicHistories", NextId = 1 }
+            );
 
             modelBuilder.Entity<StudentInfo>(entity =>
             {

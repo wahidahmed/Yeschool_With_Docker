@@ -506,6 +506,36 @@ namespace School.AdminService.Migrations
                     b.ToTable("FeesSetups");
                 });
 
+            modelBuilder.Entity("School.AdminService.Data.Entities.IdSequence", b =>
+                {
+                    b.Property<string>("EntityType")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<long>("NextId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("EntityType");
+
+                    b.ToTable("IdSequences");
+
+                    b.HasData(
+                        new
+                        {
+                            EntityType = "PersonalInfos",
+                            NextId = 1L
+                        },
+                        new
+                        {
+                            EntityType = "StudentInfos",
+                            NextId = 1L
+                        },
+                        new
+                        {
+                            EntityType = "StudentAcademicHistories",
+                            NextId = 1L
+                        });
+                });
+
             modelBuilder.Entity("School.AdminService.Data.Entities.PersonalInfo", b =>
                 {
                     b.Property<long>("PersonalnfoId")
