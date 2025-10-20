@@ -43,7 +43,7 @@ namespace School.AdminService.Controllers
 
         // POST api/<SectionController>
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Post(SectionDto dto)
         {
             Int64 maxId = await idGeneratorService.GetNextIdAsync("Sections");
