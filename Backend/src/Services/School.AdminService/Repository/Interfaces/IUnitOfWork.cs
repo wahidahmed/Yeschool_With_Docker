@@ -18,6 +18,10 @@ namespace School.AdminService.Repository.Interfaces
         IGenericRepository<FeesCollectionMaster> FeesCollectionMaster { get; }
         IGenericRepository<FeesCollectionDetail> FeesCollectionDetail { get; }
         IGenericRepository<StudentAcademicHistory> StudentAcademicHistory { get; }
+        IGenericRepository<Subject> Subject { get; }
+        IGenericRepository<Employee> Employee { get; }
+        IGenericRepository<ScheduleMaster> ScheduleMaster { get; }
+        IGenericRepository<ScheduleDetail> ScheduleDetail { get; }
 
 
         Task<bool> SaveAsync();

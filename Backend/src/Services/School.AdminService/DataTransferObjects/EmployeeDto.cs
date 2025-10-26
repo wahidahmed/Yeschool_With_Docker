@@ -1,19 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace School.AdminService.Data.Entities
+namespace School.AdminService.DataTransferObjects
 {
-    public class Employee
+    public class EmployeeDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EmployeeId { get; set; }
-        [ForeignKey("PersonalInfo")]
-        public long PersonalInfoId { get; set; }
+        [Required]
+        [StringLength(150)]
+        public string EmployeeName { get; set; }
 
         [Precision(18, 2)]
-        public decimal BasicSalary {  get; set; }
+        public decimal BasicSalary { get; set; }
         [Precision(18, 2)]
         public decimal OthersBenifit { get; set; } = 0;
         public DateOnly JoiningDate { get; set; }
@@ -26,8 +24,5 @@ namespace School.AdminService.Data.Entities
         public string EmploymentRole { get; set; }// Management,teacher,worker,others
         [StringLength(2000)]
         public string EmployeeDescription { get; set; }
-        public bool IsActive { get; set; } = true;
-
-        public PersonalInfo PersonalInfo { get; set; }
     }
 }

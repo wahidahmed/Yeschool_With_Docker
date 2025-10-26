@@ -331,11 +331,6 @@ namespace School.AdminService.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<string>("EmployeeName")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
                     b.Property<string>("EmployementType")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -350,6 +345,9 @@ namespace School.AdminService.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasDefaultValue("OTHER");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateOnly>("JoiningDate")
                         .HasColumnType("date");
 
@@ -357,11 +355,16 @@ namespace School.AdminService.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long>("PersonalInfoId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("EmployeeId");
+
+                    b.HasIndex("PersonalInfoId");
 
                     b.ToTable("Employees", t =>
                         {
-                            t.HasCheckConstraint("CK_Employement_Role", "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER')");
+                            t.HasCheckConstraint("CK_Employement_Role", "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER','MANAGEMENT-TEACHER')");
 
                             t.HasCheckConstraint("CK_Employement_Type", "EmployementType IN ('FULL_TIME', 'PART_TIME', 'CONTRACTUAL')");
                         });
@@ -669,6 +672,79 @@ namespace School.AdminService.Migrations
                         .HasFilter("[PersonCode] IS NOT NULL");
 
                     b.ToTable("PersonalInfos");
+                });
+
+            modelBuilder.Entity("School.AdminService.Data.Entities.ScheduleDetail", b =>
+                {
+                    b.Property<int>("ScheduleDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("ScheduleMasterId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ScheduleDetailId");
+
+                    b.HasIndex("ScheduleMasterId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("ScheduleDetail");
+                });
+
+            modelBuilder.Entity("School.AdminService.Data.Entities.ScheduleMaster", b =>
+                {
+                    b.Property<int>("ScheduleMasterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BreakMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClassSectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DurationInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("ScheduleStartTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("ThePeriod_Before_TiffinBreak")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPeriod")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ScheduleMasterId");
+
+                    b.HasIndex("ClassSectionId");
+
+                    b.ToTable("ScheduleMasters");
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Section", b =>
@@ -1221,6 +1297,17 @@ namespace School.AdminService.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("School.AdminService.Data.Entities.Employee", b =>
+                {
+                    b.HasOne("School.AdminService.Data.Entities.PersonalInfo", "PersonalInfo")
+                        .WithMany("Employees")
+                        .HasForeignKey("PersonalInfoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("PersonalInfo");
+                });
+
             modelBuilder.Entity("School.AdminService.Data.Entities.FeesCollectionDetail", b =>
                 {
                     b.HasOne("School.AdminService.Data.Entities.FeesCollectionMaster", "FeesCollectionMaster")
@@ -1276,6 +1363,44 @@ namespace School.AdminService.Migrations
                     b.Navigation("Classes");
 
                     b.Navigation("FeesName");
+                });
+
+            modelBuilder.Entity("School.AdminService.Data.Entities.ScheduleDetail", b =>
+                {
+                    b.HasOne("School.AdminService.Data.Entities.ScheduleMaster", "ScheduleMaster")
+                        .WithMany("ScheduleDetail")
+                        .HasForeignKey("ScheduleMasterId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("School.AdminService.Data.Entities.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("School.AdminService.Data.Entities.Employee", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ScheduleMaster");
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("School.AdminService.Data.Entities.ScheduleMaster", b =>
+                {
+                    b.HasOne("School.AdminService.Data.Entities.ClassSection", "ClassSection")
+                        .WithMany()
+                        .HasForeignKey("ClassSectionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ClassSection");
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.SpecialFee", b =>
@@ -1402,7 +1527,14 @@ namespace School.AdminService.Migrations
                 {
                     b.Navigation("Addresses");
 
+                    b.Navigation("Employees");
+
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("School.AdminService.Data.Entities.ScheduleMaster", b =>
+                {
+                    b.Navigation("ScheduleDetail");
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Section", b =>

@@ -29,6 +29,8 @@ namespace School.AdminService.Data
         public DbSet<FeesCollectionDetail> FeesCollectionDetails { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<ScheduleMaster> ScheduleMasters { get; set; }
+        public DbSet<ScheduleDetail> ScheduleDetail { get; set; }
         public DbSet<IdSequence> IdSequences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -60,7 +62,7 @@ namespace School.AdminService.Data
                 // ✅ Check constraint for string values
                 entity.ToTable(t => t.HasCheckConstraint(
                     "CK_Employement_Role",
-                    "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER')"
+                    "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER','MANAGEMENT-TEACHER')"
                 ));
 
             });

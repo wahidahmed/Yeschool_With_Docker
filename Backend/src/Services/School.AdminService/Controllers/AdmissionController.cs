@@ -96,7 +96,7 @@ namespace School.AdminService.Controllers
             mapper.Map(dto.studentInfo, studentData);
             unitOfWork.StudentInfo.Update(studentData);
 
-            var presentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType == "presnt");
+            var presentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType == "PRESENT");
             if (presentData == null)
                 return BadRequest("Update not allowed for present address");
 
@@ -104,11 +104,11 @@ namespace School.AdminService.Controllers
             mapper.Map(dto.presentAddress, presentData);
             unitOfWork.Address.Update(presentData);
 
-            var permanentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType == "permanent");
+            var permanentData = await unitOfWork.Address.GetFirstOrDefaultAsync(x => x.PersonalInfoId == personalId && x.AddressType == "PERMANENT");
             if (permanentData == null)
                 return BadRequest("Update not allowed for permanent address");
 
-            permanentData.UpdatedOn = DateTime.Now; studentData.UpdatedBy = 1;
+            permanentData.UpdatedOn = DateTime.Now; permanentData.UpdatedBy = 1;
             mapper.Map(dto.permanentAddress, permanentData);
             unitOfWork.Address.Update(permanentData);
 

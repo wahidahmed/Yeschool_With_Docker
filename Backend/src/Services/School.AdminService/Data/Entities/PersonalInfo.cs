@@ -40,5 +40,6 @@ namespace School.AdminService.Data.Entities
 
         public ICollection<Address> Addresses { get; set; } = new List<Address>();
         public ICollection<StudentInfo> Students { get; set; }= new List<StudentInfo>();
+        public ICollection<Employee> Employees { get; set; }= new List<Employee>();
     }
 }
