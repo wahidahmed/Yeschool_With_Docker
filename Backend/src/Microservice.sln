@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppGateway", "Gateway\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.AdminService", "Services\School.AdminService\School.AdminService.csproj", "{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student.Api", "Services\Student.Api\Student.Api\Student.Api.csproj", "{2FDC00A1-7FAC-4554-8537-A127D679AB72}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +29,6 @@ Global
 		{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FDC00A1-7FAC-4554-8537-A127D679AB72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FDC00A1-7FAC-4554-8537-A127D679AB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FDC00A1-7FAC-4554-8537-A127D679AB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FDC00A1-7FAC-4554-8537-A127D679AB72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,7 +37,6 @@ Global
 		{48ABD1C9-6B64-4118-99EA-7A7321EEB3CD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{5B4E1549-AC7C-47ED-917F-BA6B64A419B1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{AC4185A7-73FF-4FD8-B413-9F61B35C7C1C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{2FDC00A1-7FAC-4554-8537-A127D679AB72} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9653948-5351-41AD-A7EB-660FB78D14C2}

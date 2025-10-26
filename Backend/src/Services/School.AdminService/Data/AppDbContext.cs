@@ -27,11 +27,43 @@ namespace School.AdminService.Data
         public DbSet<SpecialFee> SpecialFees { get; set; }
         public DbSet<FeesCollectionMaster> FeesCollectionMasters { get; set; }
         public DbSet<FeesCollectionDetail> FeesCollectionDetails { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<IdSequence> IdSequences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // EMPLOYEE TABLE EmployementType
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.Property(e => e.EmployementType)
+                     .HasConversion<string>()
+                     .HasDefaultValue(EmployementType.FULL_TIME);
+
+                // ✅ Check constraint for string values
+                entity.ToTable(t => t.HasCheckConstraint(
+                    "CK_Employement_Type",
+                    "EmployementType IN ('FULL_TIME', 'PART_TIME', 'CONTRACTUAL')"
+                ));
+
+            });
+
+            // EMPLOYEE TABLE EmploymentRole
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.Property(e => e.EmploymentRole)
+                     .HasConversion<string>()
+                     .HasDefaultValue(EmployementRole.OTHER);
+
+                // ✅ Check constraint for string values
+                entity.ToTable(t => t.HasCheckConstraint(
+                    "CK_Employement_Role",
+                    "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER')"
+                ));
+
+            });
 
             // Optional: Seed default sequences
             modelBuilder.Entity<IdSequence>().HasData(

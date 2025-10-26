@@ -315,6 +315,58 @@ namespace School.AdminService.Migrations
                         });
                 });
 
+            modelBuilder.Entity("School.AdminService.Data.Entities.Employee", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("BasicSalary")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateOnly?>("ConfirmationDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("EmployeeDescription")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("EmployementType")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValue("FULL_TIME");
+
+                    b.Property<string>("EmploymentRole")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValue("OTHER");
+
+                    b.Property<DateOnly>("JoiningDate")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("OthersBenifit")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("EmployeeId");
+
+                    b.ToTable("Employees", t =>
+                        {
+                            t.HasCheckConstraint("CK_Employement_Role", "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER')");
+
+                            t.HasCheckConstraint("CK_Employement_Type", "EmployementType IN ('FULL_TIME', 'PART_TIME', 'CONTRACTUAL')");
+                        });
+                });
+
             modelBuilder.Entity("School.AdminService.Data.Entities.FeesCollectionDetail", b =>
                 {
                     b.Property<long>("FeesCollectionDetailId")
@@ -804,6 +856,24 @@ namespace School.AdminService.Migrations
                         {
                             t.HasCheckConstraint("CK_Student_Status", "Status IN ('PENDING', 'ACTIVE', 'ENROLLED')");
                         });
+                });
+
+            modelBuilder.Entity("School.AdminService.Data.Entities.Subject", b =>
+                {
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubjectName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("SubjectId");
+
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("School.AdminService.Data.Entities.Thana", b =>

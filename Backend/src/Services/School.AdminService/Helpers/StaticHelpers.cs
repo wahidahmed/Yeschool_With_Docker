@@ -23,4 +23,17 @@
         ACTIVE ,
         ENROLLED
     }
+    public enum EmployementType
+    {
+        PART_TIME,
+        FULL_TIME,
+        CONTRACTUAL
+    }
+    public enum EmployementRole
+    {
+        MANAGEMENT,
+        TEACHER,
+        WORKER,
+        OTHER
+    }
 }

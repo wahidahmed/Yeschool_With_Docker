@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using School.AdminService.Data.Entities;
 using School.AdminService.DataTransferObjects;
 using School.AdminService.Helpers;
 using School.AdminService.Repository.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace School.AdminService.Controllers
 {
