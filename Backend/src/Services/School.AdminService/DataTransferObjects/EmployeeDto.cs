@@ -6,9 +6,6 @@ namespace School.AdminService.DataTransferObjects
     public class EmployeeDto
     {
         public int EmployeeId { get; set; }
-        [Required]
-        [StringLength(150)]
-        public string EmployeeName { get; set; }
 
         [Precision(18, 2)]
         public decimal BasicSalary { get; set; }

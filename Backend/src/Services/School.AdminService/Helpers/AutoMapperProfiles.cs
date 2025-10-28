@@ -25,7 +25,7 @@ namespace School.AdminService.Helpers
             CreateMap<FeesCollectionMaster,FeesCollectionDto>().ReverseMap();
             CreateMap<FeesCollectionDetail,FeesDetailsDto>().ReverseMap();
             CreateMap<Subject,SubjectDto>().ReverseMap();
-            CreateMap<Employee,EmployeeCreateDto>().ReverseMap();
+            CreateMap<Employee,EmployeeDto>().ReverseMap();
 
             CreateMap<AddressUpdateDto, Address>()
                 .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
@@ -39,7 +39,7 @@ namespace School.AdminService.Helpers
             CreateMap<FeesNameUpdateDto, FeesName>()
                 .ForAllMembers(opt => opt.Condition ((src, dest, srcValue) => ShouldMap(srcValue)));
 
-            CreateMap<EmployeeUpdateDto, Employee>()
+            CreateMap<EmployeeDto, Employee>()
                 .ForAllMembers(opt => opt.Condition((src, dest, srcValue) => ShouldMap(srcValue)));
         }
 

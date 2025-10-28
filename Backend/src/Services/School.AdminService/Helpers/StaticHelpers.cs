@@ -34,6 +34,7 @@
         MANAGEMENT,
         TEACHER,
         WORKER,
-        OTHER
+        OTHER,
+        MANAGEMENT_TEACHER
     }
 }

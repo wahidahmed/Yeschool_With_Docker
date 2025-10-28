@@ -364,7 +364,7 @@ namespace School.AdminService.Migrations
 
                     b.ToTable("Employees", t =>
                         {
-                            t.HasCheckConstraint("CK_Employement_Role", "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER','MANAGEMENT-TEACHER')");
+                            t.HasCheckConstraint("CK_Employement_Role", "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER','MANAGEMENT_TEACHER')");
 
                             t.HasCheckConstraint("CK_Employement_Type", "EmployementType IN ('FULL_TIME', 'PART_TIME', 'CONTRACTUAL')");
                         });

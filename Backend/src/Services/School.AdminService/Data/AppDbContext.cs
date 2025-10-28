@@ -62,7 +62,7 @@ namespace School.AdminService.Data
                 // ✅ Check constraint for string values
                 entity.ToTable(t => t.HasCheckConstraint(
                     "CK_Employement_Role",
-                    "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER','MANAGEMENT-TEACHER')"
+                    "EmploymentRole IN ('MANAGEMENT', 'TEACHER', 'WORKER','OTHER','MANAGEMENT_TEACHER')"
                 ));
 
             });

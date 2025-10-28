@@ -1,0 +1,45 @@
+{
+  "employeeDto": {
+    "employeeId": 0,
+    "basicSalary": 12000,
+    "othersBenifit": 3000,
+    "joiningDate": "2025-10-28",
+    "confirmationDate": "2025-10-28",
+    "employementType": "FULL_TIME",
+    "employmentRole": "MANAGEMENT_TEACHER",
+    "employeeDescription": ""
+  },
+  "personalInfo": {
+    "personalnfoId": 0,
+    "personName": "Faisal Ahmed",
+    "mobile": "01834565667",
+    "email": "",
+    "dateOfBirth": "1990-12-10",
+    "fatherName": "Burhan Uddin",
+    "fatherMobile": "",
+    "fatherOccupation": "business",
+    "motherName": "",
+    "motherMobile": "",
+    "motherOccupation": "",
+    "gender": "male",
+    "religion": "islam",
+    "imageUrl": "string",
+    "personCode": "PERS-02"
+  },
+  "presentAddress": {
+    "addressId": 0,
+    "districtId": 101,
+    "thanaId": 1001,
+    "streetDetail": "string",
+    "addressType": "PRESENT",
+    "personalInfoId": 0
+  },
+  "permanentAddress": {
+  "addressId": 0,
+    "districtId": 101,
+    "thanaId": 1001,
+    "streetDetail": "string",
+    "addressType": "PERMANENT",
+    "personalInfoId": 0
+  }
+}

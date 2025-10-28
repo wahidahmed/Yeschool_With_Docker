@@ -58,10 +58,10 @@ namespace School.AdminService.Controllers
             dto.permanentAddress.PersonalInfoId = dto.personalInfo.PersonalnfoId;
             dto.permanentAddress.AddressType = "PERMANENT";
             var permanentAdr = mapper.Map<Address>(dto.permanentAddress);
+            unitOfWork.Address.Insert(permanentAdr);
 
             Int64 maxId = await idGeneratorService.GetNextIdAsync("Employees");
             var entity = mapper.Map<Employee>(dto.employeeDto);
-            unitOfWork.Address.Insert(permanentAdr);
             entity.EmployeeId = Convert.ToInt32(maxId);
             entity.PersonalInfoId = dto.personalInfo.PersonalnfoId;
             unitOfWork.Employee.Insert(entity);
