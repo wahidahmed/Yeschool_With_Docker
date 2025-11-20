@@ -16,6 +16,6 @@ namespace School.AdminService.Data.Entities
         public int ThePeriod_Before_TiffinBreak { get; set; }
         public int BreakMinutes { get; set; }
         public ClassSection ClassSection { get; set; }
-        public ICollection<ScheduleDetail> ScheduleDetail { get; set; }=new List<ScheduleDetail>();
+        public ICollection<ScheduleDetail> ScheduleDetails { get; set; }=new List<ScheduleDetail>();
     }
 }
