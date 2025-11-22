@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { API_BASE_URL } from '../app.tokens';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminMasterService {
-private baseUrl:string='http://localhost:5005/api/admin_service/';
-  constructor(private http:HttpClient) { }
+private baseUrl:string;
+  constructor(private http:HttpClient, @Inject(API_BASE_URL) private apiBaseUrl: string) {
+    this.baseUrl = `${apiBaseUrl}/api/admin_service/`;
+   }
 
   addNewClass(className:string,remarks:string){
     let dto={

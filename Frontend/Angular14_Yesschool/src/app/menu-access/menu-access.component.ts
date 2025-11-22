@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AdminitrationService } from '../services/adminitration.service';
+import { AdminitrationService } from '../services/administration.service';
 import { NgToastService } from 'ng-angular-popup';
 import { UserCredStoreService } from '../services/user-cred-store.service';
 import { AuthService } from '../services/auth.service';

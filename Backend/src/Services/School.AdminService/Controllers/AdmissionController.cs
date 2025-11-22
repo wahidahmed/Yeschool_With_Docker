@@ -25,17 +25,6 @@ namespace School.AdminService.Controllers
             this.idGeneratorService = idGeneratorService;
         }
 
-        [HttpGet("GetStudentInfoDetails")]
-        public async Task<IActionResult> GetStudentInfoDetails(long personalId = 0, long studentId = 0, int classId = 0)
-        {
-            var fullData = await studentService.GetStudentInfoAsync(personalId, studentId,classId);
-            if (!fullData.Any())
-            {
-                return NotFound();
-            }
-            return Ok(fullData);
-        }
-
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Post(AdmissionDto dto)

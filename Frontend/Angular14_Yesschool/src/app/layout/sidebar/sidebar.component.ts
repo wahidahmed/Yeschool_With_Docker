@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminitrationService } from 'src/app/services/adminitration.service';
+import { AdminitrationService } from 'src/app/services/administration.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserCredStoreService } from 'src/app/services/user-cred-store.service';
 

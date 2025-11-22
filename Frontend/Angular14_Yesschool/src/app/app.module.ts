@@ -20,6 +20,9 @@ import { ClassManageComponent } from './schoolAdmin/class-manage/class-manage.co
 import { SectionManageComponent } from './schoolAdmin/section-manage/section-manage.component';
 import { FeesNameComponent } from './schoolAdmin/fees-name/fees-name.component';
 import { StudentAdmissionComponent } from './schoolAdmin/student-admission/student-admission.component';
+import { StudentListComponent } from './schoolAdmin/student-list/student-list.component';
+import { API_BASE_URL } from './app.tokens';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import { StudentAdmissionComponent } from './schoolAdmin/student-admission/stude
     ClassManageComponent,
     SectionManageComponent,
     FeesNameComponent,
-    StudentAdmissionComponent
+    StudentAdmissionComponent,
+    StudentListComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,10 @@ import { StudentAdmissionComponent } from './schoolAdmin/student-admission/stude
     provide:HTTP_INTERCEPTORS,
     useClass:TokenInterceptor,
     multi:true
+    },
+     {
+      provide: API_BASE_URL,
+      useValue: environment.apiUrl // or directly 'http://localhost:5005'
     }
   ],
   bootstrap: [AppComponent]

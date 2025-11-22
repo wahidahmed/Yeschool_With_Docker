@@ -1,18 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import {JwtHelperService} from '@auth0/angular-jwt';
 import { TokenApiModel } from '../models/token-api.model';
+import { API_BASE_URL } from '../app.tokens';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
- private baseUrl: string = 'http://localhost:5005/api/auth/user/';
+ private baseUrl: string;
   private userPayload:any;
    private jwtHelper = new JwtHelperService();
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router,@Inject(API_BASE_URL) private apiBaseUrl: string) {
     this.userPayload = this.decodedToken();
+     this.baseUrl = `${apiBaseUrl}/api/auth/user/`;
    }
 
    signUp(userObj: any) {
