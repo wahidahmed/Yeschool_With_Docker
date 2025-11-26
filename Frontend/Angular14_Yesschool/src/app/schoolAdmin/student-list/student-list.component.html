@@ -1,1 +1,47 @@
-<p>student-list works!</p>
+
+<div class="card">
+  <div class="card-header"> <h3 class="card-title">Student List</h3></div>
+  <div class="card-body">
+ 
+      <div class="row">
+        <div class="col-12">
+            <table class="table table-responsive table-bordered">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Code</th>
+                  <th>Cls/Sec</th>
+                  <th>Guardian</th>
+                  <th>Guardian Rel:</th>
+                  <th>Guardian Mob:</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of studentInfoList">
+                  <td>{{item.PersonName}}</td>
+                  <td>{{item.PersonCode}}</td>
+                  <td>{{item.ClassesName}}-{{item.SectionName}}</td>
+                  
+                  <td>{{item.GuardianName}}</td>
+                  <td>{{item.GuardianRelation}}</td>
+                  <td>{{item.GuardianMobileNo}}</td>
+                  <td>{{item.Status}}</td>
+                  <td>
+                    <button class="btn btn-sm btn-warning " type="button">Edit</button>
+                    <button class="btn btn-sm btn-primary m-1" type="button">admit</button>
+                    <button class="btn btn-sm btn-success" type="button">assign</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+
+ 
+  </div>
+</div>
+
+
+

@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using School.AdminService.Models;
 using School.AdminService.Repository.Interfaces;
 
 namespace School.AdminService.Controllers
@@ -8,23 +8,17 @@ namespace School.AdminService.Controllers
     [ApiController]
     public class StudentInfoController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IMapper mapper;
         private readonly IStudentService studentService;
-        private readonly IIdGeneratorService idGeneratorService;
 
-        public StudentInfoController(IUnitOfWork unitOfWork, IMapper mapper, IStudentService studentService, IIdGeneratorService idGeneratorService)
+        public StudentInfoController(IStudentService studentService)
         {
-            this.unitOfWork = unitOfWork;
-            this.mapper = mapper;
             this.studentService = studentService;
-            this.idGeneratorService = idGeneratorService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(long personalId = 0, long studentId = 0, int classId = 0)
+        public async Task<IActionResult> Get([FromQuery] StudentParams studentParams)
         {
-            var fullData = await studentService.GetStudentInfoAsync(personalId, studentId, classId);
+            var fullData = await studentService.GetStudentInfoAsync(studentParams.personalId, studentParams.studentId, studentParams.classId, studentParams.page, studentParams.pageSize);
             if (!fullData.Any())
             {
                 return NotFound();

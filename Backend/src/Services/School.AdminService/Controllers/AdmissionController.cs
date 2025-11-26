@@ -39,6 +39,8 @@ namespace School.AdminService.Controllers
             //var personalId = Convert.ToInt64(unitOfWork.PersonalInfo.GetMaxID(x => x.PersonalnfoId)) + 1;
             dto.personalInfo.PersonalnfoId = personalId;
             dto.personalInfo.PersonCode = "PERS-0" + personalId.ToString();
+            dto.personalInfo.Gender=dto.personalInfo.Gender.ToUpper();
+            dto.personalInfo.Religion=dto.personalInfo.Religion.ToUpper();
             var personal = mapper.Map<PersonalInfo>(dto.personalInfo);
             unitOfWork.PersonalInfo.Insert(personal);
 

@@ -15,7 +15,8 @@ namespace School.AdminService.Repository
             this.context = context;
         }
 
-        public async Task<IEnumerable<GetStudentDetailDto>> GetStudentInfoAsync(long personalId=0,long studentId=0,int classId=0)
+        public async Task<IEnumerable<GetStudentDetailDto>> GetStudentInfoAsync(long personalId=0,long studentId=0,int classId=0,int page = 0,
+    int pageSize = 0)
         {
             var query = context.StudentInfos
                                 .Include(x=>x.Classes)
@@ -59,7 +60,7 @@ namespace School.AdminService.Repository
                                     PersonCode=s.PersonalInfo.PersonCode,
                                     ImageUrl=s.PersonalInfo.ImageUrl,
 
-                                    PresentAddress=s.PersonalInfo.Addresses.Where(x=>x.AddressType== "presnt").Select(a=>new AddressUpdateDto
+                                    PresentAddress=s.PersonalInfo.Addresses.Where(x=>x.AddressType== "PRESENT").Select(a=>new AddressUpdateDto
                                     {
                                         AddressId=a.AddressId,
                                         AddressType=a.AddressType,
@@ -70,7 +71,7 @@ namespace School.AdminService.Repository
                                         DistrictName=a.District.DistrictName
                                     }).FirstOrDefault(),
 
-                                    PermanentAddress=s.PersonalInfo.Addresses.Where(X=>X.AddressType== "permanent").Select(a=>new AddressUpdateDto
+                                    PermanentAddress=s.PersonalInfo.Addresses.Where(X=>X.AddressType== "PERMANENT").Select(a=>new AddressUpdateDto
                                     {
                                         AddressId = a.AddressId,
                                         AddressType = a.AddressType,
@@ -89,7 +90,22 @@ namespace School.AdminService.Repository
             if(classId > 0)
                 query=query.Where(x=>x.ClassesId == classId);
 
-            return await query.ToListAsync();
+            // Apply pagination
+            if(page>0 && pageSize > 0)
+            {
+                var skip = (page - 1) * pageSize;
+                var pagedResult = await query
+                    .Skip(skip)
+                    .Take(pageSize)
+                    .OrderByDescending(x => x.StudentId)
+                    .ToListAsync();
+                return pagedResult;
+            }
+
+
+            return await query
+                              .OrderByDescending(x=>x.StudentId)
+                              .ToListAsync();
         }
     }
 }

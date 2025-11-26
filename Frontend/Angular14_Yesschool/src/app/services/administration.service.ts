@@ -1,14 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { IAssignAccess } from '../models/iAssignAccess.model';
+import { API_BASE_URL } from '../app.tokens';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminitrationService {
 
-   private baseUrl: string = 'http://localhost:5005/api/auth/admin/';
-  constructor(private http:HttpClient) { }
+   private baseUrl:string;
+  constructor(private http:HttpClient,@Inject(API_BASE_URL) private apiBaseUrl: string) {
+     this.baseUrl = `${apiBaseUrl}/api/auth/admin/`;
+   }
 
   addNnewRole(roleName:string){
     return this.http.post<any>(`${this.baseUrl}AddNewRole?roleName=${roleName}`,{});
