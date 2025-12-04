@@ -13,7 +13,6 @@ export class StudentListComponent implements OnInit {
   constructor(private studentAdmissionService:StudentAdmissionService) {
     studentAdmissionService.getStudentList().subscribe((data)=>{
       this.studentInfoList=data;
-      console.log(this.studentInfoList)
     })
    }
 

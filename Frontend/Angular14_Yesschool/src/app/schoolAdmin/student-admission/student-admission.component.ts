@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import ValidateForm from 'src/app/helpers/ValidateForm';
 import { StudentAdmissionService } from 'src/app/services/student-admission.service';
+import { ActivatedRoute } from '@angular/router';
+import { IGetStudentInfoDto } from '../Dto/IGetStudentInfoDto';
 
 @Component({
   selector: 'app-student-admission',
@@ -10,11 +12,29 @@ import { StudentAdmissionService } from 'src/app/services/student-admission.serv
 })
 export class StudentAdmissionComponent implements OnInit {
 
-  constructor(private studentAdmitService:StudentAdmissionService, private fb:FormBuilder) { }
+  studentInfoEdit:IGetStudentInfoDto;
+  constructor(private studentAdmitService:StudentAdmissionService
+    ,private fb:FormBuilder
+    ,private route:ActivatedRoute) { }
 
   admitFormGroup:FormGroup;
   ngOnInit(): void {
-this.admitForm();
+    this.admitForm();
+    this.route.paramMap.subscribe(params=>{
+      const id=params.get('id');
+        if(id){
+          this.studentAdmitService.getStudentList().subscribe((data)=>{
+            this.studentInfoEdit=data[0];
+            console.log(this.studentInfoEdit);
+            this.admitFormGroup.patchValue({
+              studentInfo:{
+                
+              }
+            })
+          })
+        }
+    })
+
   }
 
   admitForm(){
@@ -60,6 +80,9 @@ this.admitForm();
     })
   }
 
+  bindEditData(){
+    
+  }
   formErrors={
     'PersonName':'',
     'Gender':'',

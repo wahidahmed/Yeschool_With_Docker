@@ -5,9 +5,12 @@
     <h2 class="text-center mb-4">Student Registration</h2>
 
     <!-- Section 1: Personal & Guardian Info -->
-    <div class="section-title">Personal & Guardian Information</div>
+    <!-- <div class="section-title">Personal & Guardian Information</div> -->
 
     <div class="row g-3" formGroupName="studentInfo">
+
+      <input type="hidden" formControlName="StudentId"/>
+      <input type="hidden" formControlName="PersonalnfoId"/>
       <!-- Person Name -->
       <div class="col-md-4">
         <label for="personName" class="form-label">Student Name <span class="text-danger">*</span></label>
@@ -199,10 +202,11 @@
     </div>
 
     <!-- Section 2: Address Information -->
-    <div class="section-title mt-4">Address Information</div>
+    <!-- <div class="section-title mt-4">Address Information</div> -->
 
-    <h5 class="mt-3">Present Address</h5>
+    <h5 class="section-title mt-2">Present Address</h5>
     <div class="row g-3" formGroupName="presentAddress">
+      <input type="hidden" formControlName="AddressId"/>
       <div class="col-md-2">
         <label for="presentDistrict" class="form-label">District <span class="text-danger">*</span></label>
         <select class="form-select"  formControlName="DistrictId"
@@ -245,8 +249,10 @@
 
    
 
+    <h5 class="section-title">Permanent Address</h5>
     <div>
       <div class="row g-3" formGroupName="permanentAddress">
+        <input type="hidden" formControlName="AddressId"/>
         <div class="col-md-2">
           <label for="permanentDistrict" class="form-label">District <span class="text-danger">*</span></label>
           <select class="form-select"  formControlName="DistrictId"

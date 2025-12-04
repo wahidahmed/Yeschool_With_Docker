@@ -29,7 +29,7 @@
                   <td>{{item.GuardianMobileNo}}</td>
                   <td>{{item.Status}}</td>
                   <td>
-                    <button class="btn btn-sm btn-warning " type="button">Edit</button>
+                    <button class="btn btn-sm btn-warning " type="button"[routerLink]="['/Student_Admission', item.StudentId, 'edit']" routerLinkActive="router-link-active" >Edit</button>
                     <button class="btn btn-sm btn-primary m-1" type="button">admit</button>
                     <button class="btn btn-sm btn-success" type="button">assign</button>
                   </td>
