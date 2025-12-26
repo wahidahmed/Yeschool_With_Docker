@@ -1,10 +1,8 @@
 ﻿using Auth.Api.Data;
-using Auth.Api.Data.Entties;
 using Auth.Api.Data.RawSql;
 using Auth.Api.Helper;
 using Auth.Api.Modal;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

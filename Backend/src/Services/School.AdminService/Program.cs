@@ -103,7 +103,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.ConfigureExceptionHandler(app.Environment);
-app.UseAuthentication(); // ← YOU ARE MISSING THIS!
+app.UseAuthentication();
 app.UseAuthorization();
 // 🔀 Map Endpoints
 app.MapControllers(); // ← This maps all controller routes
